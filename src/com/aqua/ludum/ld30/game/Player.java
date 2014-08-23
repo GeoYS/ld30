@@ -5,11 +5,11 @@ import com.badlogic.gdx.InputProcessor;
 public abstract class Player {
 	
 	public Player(String name) {
-		
+		this.name = name;
 	}
 	
 	public String getName() {
-		
+		return this.name;
 	}
 	
 	public abstract void update(float delta);
@@ -17,5 +17,7 @@ public abstract class Player {
 	public InputProcessor getListener() {
 		return null;
 	}
+	
+	private String name;
 	
 }
