@@ -2,6 +2,13 @@ package com.aqua.ludum.ld30.game;
 
 import java.util.List;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -12,6 +19,23 @@ public class Terrain {
 	 * @param file
 	 */
 	public Terrain(String file) {
+		TmxMapLoader mapLoader = new TmxMapLoader();
+		System.out.println("Loading map.");
+		TiledMap map = mapLoader.load(file);
+		System.out.println("Finished loading map.");
+		this.mapRenderer = new IsometricTiledMapRenderer((TiledMap) map, 1);
+		OrthographicCamera camera = new OrthographicCamera();
+    	camera = new OrthographicCamera(960, 640);
+    	camera.translate(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
+    	camera.update();
+    	this.mapRenderer.setView(camera);
+	}
+	
+	public void render(SpriteBatch batch) {
+		
+	}
+	
+	public void update(float delta) {
 		
 	}
 	
@@ -60,4 +84,5 @@ public class Terrain {
 	public List<Player> players;
 	public Player neutralPlayer;
 	
+	private TiledMapRenderer mapRenderer;
 }
