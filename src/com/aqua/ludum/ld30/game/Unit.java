@@ -16,6 +16,7 @@ public abstract class Unit {
 	
 	public void update(float delta) {
 		collisionUpdate(delta);
+		pathingUpdate(delta);
 	}
 	
 	protected final void collisionUpdate(float delta) {
@@ -71,6 +72,8 @@ public abstract class Unit {
 	}
 	
 	private Player player;
+	private Path path;
+	private boolean pathValid;
 	private Vector2 position;
 	private Vector2 targetPosition;
 	private Unit targetUnit;
