@@ -31,7 +31,9 @@ public class Terrain {
 	public void render(SpriteBatch batch) {
 		// TODO z-index rendering order
 		// render map
+		batch.end();
 		mapRenderer.render();
+		batch.begin();
 		// render units
 		for(Unit unit : units) {
 			unit.render(batch);
