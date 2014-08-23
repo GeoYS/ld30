@@ -13,11 +13,6 @@ public class Block {
 		this.width = width;
 		this.height = height;
 		rectangle = new Rectangle(position.x, position.y, width, height);
-		cornerPoints = new ArrayList<>();
-		cornerPoints.add(position);
-		cornerPoints.add(position.cpy().add(width, 0));
-		cornerPoints.add(position.cpy().add(width, height));
-		cornerPoints.add(position.cpy().add(0, height));
 	}
 	
 	public Vector2 getPosition() {
@@ -36,16 +31,7 @@ public class Block {
 		return rectangle;
 	}
 	
-	/**
-	 * Returns the four corners of its rectangle.
-	 * @return
-	 */
-	public List<Vector2> getCornerPoints(){
-		return cornerPoints;
-	}
-	
 	private Rectangle rectangle;
 	private Vector2 position;
 	private final float width, height;
-	private ArrayList<Vector2> cornerPoints;
 }

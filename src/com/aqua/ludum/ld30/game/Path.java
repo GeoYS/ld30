@@ -37,7 +37,7 @@ public final class Path {
 			}
 			openSet.remove(current);
 			closedSet.add(current);
-			for (Vector2 neighbour : terrain.getNeighbours(current)) {
+			for (Vector2 neighbour : terrain.getNeighbours(current, goal)) {
 				if (closedSet.contains(neighbour)) {
 					continue;
 				}

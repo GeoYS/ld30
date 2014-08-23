@@ -3,6 +3,7 @@ package com.aqua.ludum.ld30.game;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.aqua.ludum.ld30.Constants;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.IsometricTiledMapRenderer;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -94,12 +96,24 @@ public class Terrain {
 		
 		// go through each block
 		for(Block block : blocks) {
+			Rectangle rect = block.getRectangle();
+			float padding = Constants.PATHFINDING_CORNER_PADDING;
 			// go through each point of block
-			for(Vector2 pathPoint : block.getCornerPoints()) {
-				// if point reachable, add to list
-				if(reachable(point, pathPoint)) {
-					neighbours.add(pathPoint);
-				}
+			Vector2 pathPoint = new Vector2(rect.x - padding, rect.y - padding);
+			if (reachable(point, pathPoint)) {
+				neighbours.add(pathPoint);
+			}
+			pathPoint = new Vector2(rect.x + rect.width + padding, rect.y - padding);
+			if (reachable(point, pathPoint)) {
+				neighbours.add(pathPoint);
+			}
+			pathPoint = new Vector2(rect.x - padding, rect.y + rect.height + padding);
+			if (reachable(point, pathPoint)) {
+				neighbours.add(pathPoint);
+			}
+			pathPoint = new Vector2(rect.x + rect.width + padding, rect.y + rect.height + padding);
+			if (reachable(point, pathPoint)) {
+				neighbours.add(pathPoint);
 			}
 		}
 		
@@ -108,13 +122,24 @@ public class Terrain {
 			if(!(unit instanceof Building)) {
 				continue;
 			}
-			Building building = (Building) unit;
+			Rectangle rect = ((Building) unit).getRectangle();
+			float padding = Constants.PATHFINDING_CORNER_PADDING;
 			// go through each point of block
-			for(Vector2 pathPoint : building.getCornerPoints()) {
-				// if point reachable, add to list
-				if(reachable(point, pathPoint)) {
-					neighbours.add(pathPoint);
-				}
+			Vector2 pathPoint = new Vector2(rect.x - padding, rect.y - padding);
+			if (reachable(point, pathPoint)) {
+				neighbours.add(pathPoint);
+			}
+			pathPoint = new Vector2(rect.x + rect.width + padding, rect.y - padding);
+			if (reachable(point, pathPoint)) {
+				neighbours.add(pathPoint);
+			}
+			pathPoint = new Vector2(rect.x - padding, rect.y + rect.height + padding);
+			if (reachable(point, pathPoint)) {
+				neighbours.add(pathPoint);
+			}
+			pathPoint = new Vector2(rect.x + rect.width + padding, rect.y + rect.height + padding);
+			if (reachable(point, pathPoint)) {
+				neighbours.add(pathPoint);
 			}
 		}
 		
@@ -122,8 +147,62 @@ public class Terrain {
 	}
 	
 	private boolean reachable(Vector2 point, Vector2 target) {
-		// check if a direct line intersects anything
-		return false;
+		for (Block block : this.blocks) {
+			Rectangle rect = block.getRectangle();
+			Vector2 topLeft = new Vector2(rect.x, rect.y);
+			Vector2 topRight = new Vector2(rect.x + rect.width, rect.y);
+			Vector2 bottomLeft = new Vector2(rect.x, rect.y + rect.height);
+			Vector2 bottomRight = new Vector2(rect.x + rect.width, rect.y + rect.height);
+			Vector2 intersection = new Vector2();
+			if (Intersector.intersectSegments(point, target, topLeft, topRight, intersection)) {
+				return false;
+			}
+			if (Intersector.intersectSegments(point, target, topLeft, bottomLeft, intersection)) {
+				return false;
+			}
+			if (Intersector.intersectSegments(point, target, topRight, bottomRight, intersection)) {
+				return false;
+			}
+			if (Intersector.intersectSegments(point, target, bottomLeft, bottomRight, intersection)) {
+				return false;
+			}
+			if (rect.contains(point)) {
+				return false;
+			}
+			if (rect.contains(target)) {
+				return false;
+			}
+		}
+		for (Unit unit : this.units) {
+			if (!(unit instanceof Building)) {
+				continue;
+			}
+			Rectangle rect = ((Building) unit).getRectangle();
+			Vector2 topLeft = new Vector2(rect.x, rect.y);
+			Vector2 topRight = new Vector2(rect.x + rect.width, rect.y);
+			Vector2 bottomLeft = new Vector2(rect.x, rect.y + rect.height);
+			Vector2 bottomRight = new Vector2(rect.x + rect.width, rect.y + rect.height);
+			Vector2 intersection = new Vector2();
+			if (Intersector.intersectSegments(point, target, topLeft, topRight, intersection)) {
+				return false;
+			}
+			if (Intersector.intersectSegments(point, target, topLeft, bottomLeft, intersection)) {
+				return false;
+			}
+			if (Intersector.intersectSegments(point, target, topRight, bottomRight, intersection)) {
+				return false;
+			}
+			if (Intersector.intersectSegments(point, target, bottomLeft, bottomRight, intersection)) {
+				return false;
+			}
+			if (rect.contains(point)) {
+				return false;
+			}
+			if (rect.contains(target)) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	public List<Player> getPlayers() {
