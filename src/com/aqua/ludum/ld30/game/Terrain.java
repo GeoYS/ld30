@@ -1,5 +1,6 @@
 package com.aqua.ludum.ld30.game;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
@@ -71,6 +72,12 @@ public class Terrain {
 		
 	}
 	
+	public List<Vector2> getNeighbours(Vector2 point) {
+		
+	}
+	
+	
+	
 	public List<Player> getPlayers() {
 		
 	}
@@ -79,10 +86,10 @@ public class Terrain {
 		
 	}
 	
-	public List<Unit> units;
-	public List<Block> blocks;
-	public List<Player> players;
-	public Player neutralPlayer;
+	private List<Unit> units;
+	private List<Block> blocks;
+	private List<Player> players;
+	private Player neutralPlayer;
 	
 	private TiledMapRenderer mapRenderer;
 }
