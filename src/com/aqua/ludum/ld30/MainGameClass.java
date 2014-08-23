@@ -1,30 +1,23 @@
 package com.aqua.ludum.ld30;
 
-import com.badlogic.gdx.ApplicationListener;
+import com.aqua.ludum.ld30.game.ConnectedWorlds;
+import com.aqua.ludum.ld30.screen.Game;
+import com.aqua.ludum.ld30.screen.GameApp;
+import com.badlogic.gdx.graphics.FPSLogger;
 
-public class MainGameClass implements ApplicationListener {
+public class MainGameClass extends GameApp {
+
+	FPSLogger fps = new FPSLogger();
 	
 	@Override
-	public void create() {
-	}
-	
-	@Override
-	public void dispose() {
+	public Game game() {
+		return new ConnectedWorlds();
 	}
 	
 	@Override
 	public void render() {
+		super.render();
+		fps.log();
 	}
 	
-	@Override
-	public void resize(int width, int height) {
-	}
-	
-	@Override
-	public void pause() {
-	}
-	
-	@Override
-	public void resume() {
-	}
 }
