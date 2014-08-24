@@ -22,6 +22,7 @@ public class HumanPlayer extends Player {
 		this.currentSelection = new Selection();
 		selectedUnits = new ArrayList<>();
 		this.renderer = new ShapeRenderer();
+		this.camera = camera;
 		inputListener = new InputProcessor() {
 
 			private int lastX, lastY;
@@ -33,7 +34,7 @@ public class HumanPlayer extends Player {
 				if(isDown[Input.Buttons.LEFT]) {
 					Rectangle worldSelection = new Rectangle(currentSelection.getRectangle());
 					float x = worldSelection.x, y = worldSelection.y;
-					worldSelection.setPosition(x + camera.position.x / 2, y + camera.position.y / 2);
+					//worldSelection.setPosition(x - camera.position.x / 2, y - camera.position.y / 2);
 					selectedUnits = terrain.selectUnits(HumanPlayer.this, worldSelection);
 					currentSelection.setActive(false);
 				}
@@ -126,10 +127,11 @@ public class HumanPlayer extends Player {
 		currentSelection.render();
 		batch.begin();
 		renderer.setColor(Color.GREEN);
+		renderer.setProjectionMatrix(camera.combined);
 		renderer.begin(ShapeType.Line);
 		for(Unit unit : selectedUnits) {
 			Vector2 screenPos = Constants.worldToScreen(unit.getPosition(), getTerrain().getTilesHigh());
-			renderer.circle(screenPos.x, screenPos.y, unit.getRadius() + 5);
+			renderer.ellipse(screenPos.x - unit.getRadius(), screenPos.y - unit.getRadius() / 2, unit.getRadius() * 2, unit.getRadius());
 		}
 		renderer.end();
 	}
@@ -152,6 +154,7 @@ public class HumanPlayer extends Player {
 	private InputProcessor inputListener;
 	private Selection currentSelection;
 	private ShapeRenderer renderer;
+	private OrthographicCamera camera;
 	
 	private class Selection {
 		

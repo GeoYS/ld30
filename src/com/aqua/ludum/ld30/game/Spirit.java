@@ -28,5 +28,29 @@ public class Spirit extends Unit {
 	public float getRadius() {
 		return 0;
 	}
+
+	@Override
+	public float getAttackRadius() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public float getAttackStrength() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public float getMeleeArmour() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public float getRangeArmour() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 }

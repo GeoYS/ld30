@@ -9,22 +9,23 @@ import com.badlogic.gdx.math.Vector2;
 public class Block {
 	
 	public Block(Vector2 position, float width, float height) {
-		this.position = position;
-		this.width = width;
-		this.height = height;
 		rectangle = new Rectangle(position.x, position.y, width, height);
 	}
 	
+	public Block(Rectangle rectangle) {
+		this.rectangle = rectangle;
+	}
+	
 	public Vector2 getPosition() {
-		return position;
+		return new Vector2(rectangle.x, rectangle.y);
 	}
 	
 	public float getWidth() {
-		return width;
+		return rectangle.width;
 	}
 	
 	public float getHeight() {
-		return height;
+		return rectangle.height;
 	}
 	
 	public Rectangle getRectangle() {
@@ -32,6 +33,4 @@ public class Block {
 	}
 	
 	private Rectangle rectangle;
-	private Vector2 position;
-	private final float width, height;
 }

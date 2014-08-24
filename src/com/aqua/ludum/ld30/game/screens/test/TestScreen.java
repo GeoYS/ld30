@@ -10,9 +10,12 @@ import com.aqua.ludum.ld30.screen.Game;
 import com.aqua.ludum.ld30.screen.GameScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 
 public class TestScreen extends GameScreen{
@@ -22,6 +25,7 @@ public class TestScreen extends GameScreen{
 	private Terrain terrain;
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
+	private ShapeRenderer renderer = new ShapeRenderer();
 	
 	@Override
 	public void render() {
@@ -34,6 +38,11 @@ public class TestScreen extends GameScreen{
 		terrain.render(batch);
 		
 		batch.end();
+		
+		renderer.setColor(Color.CYAN);
+		renderer.begin(ShapeType.Line);
+		renderer.circle(400, 300, 10);
+		renderer.end();
 	}
 
 	@Override
@@ -51,7 +60,7 @@ public class TestScreen extends GameScreen{
 				this.addProcessor(((HumanPlayer) player).getListener());
 			}
 		}
-		System.out.println((new Vector2(1.0f, 1.0f)).equals(new Vector2(1.0f, 1.0f)));
+		System.out.println(Constants.SCREEN_WIDTH + " " + Constants.SCREEN_HEIGHT + " " + Gdx.graphics.getWidth() + " " + Gdx.graphics.getHeight());
 	}
 
 	@Override

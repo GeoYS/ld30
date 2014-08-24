@@ -32,5 +32,29 @@ public class Worker extends Unit {
 	}
 
 	private final float SPEED = 50, RADIUS = 16;
+
+	@Override
+	public float getAttackRadius() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public float getAttackStrength() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public float getMeleeArmour() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public float getRangeArmour() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 }

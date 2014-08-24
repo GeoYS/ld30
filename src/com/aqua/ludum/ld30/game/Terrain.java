@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.aqua.ludum.ld30.Constants;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -35,14 +36,32 @@ public class Terrain {
     	this.players = new ArrayList<>();
     	this.neutralPlayer = new NeutralPlayer("Neutral", this);
     	this.players.add(this.neutralPlayer);
+    	loadBlocks(map);
+	}
+	
+	private void loadBlocks(TiledMap map) {
+		for(int mapLayer = 0; mapLayer < map.getLayers().getCount(); mapLayer ++){
+    		MapLayer mLayer = map.getLayers().get(mapLayer);
+    		if(!mLayer.getName().equals("Blocks")) {
+    			continue;
+    		}
+    		for(int mapObject = 0; mapObject < mLayer.getObjects().getCount(); mapObject ++){
+    			RectangleMapObject mObject = (RectangleMapObject) mLayer.getObjects().get(mapObject);
+    			blocks.add(new Block(mObject.getRectangle()));
+    		}
+    	}
 	}
 	
 	public void render(SpriteBatch batch) {
 		// TODO z-index rendering order
 		// render map
 		batch.end();
+		camera.translate(0, 16);
+		camera.update();
 		mapRenderer.setView(camera);
 		mapRenderer.render();
+		camera.translate(0, -16);
+		camera.update();
 		batch.begin();
 		// render units
 		for(Unit unit : units) {
