@@ -1,5 +1,6 @@
 package com.aqua.ludum.ld30.game;
 
+import com.aqua.ludum.ld30.Constants;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
@@ -22,7 +23,29 @@ public abstract class Unit {
 	}
 	
 	protected final void collisionUpdate(float delta) {
-		
+		if (!currentPath.getPoints().isEmpty()) {
+			for (Unit unit : terrain.getUnits()) {
+				if (unit.currentPath.getPoints().isEmpty() && !unit.shoved) {
+					if (unit.position.dst2(position) <= (unit.radius + radius) * (unit.radius + radius)) {
+						unit.shoved = true;
+						Vector2 displacement = unit.position.cpy().sub(position).nor().scl(unit.radius + radius + Constants.COLLISION_PADDING);
+						unit.position.set(displacement.add(position));
+					}
+				}
+			}
+		}
+		else if (shoved) {
+			shoved = false;
+			for (Unit unit : terrain.getUnits()) {
+				if (unit.currentPath.getPoints().isEmpty() && !unit.shoved) {
+					if (unit.position.dst2(position) <= (unit.radius + radius) * (unit.radius + radius)) {
+						unit.shoved = true;
+						Vector2 displacement = unit.position.cpy().sub(position).nor().scl(unit.radius + radius + Constants.COLLISION_PADDING);
+						unit.position.set(displacement.add(position));
+					}
+				}
+			}
+		}
 	}
 	
 	protected final void pathingUpdate(float delta) {
@@ -100,5 +123,6 @@ public abstract class Unit {
 	private float radius;
 	private Terrain terrain;
 	private Path currentPath;
+	private boolean shoved = false;
 	
 }
