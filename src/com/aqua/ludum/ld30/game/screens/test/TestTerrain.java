@@ -1,12 +1,9 @@
 package com.aqua.ludum.ld30.game.screens.test;
 
-import java.util.List;
-
 import com.aqua.ludum.ld30.Constants;
 import com.aqua.ludum.ld30.game.Block;
 import com.aqua.ludum.ld30.game.HumanPlayer;
 import com.aqua.ludum.ld30.game.Terrain;
-import com.aqua.ludum.ld30.game.Worker;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -20,10 +17,10 @@ public class TestTerrain extends Terrain {
 		super("../LD30/res/LudumDareMap02.tmx", camera);
 		this.getPlayers().add(new HumanPlayer("George", this, camera));
 
-		this.addUnit(new Worker(this.getNeutralPlayer(), new Vector2(0, 0), this));
+		/*this.addUnit(new Worker(this.getNeutralPlayer(), new Vector2(0, 0), this));
 		this.addUnit(new Worker(this.getNeutralPlayer(), new Vector2(64, 0), this));
 		this.addUnit(new Worker(this.getNeutralPlayer(), new Vector2(128, 0), this));
-		this.addUnit(new Worker(this.getNeutralPlayer(), new Vector2(64, 64), this));
+		this.addUnit(new Worker(this.getNeutralPlayer(), new Vector2(64, 64), this));*/
 		
 		/*List<Vector2> neighbors = getNeighbours(new Vector2(0, 0), new Vector2(0, 0));
 		for (Vector2 n : neighbors) {
