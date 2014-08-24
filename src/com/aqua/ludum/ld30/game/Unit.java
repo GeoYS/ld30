@@ -20,6 +20,10 @@ public abstract class Unit {
 	public abstract void render(SpriteBatch batch);
 	public abstract float getSpeed();
 	public abstract float getRadius();
+	public abstract float getAttackRadius();
+	public abstract float getAttackStrength();
+	public abstract float getMeleeArmour();
+	public abstract float getRangeArmour();
 	
 	public void update(float delta) {
 		collisionUpdate(delta);
@@ -116,7 +120,26 @@ public abstract class Unit {
 		}
 	}
 	
+	protected final void attack(float delta) {
+		
+	}
+	
+	protected final int getHP() {
+		return this.hp;
+	}
+	
 	protected final void pathingUpdate(float delta) {
+		if (this.targetUnit != null) {
+			if (this.position.dst2(this.targetUnit.position) > getAttackRadius() * getAttackRadius()) {
+				currentPath = Path.shortestPath(terrain, this.position, this.targetUnit.position);
+				if (currentPath == null) {
+					currentPath = new Path();
+				}
+			}
+			else {
+				attack(delta);
+			}
+		}
 		// path empty
 		if(currentPath.getPoints().isEmpty()) {
 			return;
@@ -136,10 +159,6 @@ public abstract class Unit {
 		}
 	}
 	
-	protected final Vector2 getTargetPosition() {
-		return this.targetPosition;
-	}
-	
 	protected final Unit getTargetUnit() {
 		return this.targetUnit;
 	}
@@ -149,12 +168,19 @@ public abstract class Unit {
 	}
 	
 	public final void commandMove(Vector2 to) {
-		this.targetPosition = to;
 		this.currentPath = Path.shortestPath(terrain, this.position, to);
+		this.targetUnit = null;
+		if (currentPath == null) {
+			currentPath = new Path();
+		}
 	}
 	
 	public final void commandAttack(Unit target) {
 		this.targetUnit = target;
+		this.currentPath = Path.shortestPath(terrain, this.position, target.position);
+		if (currentPath == null) {
+			currentPath = new Path();
+		}
 	}
 	
 	public final Stance getStance() {
@@ -187,12 +213,12 @@ public abstract class Unit {
 	
 	private Player player;
 	private Vector2 position;
-	private Vector2 targetPosition;
 	private Unit targetUnit;
 	private Stance stance;
 	private float radius;
 	private Terrain terrain;
 	private Path currentPath;
+	private int hp;
 	private boolean shoved;
 	
 }
