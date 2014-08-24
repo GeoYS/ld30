@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="isometric" width="32" height="32" tilewidth="64" tileheight="32">
+ <tileset firstgid="1" name="basic tileset" tilewidth="64" tileheight="32">
+  <image source="../res/part4_tileset.png" width="640" height="1024"/>
+ </tileset>
+ <layer name="Visual" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJztwwEJAAAMBKEL8P3zrsdQcNVUVVXV1w+GgDAB
+  </data>
+ </layer>
+ <layer name="Obstruction" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJztltEKgjAUQCc9+HH9Qr0WPVmG+QVFD76vvqEI+oOgH9NgF8dt3rvNaUM6cB6E5lG2uYT404dLwHvJxh0yU1J93S3SBarTxcljTKz9Z8B7+eDz/rYslQuliQ26niX0PSW6zn0ejOhzxNJPk9/2Ab0P+3+vtGEt2nUCHonfV41XJMWt8Y3koPqYh0XflSn2P+s1ZfY2UDn0ue/nK5K+C2P2V+L7/Kf6mUGuf0fqlMx4DP5/oa9VqcyF/XfRtw9ryWWvhOwDofvc+Ru6f+45nmKuhHPFBPf9Ghqf93c9s2PuF6KdJzxfXfNWIgvk0BxGaEyZGnzzRII=
+  </data>
+ </layer>
+</map>

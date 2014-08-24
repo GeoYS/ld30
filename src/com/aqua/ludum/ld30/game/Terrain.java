@@ -27,18 +27,26 @@ public class Terrain {
 		TiledMap map = mapLoader.load(pathToTmx);
 		System.out.println("Finished loading map.");
 		this.mapRenderer = new IsometricTiledMapRenderer((TiledMap) map, 1);
-    	this.mapRenderer.setView(camera);
+    	this.camera = camera;
+    	this.units = new ArrayList<>();
+    	this.blocks = new ArrayList<>();
+    	this.players = new ArrayList<>();
 	}
 	
 	public void render(SpriteBatch batch) {
 		// TODO z-index rendering order
 		// render map
 		batch.end();
+		mapRenderer.setView(camera);
 		mapRenderer.render();
 		batch.begin();
 		// render units
 		for(Unit unit : units) {
 			unit.render(batch);
+		}
+		// render selection box
+		for(Player player : players) {
+			player.render(batch);
 		}
 	}
 	
@@ -48,6 +56,10 @@ public class Terrain {
 	
 	private void sortUnitsByDepth() {
 		
+	}
+	
+	public void addUnit(Unit unit) {
+		this.units.add(unit);
 	}
 	
 	public List<Unit> getUnits() {
@@ -220,5 +232,6 @@ public class Terrain {
 	private List<Player> players;
 	private Player neutralPlayer;
 	
+	private OrthographicCamera camera;
 	private TiledMapRenderer mapRenderer;
 }

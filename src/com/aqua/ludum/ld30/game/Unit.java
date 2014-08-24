@@ -9,6 +9,7 @@ public abstract class Unit {
 	public Unit(Player player, Vector2 position, Terrain terrain) {
 		this.player = player;
 		this.terrain = terrain;
+		this.position = position;
 	}
 	
 	public abstract void render(SpriteBatch batch);
