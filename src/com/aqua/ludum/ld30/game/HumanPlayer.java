@@ -36,11 +36,30 @@ public class HumanPlayer extends Player {
 					selectedUnits = terrain.selectUnits(HumanPlayer.this, worldSelection);
 					currentSelection.setActive(false);
 				}
+				// command units
 				if(isDown[Input.Buttons.RIGHT]) {
 					Vector2 screenPos = new Vector2(screenX - Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 2 - screenY).add(camera.position.x, camera.position.y);
-					for(Unit unit : selectedUnits) {
-						unit.commandMove(Constants.screenToWorld(screenPos, terrain.getTilesHigh()));
+					int layer = 0;
+					int ringPos = 0;
+					for (int i = 0; i < selectedUnits.size(); ++i) {
+						Unit unit = selectedUnits.get(i);
+						if (i == 0) {
+							unit.commandMove(Constants.screenToWorld(screenPos, terrain.getTilesHigh()));
+							layer++;
+							continue;
+						}
+						float degrees = (float) (2 * Math.PI / (6.0 * layer));
+						Vector2 displacement = new Vector2((float) Math.cos(degrees) * layer * 16, (float) Math.sin(degrees) * layer * 16);
+						unit.commandMove(Constants.screenToWorld(screenPos.cpy().add(displacement), terrain.getTilesHigh()));
+						ringPos++;
+						if (ringPos > 6 * layer) {
+							layer++;
+							ringPos = 0;
+						}
 					}
+					/*for(Unit unit : selectedUnits) {
+						unit.commandMove(Constants.screenToWorld(screenPos, terrain.getTilesHigh()));
+					}*/
 				}
 				isDown[button] = false;
 				return true; // touchUp used up
