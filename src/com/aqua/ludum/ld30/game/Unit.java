@@ -32,27 +32,6 @@ public abstract class Unit {
 	
 	protected final void collisionUpdate(float delta) {
 		this.handleWallCollision();
-		if (!currentPath.getPoints().isEmpty() || shoved) {
-			shoved = false;
-			for (Unit unit : terrain.getUnits()) {
-				if (this != unit) {
-					float radii2 = unit.getRadius() + getRadius();
-					radii2 *= radii2;
-					if (unit.position.dst2(position) <= radii2) {
-						unit.shoved = true;
-						Vector2 displacement = unit.position.cpy().sub(position).nor().scl(unit.getRadius() + getRadius() - unit.position.dst(position) + Constants.COLLISION_PADDING).scl(0.5f);
-						unit.position.add(displacement);
-						position.sub(displacement);
-						if (!currentPath.getPoints().isEmpty()) {
-							currentPath = Path.shortestPath(terrain, position, currentPath.getPoints().get(currentPath.getPoints().size() - 1));
-						}
-						if (!unit.currentPath.getPoints().isEmpty()) {
-							unit.currentPath = Path.shortestPath(terrain, unit.position, unit.currentPath.getPoints().get(unit.currentPath.getPoints().size() - 1));
-						}
-					}
-				}
-			}
-		}
 	}
 	
 	private void handleWallCollision() {
@@ -76,6 +55,30 @@ public abstract class Unit {
 			if (point.dst2(position) <= getRadius() * getRadius()) {
 				Vector2 r = position.cpy().sub(point);
 				position.add(r.cpy().nor().scl(getRadius() - r.len() + Constants.COLLISION_PADDING));
+			}
+		}
+	}
+	
+	private void handleUnitCollision() {
+		if (!currentPath.getPoints().isEmpty() || shoved) {
+			shoved = false;
+			for (Unit unit : terrain.getUnits()) {
+				if (this != unit) {
+					float radii2 = unit.getRadius() + getRadius();
+					radii2 *= radii2;
+					if (unit.position.dst2(position) <= radii2) {
+						unit.shoved = true;
+						Vector2 displacement = unit.position.cpy().sub(position).nor().scl(unit.getRadius() + getRadius() - unit.position.dst(position) + Constants.COLLISION_PADDING).scl(0.5f);
+						unit.position.add(displacement);
+						position.sub(displacement);
+						if (!currentPath.getPoints().isEmpty()) {
+							currentPath = Path.shortestPath(terrain, position, currentPath.getPoints().get(currentPath.getPoints().size() - 1));
+						}
+						if (!unit.currentPath.getPoints().isEmpty()) {
+							unit.currentPath = Path.shortestPath(terrain, unit.position, unit.currentPath.getPoints().get(unit.currentPath.getPoints().size() - 1));
+						}
+					}
+				}
 			}
 		}
 	}
