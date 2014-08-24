@@ -13,6 +13,7 @@ public abstract class Unit {
 		this.player = player;
 		this.terrain = terrain;
 		this.position = position;
+		this.currentPath = new Path();
 		this.shoved = false;
 	}
 	
@@ -178,6 +179,10 @@ public abstract class Unit {
 	
 	public final Circle getCollisionShape() {
 		return new Circle(this.position, this.radius);
+	}
+	
+	public Terrain getTerrain() {
+		return terrain;
 	}
 	
 	private Player player;

@@ -16,7 +16,7 @@ public class Constants {
 	 */
 	public static Vector2 worldToScreen(Vector2 point, int worldHeight) {
 		float x = point.x, y = point.y;
-		return (new Vector2(x - y, (x + y) / 2)).add(-worldHeight * 32, -worldHeight * 16);
+		return (new Vector2(x - y, -(x + y) / 2)).add(worldHeight * 32, worldHeight * 16);
 	}
 	
 	/**
@@ -26,8 +26,8 @@ public class Constants {
 	 * @return
 	 */
 	public static Vector2 screenToWorld(Vector2 point, int worldHeight) {
-		float x = point.x, y = point.y;
-		return (new Vector2(y - x / 2, y + x / 2)).add(worldHeight * 32, worldHeight * 16);
+		float nx = point.x / 2 - point.y, ny = worldHeight * 32 - point.x / 2 - point.y;
+		return new Vector2(nx, ny);
 	}
 	
 }

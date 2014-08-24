@@ -1,33 +1,81 @@
 package com.aqua.ludum.ld30.game;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.aqua.ludum.ld30.Constants;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 
 public class HumanPlayer extends Player {
 	
 	public HumanPlayer(String name, final Terrain terrain, final OrthographicCamera camera) {
 		super(name, terrain);
 		this.currentSelection = new Selection();
+		selectedUnits = new ArrayList<>();
+		this.renderer = new ShapeRenderer();
 		inputListener = new InputProcessor() {
+
+			private int lastX, lastY;
+			private boolean[] isDown = new boolean[] {false, false, false};
 			
 			@Override
 			public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 				// select units in selection rectangle
-				currentSelection.setActive(false);
+				if(isDown[Input.Buttons.LEFT]) {
+					Rectangle worldSelection = new Rectangle(currentSelection.getRectangle());
+					float x = worldSelection.x, y = worldSelection.y;
+					worldSelection.setPosition(x + camera.position.x / 2, y + camera.position.y / 2);
+					selectedUnits = terrain.selectUnits(HumanPlayer.this, worldSelection);
+					currentSelection.setActive(false);
+				}
+				if(isDown[Input.Buttons.RIGHT]) {
+					Vector2 screenPos = new Vector2(screenX - Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 2 - screenY).add(camera.position.x, camera.position.y);
+					for(Unit unit : selectedUnits) {
+						unit.commandMove(Constants.screenToWorld(screenPos, terrain.getTilesHigh()));
+					}
+				}
+				isDown[button] = false;
 				return true; // touchUp used up
 			}
 			
 			@Override
 			public boolean touchDragged(int screenX, int screenY, int pointer) {
-				currentSelection.setNewPos(screenX, screenY);
+				if(isDown[Input.Buttons.LEFT]) {
+					currentSelection.setNewPos(new Vector2(screenX, Constants.SCREEN_HEIGHT - screenY));
+					currentSelection.update();
+				}
+				if(isDown[Input.Buttons.MIDDLE]){
+					// update camera
+					camera.translate(-(screenX - lastX), screenY - lastY);
+					camera.update();
+					lastX = screenX;
+					lastY = screenY;
+				}
 				return true; // touchDragged used
 			}
 			
 			@Override
 			public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-				currentSelection.setNewPos(screenX, screenY);
-				currentSelection.setActive(true);
+				isDown[button] = true;
+				if(isDown[Input.Buttons.LEFT]) {
+					currentSelection.setOldPos(new Vector2(screenX, Constants.SCREEN_HEIGHT - screenY));
+					currentSelection.setActive(true);
+				}
+				// camera pos
+				if(isDown[Input.Buttons.MIDDLE]){
+					// update camera
+					lastX = screenX;
+					lastY = screenY;
+				}
 				return true; // touchDown used up
 			}
 			
@@ -43,7 +91,16 @@ public class HumanPlayer extends Player {
 			
 			@Override
 			public boolean keyUp(int keycode) {
-				return false;
+				Vector2 mouseWorldPos = Constants
+						.screenToWorld(
+								mouseToScreen(
+										new Vector2(Gdx.input.getX(), Gdx.input.getY()))
+										.add(camera.position.x, camera.position.y),
+								terrain.getTilesHigh());
+				if(keycode == Input.Keys.X) {
+					terrain.addUnit(new Worker(HumanPlayer.this, mouseWorldPos, terrain));
+				}
+				return true;
 			}
 			
 			@Override
@@ -60,7 +117,21 @@ public class HumanPlayer extends Player {
 	
 	@Override
 	public void update(float delta) {
-		
+	}
+	
+	@Override
+	public void render(SpriteBatch batch) {
+		super.render(batch);
+		batch.end();
+		currentSelection.render();
+		batch.begin();
+		renderer.setColor(Color.GREEN);
+		renderer.begin(ShapeType.Line);
+		for(Unit unit : selectedUnits) {
+			Vector2 screenPos = Constants.worldToScreen(unit.getPosition(), getTerrain().getTilesHigh());
+			renderer.circle(screenPos.x, screenPos.y, unit.getRadius() + 5);
+		}
+		renderer.end();
 	}
 	
 	@Override
@@ -68,41 +139,68 @@ public class HumanPlayer extends Player {
 		return inputListener;
 	}
 	
-	private OrthographicCamera camera;
+	/**
+	 * Weird method.
+	 * @param mousePos
+	 * @return
+	 */
+	private Vector2 mouseToScreen(Vector2 mousePos) {
+		return new Vector2(mousePos.x - Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 2 - mousePos.y);
+	}
+	
+	private List<Unit> selectedUnits;
 	private InputProcessor inputListener;
 	private Selection currentSelection;
+	private ShapeRenderer renderer;
 	
 	private class Selection {
 		
 		private float ox, oy, nx, ny;
 		private Rectangle rectangle;
 		private boolean active;
+		private ShapeRenderer renderer;
 		
 		public Selection() {
 			rectangle = new Rectangle();
+			this.renderer = new ShapeRenderer();
 		}
 		
-		public void setOldPos(float x, float y) {
-			ox = nx = x;
-			oy = ny = y;
+		public void render() {
+			if(!active) {
+				return;
+			}
+			update();
+			this.renderer.setColor(Color.GREEN);
+			this.renderer.begin(ShapeType.Line);
+			this.renderer.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+			this.renderer.end();
 		}
 		
-		public void setNewPos(float nx, float ny) {
-			this.nx = nx;
-			this.ny = ny;
+		public void setOldPos(Vector2 old) {
+			ox = nx = old.x;
+			oy = ny = old.y;
+		}
+		
+		public void setNewPos(Vector2 newPos) {
+			this.nx = newPos.x;
+			this.ny = newPos.y;
 		}
 		
 		public void setActive(boolean isActive) {
 			this.active = isActive;
 		}
 		
-		public Rectangle getRectangle() {
+		public void update() {
 			float x = ox < nx ? ox : nx,
 					y = oy < ny ? oy : ny,
 					width = Math.abs(ox - nx),
 					height = Math.abs(oy - ny);
 			rectangle.setPosition(x, y);
 			rectangle.setSize(width, height);
+		}
+		
+		public Rectangle getRectangle() {
+			update();
 			return rectangle;
 		}
 	}

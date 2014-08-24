@@ -2,21 +2,23 @@ package com.aqua.ludum.ld30.game;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import com.badlogic.gdx.math.Vector2;
 
 public final class Path {
 	
-	private Path() {
+	public Path() {
 		this.points = new ArrayList<>();
 	}
 	
 	public static Path shortestPath(Terrain terrain, Vector2 start, Vector2 goal) {
-		List<Vector2> closedSet = new ArrayList<>();
-		List<Vector2> openSet = new ArrayList<>();
+		Set<Vector2> closedSet = new HashSet<>();
+		Set<Vector2> openSet = new HashSet<>();
 		openSet.add(start);
 		Map<Vector2, Vector2> cameFrom = new HashMap<>();
 		Map<Vector2, Float> gScore = new HashMap<>();
@@ -27,9 +29,11 @@ public final class Path {
 		while (!openSet.isEmpty()) {
 			Vector2 current = null;
 			float lowestFScore = Float.POSITIVE_INFINITY;
-			for (Entry<Vector2, Float> entry : fScore.entrySet()) {
-				if (entry.getValue() < lowestFScore) {
-					current = entry.getKey();
+			for (Vector2 node : openSet) {
+				float f = fScore.get(node);
+				if (f < lowestFScore) {
+					lowestFScore = f;
+					current = node;
 				}
 			}
 			if (current.equals(goal)) {

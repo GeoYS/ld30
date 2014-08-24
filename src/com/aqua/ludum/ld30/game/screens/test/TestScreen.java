@@ -2,14 +2,18 @@ package com.aqua.ludum.ld30.game.screens.test;
 
 import com.aqua.ludum.ld30.Constants;
 import com.aqua.ludum.ld30.Images;
+import com.aqua.ludum.ld30.game.HumanPlayer;
+import com.aqua.ludum.ld30.game.Player;
 import com.aqua.ludum.ld30.game.Terrain;
 import com.aqua.ludum.ld30.game.Worker;
 import com.aqua.ludum.ld30.screen.Game;
 import com.aqua.ludum.ld30.screen.GameScreen;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 
 public class TestScreen extends GameScreen{
 
@@ -18,7 +22,6 @@ public class TestScreen extends GameScreen{
 	private Terrain terrain;
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
-	private int lastX, lastY;
 	
 	@Override
 	public void render() {
@@ -43,24 +46,14 @@ public class TestScreen extends GameScreen{
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
 		terrain = new TestTerrain(camera);
+		for(Player player : terrain.getPlayers()) {
+			if(player instanceof HumanPlayer) {
+				this.addProcessor(((HumanPlayer) player).getListener());
+			}
+		}
+		System.out.println((new Vector2(1.0f, 1.0f)).equals(new Vector2(1.0f, 1.0f)));
 	}
 
-	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		lastX = screenX;
-		lastY = screenY;
-		return super.touchDown(screenX, screenY, pointer, button);
-	}
-	
-	@Override
-	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		camera.translate(-(screenX - lastX), screenY - lastY);
-		camera.update();
-		lastX = screenX;
-		lastY = screenY;
-		return super.touchDragged(screenX, screenY, pointer);
-	}
-	
 	@Override
 	public int getID() {
 		return ID;

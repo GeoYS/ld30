@@ -26,11 +26,15 @@ public class Terrain {
 		System.out.println("Loading map.");
 		TiledMap map = mapLoader.load(pathToTmx);
 		System.out.println("Finished loading map.");
+		this.tilesWide = (int) map.getProperties().get("width");
+		this.tilesHigh = (int) map.getProperties().get("height");
 		this.mapRenderer = new IsometricTiledMapRenderer((TiledMap) map, 1);
     	this.camera = camera;
     	this.units = new ArrayList<>();
     	this.blocks = new ArrayList<>();
     	this.players = new ArrayList<>();
+    	this.neutralPlayer = new NeutralPlayer("Neutral", this);
+    	this.players.add(this.neutralPlayer);
 	}
 	
 	public void render(SpriteBatch batch) {
@@ -51,7 +55,12 @@ public class Terrain {
 	}
 	
 	public void update(float delta) {
-		
+		for(Unit unit : units) {
+			unit.update(delta);
+		}
+		for(Player player : players) {
+			player.update(delta);
+		}
 	}
 	
 	private void sortUnitsByDepth() {
@@ -72,12 +81,16 @@ public class Terrain {
 	
 	public List<Unit> selectUnits(Player player, Rectangle selection) {
 		ArrayList<Unit> selectedUnits = new ArrayList<>();
+		selection.x += camera.position.x - Constants.SCREEN_WIDTH / 2;
+		selection.y += camera.position.y - Constants.SCREEN_HEIGHT / 2;
 		for(Unit unit : this.units) {
 			// check if unit belongs to player
 			if(unit.getPlayer() == player) {
 				// check if unit is in selection
-				if(selection.contains(Constants.worldToScreen(point, worldHeight)))
-				selectedUnits.add(unit);
+				if(selection.contains(Constants.worldToScreen(unit.getPosition(), tilesHigh))) {
+					System.out.println("Unit selected");
+					selectedUnits.add(unit);
+				}
 			}
 		}
 		return selectedUnits;
@@ -236,12 +249,20 @@ public class Terrain {
 		return neutralPlayer;
 	}
 	
+	public int getTilesWide() {
+		return tilesWide;
+	}
+	
+	public int getTilesHigh() {
+		return tilesHigh;
+	}
+	
 	private List<Unit> units;
 	private List<Block> blocks;
 	private List<Player> players;
 	private Player neutralPlayer;
 	
-	private final int worldHeight, worldWidth;
+	private final int tilesWide, tilesHigh;
 	
 	private OrthographicCamera camera;
 	private TiledMapRenderer mapRenderer;
