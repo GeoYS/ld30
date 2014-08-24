@@ -13,6 +13,7 @@ public abstract class Unit {
 		this.player = player;
 		this.terrain = terrain;
 		this.position = position;
+		this.shoved = false;
 	}
 	
 	public abstract void render(SpriteBatch batch);
@@ -180,8 +181,6 @@ public abstract class Unit {
 	}
 	
 	private Player player;
-	private Path path;
-	private boolean pathValid;
 	private Vector2 position;
 	private Vector2 targetPosition;
 	private Unit targetUnit;
@@ -189,6 +188,6 @@ public abstract class Unit {
 	private float radius;
 	private Terrain terrain;
 	private Path currentPath;
-	private boolean shoved = false;
+	private boolean shoved;
 	
 }
