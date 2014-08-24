@@ -33,8 +33,6 @@ public class HumanPlayer extends Player {
 				// select units in selection rectangle
 				if(isDown[Input.Buttons.LEFT]) {
 					Rectangle worldSelection = new Rectangle(currentSelection.getRectangle());
-					float x = worldSelection.x, y = worldSelection.y;
-					//worldSelection.setPosition(x - camera.position.x / 2, y - camera.position.y / 2);
 					selectedUnits = terrain.selectUnits(HumanPlayer.this, worldSelection);
 					currentSelection.setActive(false);
 				}

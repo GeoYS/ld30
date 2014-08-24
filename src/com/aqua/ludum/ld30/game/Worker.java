@@ -2,9 +2,6 @@ package com.aqua.ludum.ld30.game;
 
 import com.aqua.ludum.ld30.Constants;
 import com.aqua.ludum.ld30.Images;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 

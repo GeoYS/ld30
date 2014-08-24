@@ -32,25 +32,23 @@ public abstract class Unit {
 	
 	protected final void collisionUpdate(float delta) {
 		this.handleWallCollision();
-		if (!currentPath.getPoints().isEmpty()) {
-			for (Unit unit : terrain.getUnits()) {
-				if (unit.currentPath.getPoints().isEmpty() && !unit.shoved && this != unit) {
-					if (unit.position.dst2(position) <= (unit.radius + radius) * (unit.radius + radius)) {
-						unit.shoved = true;
-						Vector2 displacement = unit.position.cpy().sub(position).nor().scl(unit.radius + radius + Constants.COLLISION_PADDING);
-						unit.position.set(displacement.add(position));
-					}
-				}
-			}
-		}
-		else if (shoved) {
+		if (!currentPath.getPoints().isEmpty() || shoved) {
 			shoved = false;
 			for (Unit unit : terrain.getUnits()) {
-				if (unit.currentPath.getPoints().isEmpty() && !unit.shoved && this != unit) {
-					if (unit.position.dst2(position) <= (unit.radius + radius) * (unit.radius + radius)) {
+				if (this != unit) {
+					float radii2 = unit.getRadius() + getRadius();
+					radii2 *= radii2;
+					if (unit.position.dst2(position) <= radii2) {
 						unit.shoved = true;
-						Vector2 displacement = unit.position.cpy().sub(position).nor().scl(unit.radius + radius + Constants.COLLISION_PADDING);
-						unit.position.set(displacement.add(position));
+						Vector2 displacement = unit.position.cpy().sub(position).nor().scl(unit.getRadius() + getRadius() - unit.position.dst(position) + Constants.COLLISION_PADDING).scl(0.5f);
+						unit.position.add(displacement);
+						position.sub(displacement);
+						if (!currentPath.getPoints().isEmpty()) {
+							currentPath = Path.shortestPath(terrain, position, currentPath.getPoints().get(currentPath.getPoints().size() - 1));
+						}
+						if (!unit.currentPath.getPoints().isEmpty()) {
+							unit.currentPath = Path.shortestPath(terrain, unit.position, unit.currentPath.getPoints().get(unit.currentPath.getPoints().size() - 1));
+						}
 					}
 				}
 			}
@@ -65,63 +63,19 @@ public abstract class Unit {
 			Vector2 lowerLeft = new Vector2(rect.x, rect.y + rect.height);
 			Vector2 lowerRight = new Vector2(rect.x + rect.width, rect.y + rect.height);
 			Vector2 point = new Vector2();
-			Vector2 direction = null;
 			Intersector.nearestSegmentPoint(upperLeft, upperRight, position, point);
-			if (point.dst2(position) <= radius * radius) {
-				if (Intersector.pointLineSide(lowerLeft, upperLeft, position) == -1) {
-					direction = new Vector2(-1, -1).nor();
-				}
-				else if (Intersector.pointLineSide(lowerRight, upperRight, position) == 1) {
-					direction = new Vector2(1, -1).nor();
-				}
-				else {
-					direction = new Vector2(0, -1);
-				}
-			}
-			if (direction == null) {
+			if (point.dst2(position) > getRadius() * getRadius()) {
 				Intersector.nearestSegmentPoint(upperLeft, lowerLeft, position, point);
-				if (point.dst2(position) <= radius * radius) {
-					if (Intersector.pointLineSide(upperLeft, upperRight, position) == -1) {
-						direction = new Vector2(-1, -1).nor();
-					}
-					else if (Intersector.pointLineSide(lowerLeft, lowerRight, position) == 1) {
-						direction = new Vector2(-1, 1).nor();
-					}
-					else {
-						direction = new Vector2(-1, 0);
-					}
-				}
 			}
-			if (direction == null) {
+			if (point.dst2(position) > getRadius() * getRadius()) {
 				Intersector.nearestSegmentPoint(upperRight, lowerRight, position, point);
-				if (point.dst2(position) <= radius * radius) {
-					if (Intersector.pointLineSide(upperLeft, upperRight, position) == -1) {
-						direction = new Vector2(1, -1).nor();
-					}
-					else if (Intersector.pointLineSide(lowerLeft, lowerRight, position) == 1) {
-						direction = new Vector2(1, 1).nor();
-					}
-					else {
-						direction = new Vector2(1, 0);
-					}
-				}
 			}
-			if (direction == null) {
+			if (point.dst2(position) > getRadius() * getRadius()) {
 				Intersector.nearestSegmentPoint(lowerLeft, lowerRight, position, point);
-				if (point.dst2(position) <= radius * radius) {
-					if (Intersector.pointLineSide(lowerLeft, upperLeft, position) == -1) {
-						direction = new Vector2(-1, 1).nor();
-					}
-					else if (Intersector.pointLineSide(lowerRight, upperRight, position) == 1) {
-						direction = new Vector2(1, 1).nor();
-					}
-					else {
-						direction = new Vector2(0, 1);
-					}
-				}
 			}
-			if(direction != null) {
-				position.add(direction.scl(radius + Constants.COLLISION_PADDING));
+			if (point.dst2(position) <= getRadius() * getRadius()) {
+				Vector2 r = position.cpy().sub(point);
+				position.add(r.cpy().nor().scl(getRadius() - r.len() + Constants.COLLISION_PADDING));
 			}
 		}
 	}
@@ -157,7 +111,7 @@ public abstract class Unit {
 		position.add(deltaPos);
 		// check if next path point reached
 		final float DIST_BUFFER = 1; // unit does not reach precisely at the target
-		final float MIN_DIST_SQUARED = (this.getRadius() + DIST_BUFFER) * (this.getRadius() + DIST_BUFFER); // distance considered "at the next path point"
+		final float MIN_DIST_SQUARED = DIST_BUFFER * DIST_BUFFER; // distance considered "at the next path point"
 		float distSquared = target.dst2(position);
 		if(distSquared <= MIN_DIST_SQUARED) {
 			// update path
@@ -210,7 +164,7 @@ public abstract class Unit {
 	}
 	
 	public final Circle getCollisionShape() {
-		return new Circle(this.position, this.radius);
+		return new Circle(this.position, this.getRadius());
 	}
 	
 	public Terrain getTerrain() {
@@ -221,7 +175,6 @@ public abstract class Unit {
 	private Vector2 position;
 	private Unit targetUnit;
 	private Stance stance;
-	private float radius;
 	private Terrain terrain;
 	private Path currentPath;
 	private int hp;
