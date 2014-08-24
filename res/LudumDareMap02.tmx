@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="isometric" width="32" height="32" tilewidth="64" tileheight="32">
+ <tileset firstgid="1" name="BasicTileset" tilewidth="64" tileheight="32">
+  <image source="../res/part4_tileset.png" width="640" height="1024"/>
+ </tileset>
+ <layer name="Visual" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJztwwEJAAAMBKEL8P3zrsdQcNVUVVXV1w+GgDAB
+  </data>
+ </layer>
+ <layer name="Obstruction" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJzdlkEOwiAQRXHlIWs8g7Y9ghIX7L1F79B4BQ+kJBC/I1hkBmh8yQ8taXnTTEM7q0+mwNw37j9eT5nduN3I+i/P7EiWauD4B+fEpOCf29bQk2iSPclAwsHeb1zovMT6yOjGG4T6Q3VI+2Pr254Y9f7ctfxGvd4JnLfjCSLt7+BYM9fPoQOvhuMz5EpSyo94d2m8H+P9NThGzvG9PzT2l2Rtfk/ML92LnD2FW8ME4e5pXFr6JfZ0Ti96pptbg5Q/l5Z+/68nTWovYvtOrRpK+lNYg79GDSW/3aks1RD6L63JSPLP2F48ANL8Qto=
+  </data>
+ </layer>
+ <layer name="Options" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJztlrEKwCAMRNPJJX/r/0MHKUSpaQeTE7y3acR3AcGIkF2oiS6d7Jer1dQ5s8L9dneV3h2Vw/PbOsKP7H+sq1mvxssQ/f6sBwnaTwghhJwO+i9G+x8y5q4vd9b898ePyjHmieIGNO4EpQ==
+  </data>
+ </layer>
+ <layer name="free hand" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJztlkEKgDAMBPOAPrG/6Pc9iGAgSG2DJrsiHehFCrO0a1RksVj8lY0dAERlBwBQzsX2MzPYHJbW2Vclrxcev2bIoHUyIGnJGUbnpm4RXx+j7+B617P3AjGb6iQD2o/OYf3Mc0Bk8PRJ/W+6N/p3uJut9lkZ7Mtg5vrCd4vljZoPT+8ywh/RJXYHDlgz0vp17SbbEEE=
+  </data>
+ </layer>
+</map>
