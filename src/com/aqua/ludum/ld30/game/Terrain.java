@@ -47,6 +47,8 @@ public class Terrain {
     		}
     		for(int mapObject = 0; mapObject < mLayer.getObjects().getCount(); mapObject ++){
     			RectangleMapObject mObject = (RectangleMapObject) mLayer.getObjects().get(mapObject);
+    			Rectangle block = mObject.getRectangle();
+    			block.y = this.getTilesHigh() * 32 - (block.y + block.height);
     			blocks.add(new Block(mObject.getRectangle()));
     		}
     	}
