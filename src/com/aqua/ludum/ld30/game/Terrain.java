@@ -71,7 +71,16 @@ public class Terrain {
 	}
 	
 	public List<Unit> selectUnits(Player player, Rectangle selection) {
-		return null;
+		ArrayList<Unit> selectedUnits = new ArrayList<>();
+		for(Unit unit : this.units) {
+			// check if unit belongs to player
+			if(unit.getPlayer() == player) {
+				// check if unit is in selection
+				if(selection.contains(Constants.worldToScreen(point, worldHeight)))
+				selectedUnits.add(unit);
+			}
+		}
+		return selectedUnits;
 	}
 	
 	public Unit selectUnit(Vector2 point) {
@@ -231,6 +240,8 @@ public class Terrain {
 	private List<Block> blocks;
 	private List<Player> players;
 	private Player neutralPlayer;
+	
+	private final int worldHeight, worldWidth;
 	
 	private OrthographicCamera camera;
 	private TiledMapRenderer mapRenderer;
