@@ -41,6 +41,7 @@ public class HumanPlayer extends Player {
 					Vector2 screenPos = new Vector2(screenX - Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 2 - screenY).add(camera.position.x, camera.position.y);
 					int layer = 0;
 					int ringPos = 0;
+					
 					for (int i = 0; i < selectedUnits.size(); ++i) {
 						Unit unit = selectedUnits.get(i);
 						if (i == 0) {
@@ -49,7 +50,8 @@ public class HumanPlayer extends Player {
 							continue;
 						}
 						float degrees = (float) (2 * Math.PI / (6.0 * layer));
-						Vector2 displacement = new Vector2((float) Math.cos(degrees) * layer * 16, (float) Math.sin(degrees) * layer * 16);
+						int coprime = layer < Constants.COPRIMES.length ? Constants.COPRIMES[layer] : 1;
+						Vector2 displacement = new Vector2((float) Math.cos(degrees * ringPos * coprime) * layer * 32, (float) Math.sin(degrees * ringPos * coprime) * layer * 32);
 						unit.commandMove(Constants.screenToWorld(screenPos.cpy().add(displacement), terrain.getTilesHigh()));
 						ringPos++;
 						if (ringPos > 6 * layer) {
