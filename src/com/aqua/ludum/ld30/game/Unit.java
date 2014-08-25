@@ -130,20 +130,24 @@ public abstract class Unit {
 		return 0;
 	}
 	
-	public final void commandMove(Vector2 to) {
+	public final boolean commandMove(Vector2 to) {
 		this.currentPath = Path.shortestPath(terrain, this.position, to);
 		this.targetUnit = null;
 		if (currentPath == null) {
 			currentPath = new Path();
+			return false;
 		}
+		return true;
 	}
 	
-	public final void commandAttack(Unit target) {
+	public final boolean commandAttack(Unit target) {
 		this.targetUnit = target;
 		this.currentPath = Path.shortestPath(terrain, this.position, target.position);
 		if (currentPath == null) {
 			currentPath = new Path();
+			return false;
 		}
+		return true;
 	}
 	
 	public final Stance getStance() {

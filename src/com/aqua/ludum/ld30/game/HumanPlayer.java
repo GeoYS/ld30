@@ -50,24 +50,18 @@ public class HumanPlayer extends Player {
 				// command units
 				if(isDown[Input.Buttons.RIGHT]) {
 					Vector2 screenPos = new Vector2(screenX - Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 2 - screenY).add(camera.position.x, camera.position.y);
-					int layer = 0;
-					int ringPos = 0;
-					
+					Formation formation = new Formation(32.0f);
 					for (int i = 0; i < selectedUnits.size(); ++i) {
 						Unit unit = selectedUnits.get(i);
-						if (i == 0) {
-							unit.commandMove(Constants.screenToWorld(screenPos, terrain.getTilesHigh()));
-							layer++;
-							continue;
+						Vector2 next = formation.getNextPosition();
+						if (next == null) {
+							break;
 						}
-						float degrees = (float) (2 * Math.PI / (6.0 * layer));
-						int coprime = layer < Constants.COPRIMES.length ? Constants.COPRIMES[layer] : 1;
-						Vector2 displacement = new Vector2((float) Math.cos(degrees * ringPos * coprime) * layer * 32, (float) Math.sin(degrees * ringPos * coprime) * layer * 32);
-						unit.commandMove(Constants.screenToWorld(screenPos.cpy().add(displacement), terrain.getTilesHigh()));
-						ringPos++;
-						if (ringPos >= 6 * layer) {
-							layer++;
-							ringPos = 0;
+						if (unit.commandMove(Constants.screenToWorld(screenPos, terrain.getTilesHigh()).add(next))) {
+							formation.fillPosition();
+						}
+						else {
+							--i;
 						}
 					}
 					/*for(Unit unit : selectedUnits) {

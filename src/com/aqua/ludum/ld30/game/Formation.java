@@ -9,8 +9,8 @@ import com.badlogic.gdx.math.Vector2;
 public class Formation {
 	
 	public Formation(float spacing) {
-		this.layer = -1;
-		this.ringPos = -1;
+		this.layer = 0;
+		this.ringPos = 0;
 		this.spacing = spacing;
 		this.filled = new HashSet<>();
 		this.emptyLayer = true;
@@ -24,13 +24,15 @@ public class Formation {
 			ringPos = 0;
 			return new Vector2(0.0f, 0.0f);
 		}
+		lastLayer = layer;
+		lastRingPos = ringPos;
 		float angle = (float) (2.0 * Math.PI / (6.0 * layer));
-		int coprime = layer < COPRIMES.length ? COPRIMES[layer] : 1;
+		//int coprime = layer < COPRIMES.length ? COPRIMES[layer] : 1;
 		Vector2 next = new Vector2(
-				spacing * (float) Math.cos(angle * ringPos * coprime) * layer,
-				spacing * (float) Math.sin(angle * ringPos * coprime) * layer);
+				spacing * (float) Math.cos(angle * ringPos) * layer,
+				spacing * (float) Math.sin(angle * ringPos) * layer);
 		boolean success = true;
-		int segment = ringPos / (6 * layer);
+		int segment = ringPos / layer;
 		int localPos = ringPos - segment * layer;
 		if (localPos == 0) {
 			if (!filled.contains(new Pair<Integer, Integer>(layer - 1, segment * (layer - 1)))) {
@@ -45,7 +47,7 @@ public class Formation {
 		}
 		
 		++ringPos;
-		if (ringPos > 6 * layer) {
+		if (ringPos >= 6 * layer) {
 			ringPos = 0;
 			++layer;
 			if (emptyLayer) {
@@ -73,6 +75,6 @@ public class Formation {
 	private int lastRingPos;
 	private final float spacing;
 	private Set<Pair<Integer, Integer>> filled;
-	private static final int[] COPRIMES = new int[] {1, 1, 5, 7, 11, 13, 19};
+	//private static final int[] COPRIMES = new int[] {1, 1, 5, 7, 11, 13, 19};
 	private boolean emptyLayer;
 }
