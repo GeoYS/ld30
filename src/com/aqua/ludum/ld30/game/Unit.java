@@ -131,6 +131,14 @@ public abstract class Unit {
 	}
 	
 	public final boolean commandMove(Vector2 to) {
+		for (Unit unit : terrain.getUnits()) {
+			if (!(unit instanceof Building)) {
+				if (unit.getPosition().dst2(to) <= unit.getRadius() * unit.getRadius()) {
+					currentPath = new Path();
+					return false;
+				}
+			}
+		}
 		this.currentPath = Path.shortestPath(terrain, this.position, to);
 		this.targetUnit = null;
 		if (currentPath == null) {

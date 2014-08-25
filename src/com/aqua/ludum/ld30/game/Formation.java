@@ -35,13 +35,15 @@ public class Formation {
 		int segment = ringPos / layer;
 		int localPos = ringPos - segment * layer;
 		if (localPos == 0) {
-			if (!filled.contains(new Pair<Integer, Integer>(layer - 1, segment * (layer - 1)))) {
+			if (!filled.isEmpty() &&
+					!filled.contains(new Pair<Integer, Integer>(layer - 1, segment * (layer - 1)))) {
 				success = false;
 			}
 		}
 		else {
-			if (!filled.contains(new Pair<Integer, Integer>(layer - 1, segment * (layer - 1) + localPos - 1)) ||
-					!filled.contains(new Pair<Integer, Integer>(layer - 1, segment * (layer - 1) + localPos))) {
+			if (!filled.isEmpty() &&
+					(!filled.contains(new Pair<Integer, Integer>(layer - 1, segment * (layer - 1) + localPos - 1)) ||
+					!filled.contains(new Pair<Integer, Integer>(layer - 1, segment * (layer - 1) + localPos)))) {
 				success = false;
 			}
 		}
@@ -50,7 +52,7 @@ public class Formation {
 		if (ringPos >= 6 * layer) {
 			ringPos = 0;
 			++layer;
-			if (emptyLayer) {
+			if (!filled.isEmpty() && emptyLayer) {
 				return null;
 			}
 			emptyLayer = true;
