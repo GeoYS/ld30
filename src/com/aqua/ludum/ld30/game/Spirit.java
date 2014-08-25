@@ -22,12 +22,6 @@ public class Spirit extends AnimatedUnit {
 	}
 	
 	@Override
-	public void update(float delta) {
-		updateBuildingTarget(delta);
-		super.update(delta);
-	}
-	
-	@Override
 	protected void pathingUpdate(float delta) {
 		if (this.targetBuilding != null) {
 			if (this.targetBuilding.player != player) {
@@ -60,7 +54,7 @@ public class Spirit extends AnimatedUnit {
 	@Override
 	public boolean commandAttack(Unit target) {
 		this.targetBuilding = null;
-		super.commandAttack(target);
+		return super.commandAttack(target);
 	}
 
 	@Override

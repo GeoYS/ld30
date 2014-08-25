@@ -3,7 +3,6 @@ package com.aqua.ludum.ld30.game;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.aqua.ludum.ld30.Constants;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;

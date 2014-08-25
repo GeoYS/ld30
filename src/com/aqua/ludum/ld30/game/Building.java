@@ -1,11 +1,9 @@
 package com.aqua.ludum.ld30.game;
 
-import com.aqua.ludum.ld30.Images;
 import com.aqua.ludum.ld30.util.Stopwatch;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -62,4 +60,5 @@ public abstract class Building extends Unit{
 	private Stopwatch animationTimer;
 	private Texture buildingImage;
 	private final float FRAME_DURATION = 0.3f, TIME_TO_COMPLETION = 3; 
+	public int spiritCount = 0;
 }
