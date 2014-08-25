@@ -28,5 +28,10 @@ public class RangeSpawn extends SpawnBuilding {
 		return 10.0f;
 	}
 
+	@Override
+	public float timeToCompletion() {
+		return 16.0f;
+	}
+
 
 }

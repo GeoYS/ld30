@@ -7,6 +7,8 @@ public class NeutralBuilding extends SpawnBuilding {
 
 	public NeutralBuilding(Player player, Vector2 position, Terrain terrain) {
 		super(player, position, terrain, Images.NEUTRAL_BUILDING);
+		this.spawning = true;
+		this.timeToSpawn = 5.0f;
 	}
 
 	@Override
@@ -34,6 +36,11 @@ public class NeutralBuilding extends SpawnBuilding {
 	@Override
 	public float timeUntilSpawn() {
 		return 60.0f;
+	}
+
+	@Override
+	public float timeToCompletion() {
+		return 0;
 	}
 
 

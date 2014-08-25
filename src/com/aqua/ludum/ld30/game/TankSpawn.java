@@ -28,4 +28,9 @@ public class TankSpawn extends SpawnBuilding {
 		return 0;
 	}
 
+	@Override
+	public float timeToCompletion() {
+		return 20.0f;
+	}
+
 }

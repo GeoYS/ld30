@@ -26,5 +26,10 @@ public class SoldierSpawn extends SpawnBuilding{
 		return 10.0f;
 	}
 
+	@Override
+	public float timeToCompletion() {
+		return 12.0f;
+	}
+
 
 }

@@ -37,7 +37,7 @@ public abstract class SpawnBuilding extends Building {
 	
 	@Override
 	public void update(float delta) {
-		if(animationTimer.time() / 1000f >= TIME_TO_COMPLETION) {
+		if(animationTimer.time() / 1000f >= timeToCompletion()) {
 			isBuilding = false;
 		}
 		if (!isBuilding) {
@@ -77,6 +77,8 @@ public abstract class SpawnBuilding extends Building {
 		return 1000.0f;
 	}
 	
+	public abstract float timeToCompletion();
+	
 	protected abstract void handleKey(int key);
 	
 	private boolean isBuilding;
@@ -84,7 +86,7 @@ public abstract class SpawnBuilding extends Building {
 	private Stopwatch animationTimer;
 	private Texture buildingImage;
 	public float timeToSpawn = 0.0f;
-	private boolean spawning = false;
-	private final float FRAME_DURATION = 1.5f, TIME_TO_COMPLETION = 3; 
+	protected boolean spawning = false;
+	private float FRAME_DURATION = timeToCompletion() / 2;
 	public int spiritCount = 0;
 }

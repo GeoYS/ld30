@@ -27,4 +27,9 @@ public class FastSpawn extends SpawnBuilding{
 		return 10.0f;
 	}
 
+	@Override
+	public float timeToCompletion() {
+		return 10.0f;
+	}
+
 }

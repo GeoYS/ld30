@@ -43,6 +43,7 @@ public abstract class Player {
 			}
 		}
 		Formation formation = new Formation(32.0f);
+		int failsafe = units.size() * 5;
 		for (int i = 0; i < units.size(); ++i) {
 			Unit unit = units.get(i);
 			Vector2 next = formation.getNextPosition();
@@ -54,6 +55,10 @@ public abstract class Player {
 			}
 			else {
 				--i;
+				--failsafe;
+				if (failsafe <= 0) {
+					break;
+				}
 			}
 		}
 	}
