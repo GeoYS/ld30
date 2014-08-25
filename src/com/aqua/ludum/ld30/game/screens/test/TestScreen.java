@@ -6,12 +6,14 @@ import com.aqua.ludum.ld30.game.ComputerPlayer;
 import com.aqua.ludum.ld30.game.HumanPlayer;
 import com.aqua.ludum.ld30.game.Player;
 import com.aqua.ludum.ld30.game.Terrain;
+import com.aqua.ludum.ld30.game.Worker;
 import com.aqua.ludum.ld30.screen.Game;
 import com.aqua.ludum.ld30.screen.GameScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 
 public class TestScreen extends GameScreen{
 
@@ -30,8 +32,6 @@ public class TestScreen extends GameScreen{
 		Gdx.gl20.glClearColor(0,0,0,0);
 		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		terrain.render(batch);
-		batch.draw(Images.WORKER_LEFTUP, 100, 100);
-		batch.draw(Images.WORKER_DOWNRIGHT, 400, 400);
 		
 		batch.end();
 	}
@@ -56,6 +56,10 @@ public class TestScreen extends GameScreen{
 				this.addProcessor(((HumanPlayer) player).getListener());
 			}
 		}
+		terrain.addUnit(new Worker(computer, new Vector2(0, 0), terrain));
+		terrain.addUnit(new Worker(computer, new Vector2(20, 0), terrain));
+		terrain.addUnit(new Worker(computer, new Vector2(40, 0), terrain));
+		terrain.addUnit(new Worker(computer, new Vector2(60, 0), terrain));
 	}
 
 	@Override

@@ -37,7 +37,6 @@ public class Spirit extends AnimatedUnit {
 	
 	@Override
 	protected void pathingUpdate(float delta) {
-		System.out.println("HP" + hp);
 		if (this.targetBuilding != null) {
 			if (this.targetBuilding.player != player) {
 				this.targetBuilding = null;

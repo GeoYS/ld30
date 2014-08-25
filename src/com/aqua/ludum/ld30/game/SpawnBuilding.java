@@ -16,7 +16,7 @@ public abstract class SpawnBuilding extends Building {
 		super(player, position, terrain);
 		this.buildingImage = buildingImage;
 		isBuilding = true;
-		buildingAnimation = new Animation(FRAME_DURATION, Images.WORKER_SPRITESHEET.getRightFrames());
+		buildingAnimation = new Animation(FRAME_DURATION, Images.BUILDING.getFrames());
 		buildingAnimation.setPlayMode(PlayMode.LOOP_PINGPONG);
 		animationTimer = new Stopwatch();
 		animationTimer.start();

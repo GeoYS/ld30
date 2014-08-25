@@ -11,7 +11,7 @@ public class ComputerPlayer extends Player {
 	@Override
 	public void update(float delta) {
 		super.update(delta);
-		this.getSelectedUnits().clear();
+		/*this.getSelectedUnits().clear();
 		for(Unit unit : getTerrain().getUnits()) {
 			if(unit.getPlayer() == this) {
 				if(!isUnitMoving(unit)) {
@@ -22,7 +22,7 @@ public class ComputerPlayer extends Player {
 		float x, y;
 		x = (float) (Math.random() * getTerrain().getWidth());
 		y = (float) (Math.random() * getTerrain().getHeight());
-		this.moveSelectedUnits(new Vector2(x, y));
+		this.moveSelectedUnits(new Vector2(x, y));*/
 	}
 	
 	private boolean isUnitMoving(Unit unit) {

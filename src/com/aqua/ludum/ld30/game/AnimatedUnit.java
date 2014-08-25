@@ -13,6 +13,7 @@ public abstract class AnimatedUnit extends Unit{
 		oldPos = new Vector2();
 		animationTimer = new Stopwatch();
 		this.setMoveSheet(moveSheet);
+		this.setAttackSheet(attackSheet);
 	}
 
 	@Override
@@ -23,11 +24,26 @@ public abstract class AnimatedUnit extends Unit{
 	
 	@Override
 	public void render(SpriteBatch batch) {
+		if(current == aup || current == adown || current == aleft || current == aright) {
+			if(animationTimer.time() / 1000f < FRAME_DURATION * 6) {
+				int keyFrame;
+				if(animationTimer.isRunning()) {
+					keyFrame = current.getKeyFrameIndex(animationTimer.time() / 1000f); // StopWatch is in milliseconds!
+				}
+				else {
+					// MIDDLE FRAME (OUT OF 3) IS THE STANDING FRAME
+					keyFrame = 1;
+				}
+				Vector2 screenPos = this.getScreenPosition();
+				batch.draw(current.getKeyFrames()[keyFrame], screenPos.x - current.getKeyFrames()[0].getRegionWidth() / 2, screenPos.y);
+				return;
+			}
+		}
 		Vector2 deltaPos = this.getPosition().cpy().sub(oldPos);
 		
 		// is the unit moving?
 		if(animationTimer.isRunning()) {
-			if(deltaPos.x == 0 && deltaPos.y == 0) {
+			if(deltaPos.x == 0 && deltaPos.y == 0 && !isAttacking()) {
 				animationTimer.stop();
 				animationTimer.reset();
 			}
@@ -39,6 +55,9 @@ public abstract class AnimatedUnit extends Unit{
 		}
 		
 		// which direction is the unit going?
+		if(isAttacking()) {
+			System.out.println("is attacking " + this.isAttacking());
+		}
 		float dx = deltaPos.x, dy = deltaPos.y;
 		if((dx < 0 && dy < 0)) {
 			current = this.isAttacking() ? aup : up;
@@ -49,8 +68,38 @@ public abstract class AnimatedUnit extends Unit{
 		else if((dx < 0 && dy > 0) || (dx == 0 && dy > 0) || (dx == 0 && dy < 0)) {
 			current = this.isAttacking() ? aleft : left;
 		}
-		else if((dx > 0 && dy < 0) || (dy == 0 && dx > 0) || (dy == 0 && dx < 0)) {
+		else if((dx > 0 && dy < 0) || (dy == 0 && dx > 0) || (dy == 0 && dx < 0)){
 			current = this.isAttacking() ? aright : right;
+		}
+		else {
+			if(isAttacking()) {
+				if(current == up) {
+					current = aup;
+				}
+				else if(current == down) {
+					current = adown;
+				}
+				else if(current == left) {
+					current = aleft;
+				}
+				else if(current == right) {
+					current = aright;
+				}
+			}
+			else {
+				if(current == aup) {
+					current = up;
+				}
+				else if(current == adown) {
+					current = down;
+				}
+				else if(current == aleft) {
+					current = left;
+				}
+				else if(current == aright) {
+					current = right;
+				}
+			}
 		}
 		
 		int keyFrame;

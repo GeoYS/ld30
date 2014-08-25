@@ -16,25 +16,25 @@ public class UnitSpritesheet {
 		if(!isAttack) {
 			final int FRAMES_WIDE = 3, FRAMES_HIGH = 2;
 			int regionWidth = leftUp.getWidth() / FRAMES_WIDE, regionHeight = leftUp.getHeight() / FRAMES_HIGH;
-			left = new TextureRegion[FRAMES_WIDE];
+			left = new TextureRegion[3];
 			for(int i = 0; i < FRAMES_WIDE; i ++) {
 				left[i] = new TextureRegion();
 				left[i].setTexture(leftUp);
 				left[i].setRegion(i * regionWidth, 0, regionWidth, regionHeight);
 			}
-			up = new TextureRegion[FRAMES_WIDE];
+			up = new TextureRegion[3];
 			for(int i = 0; i < FRAMES_WIDE; i ++) {
 				up[i] = new TextureRegion();
 				up[i].setTexture(leftUp);
 				up[i].setRegion(i * regionWidth, regionHeight, regionWidth, regionHeight);
 			}
-			down = new TextureRegion[FRAMES_WIDE];
+			down = new TextureRegion[3];
 			for(int i = 0; i < FRAMES_WIDE; i ++) {
 				down[i] = new TextureRegion();
 				down[i].setTexture(downRight);
 				down[i].setRegion(i * regionWidth, 0, regionWidth, regionHeight);
 			}
-			right = new TextureRegion[FRAMES_WIDE];
+			right = new TextureRegion[3];
 			for(int i = 0; i < FRAMES_WIDE; i ++) {
 				right[i] = new TextureRegion();
 				right[i].setTexture(downRight);
@@ -44,26 +44,26 @@ public class UnitSpritesheet {
 		else {
 			final int FRAMES_WIDE = 2, FRAMES_HIGH = 3;
 			int regionWidth = leftUp.getWidth() / FRAMES_WIDE, regionHeight = leftUp.getHeight() / FRAMES_HIGH;
-			right = new TextureRegion[FRAMES_WIDE];
-			for(int i = 0; i < FRAMES_HIGH; i ++) {
+			right = new TextureRegion[3];
+			for(int i = 0; i < 3; i ++) {
 				right[i] = new TextureRegion();
 				right[i].setTexture(leftUp);
 				right[i].setRegion(0, i * regionHeight, regionWidth, regionHeight);
 			}
-			left = new TextureRegion[FRAMES_WIDE];
-			for(int i = 0; i < FRAMES_WIDE; i ++) {
+			left = new TextureRegion[3];
+			for(int i = 0; i < 3; i ++) {
 				left[i] = new TextureRegion();
 				left[i].setTexture(leftUp);
 				left[i].setRegion(regionWidth, i * regionHeight, regionWidth, regionHeight);
 			}
-			down = new TextureRegion[FRAMES_WIDE];
-			for(int i = 0; i < FRAMES_WIDE; i ++) {
+			down = new TextureRegion[3];
+			for(int i = 0; i < 3; i ++) {
 				down[i] = new TextureRegion();
 				down[i].setTexture(downRight);
 				down[i].setRegion(0, i * regionHeight, regionWidth, regionHeight);
 			}
-			up = new TextureRegion[FRAMES_WIDE];
-			for(int i = 0; i < FRAMES_WIDE; i ++) {
+			up = new TextureRegion[3];
+			for(int i = 0; i < 3; i ++) {
 				up[i] = new TextureRegion();
 				up[i].setTexture(downRight);
 				up[i].setRegion(regionWidth,  i * regionHeight, regionWidth, regionHeight);
