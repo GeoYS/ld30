@@ -28,7 +28,7 @@ public class Spirit extends AnimatedUnit {
 				this.targetBuilding = null;
 			}
 			else if (this.position.dst2(this.targetBuilding.position) > (targetBuilding.getRadius() + getRadius()) * (targetBuilding.getAttackRadius() + getRadius())) {
-				move(new Vector2(1.0f, 1.0f).nor().scl(targetUnit.getRadius() + Constants.PATHFINDING_CORNER_PADDING).add(targetBuilding.position));
+				move(new Vector2(1.0f, 1.0f).nor().scl(targetBuilding.getRadius() + Constants.PATHFINDING_CORNER_PADDING).add(targetBuilding.position));
 			}
 			else {
 				stopMove();

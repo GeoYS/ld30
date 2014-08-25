@@ -26,6 +26,7 @@ public class Terrain {
 		TmxMapLoader mapLoader = new TmxMapLoader();
 		System.out.println("Loading map.");
 		TiledMap map = mapLoader.load(pathToTmx);
+		spawnUnits = new ArrayList<>();
 		System.out.println("Finished loading map.");
 		this.tilesWide = (int) map.getProperties().get("width");
 		this.tilesHigh = (int) map.getProperties().get("height");
@@ -76,6 +77,8 @@ public class Terrain {
 	}
 	
 	public void update(float delta) {
+		units.addAll(spawnUnits);
+		spawnUnits.clear();
 		for(Unit unit : units) {
 			unit.update(delta);
 		}
@@ -102,6 +105,10 @@ public class Terrain {
 				}
 			}
 		}
+	}
+	
+	public void spawnUnit(Unit unit) {
+		spawnUnits.add(unit);
 	}
 	
 	private void sortUnitsByDepth() {
@@ -309,6 +316,7 @@ public class Terrain {
 	}
 	
 	private List<Unit> units;
+	private List<Unit> spawnUnits;
 	private List<Block> blocks;
 	private List<Player> players;
 	private Player neutralPlayer;

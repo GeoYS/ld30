@@ -19,6 +19,7 @@ public class FastSpawn extends SpawnBuilding{
 	@Override
 	public void spawn() {
 		super.spawn();
+		terrain.spawnUnit(new Fast(player, new Vector2(0.0f, this.getRadius() + 32.0f).add(position), terrain));
 	}
 
 	@Override
