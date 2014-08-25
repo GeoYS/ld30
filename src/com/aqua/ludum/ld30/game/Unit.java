@@ -182,6 +182,10 @@ public abstract class Unit {
 		return new Circle(this.position, this.getRadius());
 	}
 	
+	public Path getCurrentPath() {
+		return currentPath;
+	}
+	
 	public Terrain getTerrain() {
 		return terrain;
 	}

@@ -154,8 +154,15 @@ public class HumanPlayer extends Player {
 		renderer.setProjectionMatrix(camera.combined);
 		renderer.begin(ShapeType.Line);
 		for(Unit unit : selectedUnits) {
+			// draw selection circle
 			Vector2 screenPos = Constants.worldToScreen(unit.getPosition(), getTerrain().getTilesHigh());
 			renderer.ellipse(screenPos.x - unit.getRadius(), screenPos.y - unit.getRadius() / 2, unit.getRadius() * 2, unit.getRadius());
+			// draw target points
+			List<Vector2> pathPoints = unit.getCurrentPath().getPoints();
+			if(!pathPoints.isEmpty()) {
+				Vector2 targetPos = Constants.worldToScreen(pathPoints.get(pathPoints.size() - 1), getTerrain().getTilesHigh());
+				renderer.circle(targetPos.x, targetPos.y, 2);
+			}
 		}
 		renderer.end();
 	}
