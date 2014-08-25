@@ -35,7 +35,7 @@ public class Terrain {
     	this.units = new ArrayList<>();
     	this.blocks = new ArrayList<>();
     	this.players = new ArrayList<>();
-    	this.neutralPlayer = new NeutralPlayer("Neutral", this);
+    	this.neutralPlayer = new NeutralPlayer("Neutral");
     	this.humanPlayer = human;
     	this.computerPlayer = computer;
     	this.players.add(this.neutralPlayer);
@@ -70,7 +70,13 @@ public class Terrain {
     			}
     		}
     		else if (mLayer.getName().equals("Neutral")) {
-    			
+    			for (int mapObject = 0; mapObject < mLayer.getObjects().getCount(); mapObject++) {
+    				RectangleMapObject mObject = (RectangleMapObject) mLayer.getObjects().get(mapObject);
+    				Vector2 position = new Vector2();
+    				position.x = mObject.getRectangle().x;
+    				position.y = getTilesHigh() * 32 - (mObject.getRectangle().y + mObject.getRectangle().height);
+    				units.add(new NeutralBuilding(players.get(0), position, this));
+    			}
     		}
     	}
 	}
