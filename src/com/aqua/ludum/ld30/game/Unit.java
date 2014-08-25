@@ -36,17 +36,19 @@ public abstract class Unit {
 		stanceUpdate(delta);
 		collisionUpdate(delta);
 		pathingUpdate(delta);
-		hp += delta * 1;
-		shp += delta * 10;
-		if (hp > getStartHP()) {
-			hp = getStartHP();
-		}
-		if (shp > getStartSHP()) {
-			shp = getStartSHP();
+		if (hp > 0) {
+			hp += delta * 1;
+			shp += delta * 10;
+			if (hp > getStartHP()) {
+				hp = getStartHP();
+			}
+			if (shp > getStartSHP()) {
+				shp = getStartSHP();
+			}
 		}
 	}
 	
-	protected final void collisionUpdate(float delta) {
+	protected void collisionUpdate(float delta) {
 		this.handleWallCollision();
 	}
 	
@@ -203,7 +205,7 @@ public abstract class Unit {
 	}
 	
 	protected boolean move(Vector2 to, List<Unit> ignore) {
-		for (Unit unit : terrain.getUnits()) {
+		/*for (Unit unit : terrain.getUnits()) {
 			if (ignore.contains(unit) || unit == this || unit.getPlayer() != getPlayer()) {
 				continue;
 			}
@@ -219,8 +221,8 @@ public abstract class Unit {
 					currentPath = new Path();
 					return false;
 				}
-			}*/
-		}
+			}
+		}*/
 		
 		this.currentPath = Path.shortestPath(terrain, this.position, to);
 		if (currentPath == null) {

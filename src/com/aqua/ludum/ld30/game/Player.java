@@ -22,17 +22,31 @@ public abstract class Player {
 	public void render(SpriteBatch batch) {
 	}
 	
-	public abstract void update(float delta);
+	public void update(float delta) {
+		List<Unit> units = this.getSelectedUnits();
+		for (int i = 0; i < units.size(); ++i) {
+			if (units.get(i).getHP() < 0) {
+				units.remove(i);
+				--i;
+			}
+		}
+	}
 	
 	protected void moveSelectedUnits(Vector2 position) {
+		List<Unit> units = new ArrayList<>();
+		for(Unit unit : getSelectedUnits()) {
+			if(!(unit instanceof Building)) {
+				units.add(unit);
+			}
+		}
 		Formation formation = new Formation(32.0f);
-		for (int i = 0; i < getSelectedUnits().size(); ++i) {
-			Unit unit = getSelectedUnits().get(i);
+		for (int i = 0; i < units.size(); ++i) {
+			Unit unit = units.get(i);
 			Vector2 next = formation.getNextPosition();
 			if (next == null) {
 				break;
 			}
-			if (unit.commandMove(position.cpy().add(next), getSelectedUnits())) {
+			if (unit.commandMove(position.cpy().add(next), units)) {
 				formation.fillPosition();
 			}
 			else {
@@ -44,6 +58,14 @@ public abstract class Player {
 	protected void attackWithSelectedUnits(Unit target) {
 		for (Unit unit : this.selectedUnits) {
 			unit.commandAttack(target);
+		}
+	}
+	
+	protected void enterBuildingWithSelectedUnits(SpawnBuilding target) {
+		for (Unit unit : this.selectedUnits) {
+			if(unit instanceof Spirit) {
+				((Spirit) unit).commandTargetBuilding(target);
+			}
 		}
 	}
 	

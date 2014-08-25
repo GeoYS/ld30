@@ -1,5 +1,7 @@
 package com.aqua.ludum.ld30.game;
 
+import java.util.List;
+
 import com.aqua.ludum.ld30.Constants;
 import com.aqua.ludum.ld30.Images;
 import com.badlogic.gdx.math.Vector2;
@@ -22,12 +24,25 @@ public class Spirit extends AnimatedUnit {
 	}
 	
 	@Override
+	protected void collisionUpdate(float delta) {
+		
+	}
+	
+	@Override
+	protected boolean move(Vector2 to, List<Unit> ignore) {
+		this.currentPath = new Path();
+		currentPath.getPoints().add(to);
+		return true;
+	}
+	
+	@Override
 	protected void pathingUpdate(float delta) {
+		System.out.println("HP" + hp);
 		if (this.targetBuilding != null) {
 			if (this.targetBuilding.player != player) {
 				this.targetBuilding = null;
 			}
-			else if (this.position.dst2(this.targetBuilding.position) > (targetBuilding.getRadius() + getRadius()) * (targetBuilding.getAttackRadius() + getRadius())) {
+			else if (this.position.dst2(this.targetBuilding.position) > (targetBuilding.getRadius() + getRadius() + 64.0f) * (targetBuilding.getAttackRadius() + getRadius() + 64.0f)) {
 				move(new Vector2(1.0f, 1.0f).nor().scl(targetBuilding.getRadius() + Constants.PATHFINDING_CORNER_PADDING).add(targetBuilding.position));
 			}
 			else {

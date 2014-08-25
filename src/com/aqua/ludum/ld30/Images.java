@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 public class Images {
 	
 	// buildings
-	public static final Texture RANGED_TENT, NEUTRAL_BUILDING = null, SOLDIER_TENT, TANK_TENT, FAST_TENT, TEMPLE = null;
+	public static final Texture RANGED_TENT, NEUTRAL_BUILDING, SOLDIER_TENT, TANK_TENT, FAST_TENT, TEMPLE;
 
 	// units
 	public static final Texture WORKER_LEFTUP, WORKER_DOWNRIGHT, SOLDIER_LEFTUP, SOLDIER_DOWNRIGHT,
@@ -20,11 +20,11 @@ public class Images {
 	static {
 		// buildings
 		RANGED_TENT = new Texture(new Pixmap(Gdx.files.internal("../LD30/res/units/ranged_tent_sprite.png")));
-		//NEUTRAL_BUILDING = new Texture(new Pixmap(Gdx.files.internal("../LD30/res/units/igloo.png")));
+		NEUTRAL_BUILDING = new Texture(new Pixmap(Gdx.files.internal("../LD30/res/units/neutral_tent_sprite.png")));
 		SOLDIER_TENT = new Texture(new Pixmap(Gdx.files.internal("../LD30/res/units/soldier_tent_sprite.png")));
 		FAST_TENT = new Texture(new Pixmap(Gdx.files.internal("../LD30/res/units/fast_tent_sprite.png")));
 		TANK_TENT = new Texture(new Pixmap(Gdx.files.internal("../LD30/res/units/tank_tent_sprite.png")));
-		//TEMPLE = new Texture(new Pixmap(Gdx.files.internal("../LD30/res/units/temple.png")));
+		TEMPLE = new Texture(new Pixmap(Gdx.files.internal("../LD30/res/units/neutral_tent_sprite.png")));
 		
 		// units
 		WORKER_LEFTUP = new Texture(new Pixmap(Gdx.files.internal("../LD30/res/units/worker_sprite_2.png")));

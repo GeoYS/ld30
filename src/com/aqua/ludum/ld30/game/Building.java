@@ -7,7 +7,10 @@ public abstract class Building extends Unit{
 
 	public Building(Player player, Vector2 position, Terrain terrain) {
 		super(player, position, terrain);
-		this.rectangle = new Rectangle(position.x, position.y, this.getRadius() * 2, this.getRadius() * 2);
+		this.rectangle = new Rectangle(position.x - 32,
+				position.y - 32,
+				64,
+				64);
 	}
 	
 	@Override
@@ -21,7 +24,7 @@ public abstract class Building extends Unit{
 
 	@Override
 	public float getRadius() {
-		return 0;
+		return rectangle.width / 2;
 	}
 
 	@Override

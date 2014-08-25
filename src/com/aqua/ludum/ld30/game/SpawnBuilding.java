@@ -1,9 +1,12 @@
 package com.aqua.ludum.ld30.game;
 
+import com.aqua.ludum.ld30.Images;
 import com.aqua.ludum.ld30.util.Stopwatch;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -13,16 +16,19 @@ public abstract class SpawnBuilding extends Building {
 		super(player, position, terrain);
 		this.buildingImage = buildingImage;
 		isBuilding = true;
-		//buildingAnimation = new Animation(FRAME_DURATION, null);
-		//buildingAnimation.setPlayMode(PlayMode.LOOP_PINGPONG);
+		buildingAnimation = new Animation(FRAME_DURATION, Images.WORKER_SPRITESHEET.getRightFrames());
+		buildingAnimation.setPlayMode(PlayMode.LOOP_PINGPONG);
 		animationTimer = new Stopwatch();
 		animationTimer.start();
+		this.spiritCount = 1;
 	}
 	
 	@Override
 	public final void render(SpriteBatch batch) {
 		if(isBuilding) {
-			buildingAnimation.getKeyFrame(animationTimer.time() / 1000f);
+			Vector2 screenPos = this.getScreenPosition();
+			TextureRegion frame = buildingAnimation.getKeyFrame(animationTimer.time() / 1000f);
+			batch.draw(buildingAnimation.getKeyFrame(animationTimer.time() / 1000f), screenPos.x - frame.getRegionWidth() / 2, screenPos.y);
 		}
 		else {
 			renderBuilding(batch);
@@ -57,7 +63,7 @@ public abstract class SpawnBuilding extends Building {
 	
 	public final void renderBuilding(SpriteBatch batch) {
 		Vector2 screenPos = this.getScreenPosition();
-		batch.draw(buildingImage, screenPos.x - buildingImage.getWidth() / 2, screenPos.y - buildingImage.getHeight() / 2);
+		batch.draw(buildingImage, screenPos.x - buildingImage.getWidth() / 2, screenPos.y - buildingImage.getHeight() / 2 + 16);
 	}
 	
 	public void handleKeyDown(int key) {
@@ -77,8 +83,8 @@ public abstract class SpawnBuilding extends Building {
 	private Animation buildingAnimation;
 	private Stopwatch animationTimer;
 	private Texture buildingImage;
-	private float timeToSpawn = 0.0f;
+	public float timeToSpawn = 0.0f;
 	private boolean spawning = false;
-	private final float FRAME_DURATION = 0.3f, TIME_TO_COMPLETION = 3; 
+	private final float FRAME_DURATION = 1.5f, TIME_TO_COMPLETION = 3; 
 	public int spiritCount = 0;
 }

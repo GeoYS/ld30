@@ -62,6 +62,15 @@ public class HumanPlayer extends Player {
 							}
 						}
 					}
+					// enter building
+					for(Unit unit : terrain.getUnits()) {
+						if(unit instanceof SpawnBuilding) {
+							if(unit.getCollisionShape().contains(mouseWorld)){
+								HumanPlayer.this.enterBuildingWithSelectedUnits((SpawnBuilding) unit);
+								break;
+							}
+						}
+					}
 				}
 				isDown[button] = false;
 				return true; // touchUp used up
@@ -69,7 +78,6 @@ public class HumanPlayer extends Player {
 			
 			@Override
 			public boolean touchDragged(int screenX, int screenY, int pointer) {
-				System.out.println("dragged");
 				if(isDown[Input.Buttons.LEFT]) {
 					currentSelection.setNewPos(new Vector2(screenX, Constants.SCREEN_HEIGHT - screenY));
 					currentSelection.update();
@@ -165,10 +173,6 @@ public class HumanPlayer extends Player {
 	}
 	
 	@Override
-	public void update(float delta) {
-	}
-	
-	@Override
 	public void render(SpriteBatch batch) {
 		super.render(batch);
 		batch.end();
@@ -227,6 +231,17 @@ public class HumanPlayer extends Player {
 				unit.getScreenPosition().y - 14,
 				unit.getSHP() / unit.getStartSHP() * MAX_HEALTH_WIDTH,
 				2);
+		if(unit instanceof SpawnBuilding) {
+			SpawnBuilding spawnBuilding = (SpawnBuilding) unit;
+			if(spawnBuilding.spiritCount > 0) {
+				float percentage = 1 - spawnBuilding.timeToSpawn / spawnBuilding.timeUntilSpawn();
+				renderer.setColor(Color.PINK);
+				renderer.rect(unit.getScreenPosition().x - MAX_HEALTH_WIDTH / 2,
+						unit.getScreenPosition().y - 18,
+						percentage * MAX_HEALTH_WIDTH,
+						2);
+			}
+		}
 	}
 	
 	@Override

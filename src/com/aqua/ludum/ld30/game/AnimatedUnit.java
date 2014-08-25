@@ -8,11 +8,11 @@ import com.badlogic.gdx.math.Vector2;
 
 public abstract class AnimatedUnit extends Unit{
 
-	public AnimatedUnit(Player player, Vector2 position, Terrain terrain, UnitSpritesheet spritesheet) {
+	public AnimatedUnit(Player player, Vector2 position, Terrain terrain, UnitSpritesheet moveSheet, UnitSpritesheet attackSheet) {
 		super(player, position, terrain);
 		oldPos = new Vector2();
 		animationTimer = new Stopwatch();
-		this.setUnitSpriteSheet(spritesheet);
+		this.setMoveSheet(moveSheet);
 	}
 
 	@Override
@@ -65,7 +65,7 @@ public abstract class AnimatedUnit extends Unit{
 		batch.draw(current.getKeyFrames()[keyFrame], screenPos.x - current.getKeyFrames()[0].getRegionWidth() / 2, screenPos.y);
 	}
 	
-	public void setUnitSpriteSheet(UnitSpritesheet spritesheet) {
+	public void setMoveSheet(UnitSpritesheet spritesheet) {
 		up = new Animation(FRAME_DURATION, spritesheet.getUpFrames());
 		up.setPlayMode(PlayMode.LOOP_PINGPONG); // DON'T FORGET TO SET THE PLAY MODE!!!
 		down = new Animation(FRAME_DURATION, spritesheet.getDownFrames());
@@ -77,7 +77,18 @@ public abstract class AnimatedUnit extends Unit{
 		current = down;
 	}
 	
-	private Animation up, down, left, right, current;
+	public void setAttackSheet(UnitSpritesheet spritesheet) {
+		aup = new Animation(FRAME_DURATION, spritesheet.getUpFrames());
+		aup.setPlayMode(PlayMode.LOOP_PINGPONG); // DON'T FORGET TO SET THE PLAY MODE!!!
+		adown = new Animation(FRAME_DURATION, spritesheet.getDownFrames());
+		adown.setPlayMode(PlayMode.LOOP_PINGPONG);
+		aleft = new Animation(FRAME_DURATION, spritesheet.getLeftFrames());
+		aleft.setPlayMode(PlayMode.LOOP_PINGPONG);
+		aright = new Animation(FRAME_DURATION, spritesheet.getRightFrames());
+		aright.setPlayMode(PlayMode.LOOP_PINGPONG);
+	}
+	
+	private Animation up, down, left, right, aup, adown, aleft, aright, current;
 	private Vector2 oldPos;
 	private Stopwatch animationTimer;
 	private final float FRAME_DURATION = 0.2f; // in seconds

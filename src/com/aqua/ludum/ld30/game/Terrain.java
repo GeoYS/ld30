@@ -88,21 +88,14 @@ public class Terrain {
 		for (int i = 0; i < units.size(); ++i) {
 			if (units.get(i).getHP() < 0) {
 				if (units.get(i).getPlayer() != this.getNeutralPlayer()) {
-					units.add(new Spirit(units.get(i).getPlayer(), units.get(i).getPosition(), this));
+					if (!(units.get(i) instanceof Spirit)) {
+						if(!(units.get(i) instanceof Worker) || !((Worker) units.get(i)).isSpawning) {
+							units.add(new Spirit(units.get(i).getPlayer(), units.get(i).getPosition(), this));
+						}
+					}
 				}
 				units.remove(i);
 				--i;
-			}
-		}
-		// change workers to buildings
-		for (int i = 0; i < units.size(); ++i) {
-			if (units.get(i) instanceof Worker) {
-				Worker worker = (Worker) units.get(i);
-				if(worker.toBuild != null) {
-					units.add(worker.toBuild);
-					units.remove(i);
-					--i;
-				}
 			}
 		}
 	}

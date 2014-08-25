@@ -8,6 +8,7 @@ public class Worker extends AnimatedUnit {
 
 	public Worker(Player player, Vector2 position, Terrain terrain) {
 		super(player, position, terrain, Images.WORKER_SPRITESHEET);
+		isSpawning = false;
 	}
 
 	/*@Override
@@ -18,16 +19,24 @@ public class Worker extends AnimatedUnit {
 
 	public void handleKey(int key) {
 		if(key == Input.Keys.NUM_1) {
-			toBuild = new SoldierSpawn(this.getPlayer(), this.getPosition(), this.getTerrain());
+			terrain.spawnUnit(new SoldierSpawn(this.getPlayer(), this.getPosition(), this.getTerrain()));
+			this.hp = -1;
+			isSpawning = true;
 		}
 		else if(key == Input.Keys.NUM_2) {
-			toBuild = new RangeSpawn(this.getPlayer(), this.getPosition(), this.getTerrain());
+			terrain.spawnUnit(new RangeSpawn(this.getPlayer(), this.getPosition(), this.getTerrain()));
+			this.hp = -1;
+			isSpawning = true;
 		}
 		else if(key == Input.Keys.NUM_3) {
-			toBuild = new FastSpawn(this.getPlayer(), this.getPosition(), this.getTerrain());
+			terrain.spawnUnit(new FastSpawn(this.getPlayer(), this.getPosition(), this.getTerrain()));
+			this.hp = -1;
+			isSpawning = true;
 		}
 		else if(key == Input.Keys.NUM_4) {
-			toBuild = new TankSpawn(this.getPlayer(), this.getPosition(), this.getTerrain());
+			terrain.spawnUnit(new TankSpawn(this.getPlayer(), this.getPosition(), this.getTerrain()));
+			this.hp = -1;
+			isSpawning = true;
 		}
 	}
 	
@@ -72,5 +81,5 @@ public class Worker extends AnimatedUnit {
 	}
 	
 	public Building toBuild;
-	
+	public boolean isSpawning;
 }

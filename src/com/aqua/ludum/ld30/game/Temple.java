@@ -1,5 +1,6 @@
 package com.aqua.ludum.ld30.game;
 
+import com.aqua.ludum.ld30.Images;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
@@ -56,8 +57,8 @@ public class Temple extends Building {
 
 	@Override
 	public void render(SpriteBatch batch) {
-		// TODO Auto-generated method stub
-		
+		Vector2 screenPos = this.getScreenPosition();
+		batch.draw(Images.TEMPLE, screenPos.x - Images.TEMPLE.getWidth() / 2, screenPos.y - Images.TEMPLE.getHeight() / 2);
 	}
 
 }
