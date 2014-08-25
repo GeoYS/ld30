@@ -170,7 +170,7 @@ public abstract class Unit {
 			if (ignore.contains(unit) || unit == this || unit.getPlayer() != getPlayer()) {
 				continue;
 			}
-			if (!(unit instanceof Building)) {
+			/*if (!(unit instanceof Building)) {
 				Vector2 otherTo = null;
 				if (unit.currentPath.getPoints().isEmpty()) {
 					otherTo = unit.getPosition();
@@ -182,7 +182,7 @@ public abstract class Unit {
 					currentPath = new Path();
 					return false;
 				}
-			}
+			}*/
 		}
 		
 		this.currentPath = Path.shortestPath(terrain, this.position, to);

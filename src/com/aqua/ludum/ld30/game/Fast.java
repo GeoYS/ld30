@@ -3,36 +3,30 @@ package com.aqua.ludum.ld30.game;
 import com.aqua.ludum.ld30.Images;
 import com.badlogic.gdx.math.Vector2;
 
-public class Worker extends AnimatedUnit {
+public class Fast extends AnimatedUnit {
 
-	public Worker(Player player, Vector2 position, Terrain terrain) {
+	public Fast(Player player, Vector2 position, Terrain terrain) {
 		super(player, position, terrain, Images.WORKER_SPRITESHEET);
 	}
 
-	/*@Override
-	public void render(SpriteBatch batch) {
-		Vector2 screenPos = Constants.worldToScreen(this.getPosition(), getTerrain().getTilesHigh());
-		batch.draw(Images.WORKER_IMAGE, screenPos.x, screenPos.y);
-	}*/
-
 	@Override
 	public float getSpeed() {
-		return 40.0f;
+		return 100.0f;
 	}
 
 	@Override
 	public float getRadius() {
-		return 12.0f;
+		return 10.0f;
 	}
 
 	@Override
 	public float getAttackRadius() {
-		return 24.0f;
+		return 32.0f;
 	}
 
 	@Override
 	public float getAttackStrength() {
-		return 60.0f;
+		return 500.0f;
 	}
 
 	@Override
@@ -42,12 +36,12 @@ public class Worker extends AnimatedUnit {
 
 	@Override
 	public float getRangeArmour() {
-		return 0.0f;
+		return 150.0f;
 	}
 
 	@Override
 	public float getStartHP() {
-		return 120.0f;
+		return 10.0f;
 	}
 	
 }
