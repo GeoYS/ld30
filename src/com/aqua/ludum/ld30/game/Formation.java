@@ -36,14 +36,18 @@ public class Formation {
 		int localPos = ringPos - segment * layer;
 		if (localPos == 0) {
 			if (!filled.isEmpty() &&
-					!filled.contains(new Pair<Integer, Integer>(layer - 1, segment * (layer - 1)))) {
+					(!filled.contains(new Pair<Integer, Integer>(layer - 1, segment * (layer - 1))) &&
+					!filled.contains(new Pair<Integer, Integer>(layer, (ringPos - 1) % (6 * layer))) &&
+					!filled.contains(new Pair<Integer, Integer>(layer, (ringPos + 1) & (6 * layer))))) {
 				success = false;
 			}
 		}
 		else {
 			if (!filled.isEmpty() &&
-					(!filled.contains(new Pair<Integer, Integer>(layer - 1, segment * (layer - 1) + localPos - 1)) ||
-					!filled.contains(new Pair<Integer, Integer>(layer - 1, segment * (layer - 1) + localPos)))) {
+					(!filled.contains(new Pair<Integer, Integer>(layer - 1, (segment * (layer - 1) + localPos - 1) % (6 * (layer - 1)))) &&
+					!filled.contains(new Pair<Integer, Integer>(layer - 1, (segment * (layer - 1) + localPos) % (6 * (layer - 1)))) &&
+					!filled.contains(new Pair<Integer, Integer>(layer, (ringPos - 1) % (6 * layer))) &&
+					!filled.contains(new Pair<Integer, Integer>(layer, (ringPos + 1) % (6 * layer))))) {
 				success = false;
 			}
 		}
