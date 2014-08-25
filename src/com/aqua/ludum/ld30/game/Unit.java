@@ -32,6 +32,10 @@ public abstract class Unit {
 	public abstract float getMeleeArmour();
 	public abstract float getRangeArmour();
 	
+	public boolean isAttacking() {
+		return isAttacking;
+	}
+	
 	public void update(float delta) {
 		stanceUpdate(delta);
 		collisionUpdate(delta);
@@ -157,14 +161,17 @@ public abstract class Unit {
 	}
 	
 	protected void pathingUpdate(float delta) {
+		isAttacking = false;
 		if (this.targetUnit != null) {
 			if (this.targetUnit.hp < 0 || this.targetUnit.player == player) {
 				this.targetUnit = null;
 			}
-			else if (this.position.dst2(this.targetUnit.position) > getAttackRadius() * getAttackRadius()) {
+			else if (this.position.dst2(this.targetUnit.position) > getAttackRadius() * getAttackRadius() ||
+					(!isAttacking && this.position.dst2(this.targetUnit.position) > (getAttackRadius() + 8) * (getAttackRadius() + 8))) {
 				move(targetUnit.position);
 			}
 			else {
+				isAttacking = true;
 				stopMove();
 				attack(delta);
 			}
@@ -292,6 +299,7 @@ public abstract class Unit {
 	protected Path currentPath;
 	protected float hp;
 	protected float shp;
+	private boolean isAttacking = false;
 	//private boolean shoved;
 	
 }
