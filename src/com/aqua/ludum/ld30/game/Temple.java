@@ -20,11 +20,6 @@ public class Temple extends Building {
 	}
 
 	@Override
-	public float getRadius() {
-		return 48.0f;
-	}
-
-	@Override
 	public float getStartHP() {
 		return 1000;
 	}

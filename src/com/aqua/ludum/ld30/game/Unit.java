@@ -168,7 +168,12 @@ public abstract class Unit {
 			}
 			else if (this.position.dst2(this.targetUnit.position) > getAttackRadius() * getAttackRadius() ||
 					(!isAttacking && this.position.dst2(this.targetUnit.position) > (getAttackRadius() + 8) * (getAttackRadius() + 8))) {
-				move(targetUnit.position);
+				if (targetUnit instanceof Building) {
+					move(targetUnit.position.cpy().add(new Vector2(0.0f, targetUnit.getRadius() + getRadius() + 4.0f)));
+				}
+				else {
+					move(targetUnit.position);
+				}
 			}
 			else {
 				isAttacking = true;
@@ -230,6 +235,10 @@ public abstract class Unit {
 				}
 			}
 		}*/
+		if (to.x < 0 || to.x > terrain.getTilesWide() * 32.0f || to.y < 0 || to.y > terrain.getTilesHigh() * 32.0f) {
+			currentPath = new Path();
+			return false;
+		}
 		
 		this.currentPath = Path.shortestPath(terrain, this.position, to);
 		if (currentPath == null) {
@@ -246,7 +255,14 @@ public abstract class Unit {
 	
 	public boolean commandAttack(Unit target) {
 		this.targetUnit = target;
-		if (move(target.position)) {
+		boolean result = false;
+		if (target instanceof Building) {
+			result = move(targetUnit.position.cpy().add(new Vector2(0.0f, targetUnit.getRadius() + getRadius() + 4.0f)));
+		}
+		else {
+			result = move(target.position);
+		}
+		if (result) {
 			return true;
 		}
 		else {
