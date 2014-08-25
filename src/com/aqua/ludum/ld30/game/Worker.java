@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 public class Worker extends AnimatedUnit {
 
 	public Worker(Player player, Vector2 position, Terrain terrain) {
-		super(player, position, terrain, Images.WORKER_SPRITESHEET);
+		super(player, position, terrain, Images.WORKER_SPRITESHEET, Images.AWORKER_SPRITESHEET);
 		isSpawning = false;
 	}
 

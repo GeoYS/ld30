@@ -14,8 +14,20 @@ public class Images {
 	public static final Texture WORKER_LEFTUP, WORKER_DOWNRIGHT, SOLDIER_LEFTUP, SOLDIER_DOWNRIGHT,
 		TANK_LEFTUP, TANK_DOWNRIGHT, FAST_LEFTUP, FAST_DOWNRIGHT, RANGED_LEFTUP, RANGED_DOWNRIGHT,
 		SPIRIT_LEFTUP, SPIRIT_DOWNRIGHT;
+	public static final Texture AWORKER_LEFTRIGHT, AWORKER_DOWNUP, ASOLDIER_LEFTRIGHT, ASOLDIER_DOWNUP,
+		ATANK_LEFTRIGHT, ATANK_DOWNUP, AFAST_LEFTRIGHT, AFAST_DOWNUP, ARANGED_LEFTRIGHT, ARANGED_DOWNUP;
 	public static final UnitSpritesheet WORKER_SPRITESHEET, TANK_SPRITESHEET, SOLDIER_SPRITESHEET, SPIRIT_SPRITESHEET,
 		FAST_SPRITESHEET, RANGED_SPRITESHEET;
+
+	public static UnitSpritesheet AWORKER_SPRITESHEET;
+
+	public static UnitSpritesheet ATANK_SPRITESHEET;
+
+	public static UnitSpritesheet ASOLDIER_SPRITESHEET;
+
+	public static UnitSpritesheet AFAST_SPRITESHEET;
+
+	public static UnitSpritesheet ARANGED_SPRITESHEET;
 	
 	static {
 		// buildings
@@ -39,11 +51,29 @@ public class Images {
 		FAST_DOWNRIGHT = new Texture(new Pixmap(Gdx.files.internal("../LD30/res/units/fast_sprite_1.png")));
 		RANGED_LEFTUP = new Texture(new Pixmap(Gdx.files.internal("../LD30/res/units/ranged_sprite_2.png")));
 		RANGED_DOWNRIGHT = new Texture(new Pixmap(Gdx.files.internal("../LD30/res/units/ranged_sprite_1.png")));
-		WORKER_SPRITESHEET = new UnitSpritesheet(WORKER_LEFTUP, WORKER_DOWNRIGHT);
-		TANK_SPRITESHEET = new UnitSpritesheet(TANK_LEFTUP, TANK_DOWNRIGHT);
-		SOLDIER_SPRITESHEET = new UnitSpritesheet(SOLDIER_LEFTUP, SOLDIER_DOWNRIGHT);
-		SPIRIT_SPRITESHEET = new UnitSpritesheet(SPIRIT_LEFTUP, SPIRIT_DOWNRIGHT);
-		FAST_SPRITESHEET = new UnitSpritesheet(FAST_LEFTUP, FAST_DOWNRIGHT);
-		RANGED_SPRITESHEET = new UnitSpritesheet(RANGED_LEFTUP, RANGED_DOWNRIGHT);		
+		WORKER_SPRITESHEET = new UnitSpritesheet(WORKER_LEFTUP, WORKER_DOWNRIGHT, false);
+		TANK_SPRITESHEET = new UnitSpritesheet(TANK_LEFTUP, TANK_DOWNRIGHT, false);
+		SOLDIER_SPRITESHEET = new UnitSpritesheet(SOLDIER_LEFTUP, SOLDIER_DOWNRIGHT, false);
+		SPIRIT_SPRITESHEET = new UnitSpritesheet(SPIRIT_LEFTUP, SPIRIT_DOWNRIGHT, false);
+		FAST_SPRITESHEET = new UnitSpritesheet(FAST_LEFTUP, FAST_DOWNRIGHT, false);
+		RANGED_SPRITESHEET = new UnitSpritesheet(RANGED_LEFTUP, RANGED_DOWNRIGHT, false);		
+		
+		// ATTACKING UNITS
+		// units
+		AWORKER_LEFTRIGHT = new Texture(new Pixmap(Gdx.files.internal("../LD30/res/units/worker_attack_sprite_2.png")));
+		AWORKER_DOWNUP = new Texture(new Pixmap(Gdx.files.internal("../LD30/res/units/worker_attack_sprite_1.png")));
+		ASOLDIER_LEFTRIGHT = new Texture(new Pixmap(Gdx.files.internal("../LD30/res/units/soldier_attack_sprite_2.png")));
+		ASOLDIER_DOWNUP = new Texture(new Pixmap(Gdx.files.internal("../LD30/res/units/soldier_attack_sprite_1.png")));
+		ATANK_LEFTRIGHT = new Texture(new Pixmap(Gdx.files.internal("../LD30/res/units/tank_attack_sprite_2.png")));
+		ATANK_DOWNUP = new Texture(new Pixmap(Gdx.files.internal("../LD30/res/units/tank_attack_sprite_1.png")));
+		AFAST_LEFTRIGHT = new Texture(new Pixmap(Gdx.files.internal("../LD30/res/units/fast_attack_sprite_2.png")));
+		AFAST_DOWNUP = new Texture(new Pixmap(Gdx.files.internal("../LD30/res/units/fast_attack_sprite_1.png")));
+		ARANGED_LEFTRIGHT = new Texture(new Pixmap(Gdx.files.internal("../LD30/res/units/ranged_attack_sprite_2.png")));
+		ARANGED_DOWNUP = new Texture(new Pixmap(Gdx.files.internal("../LD30/res/units/ranged_attack_sprite_1.png")));
+		AWORKER_SPRITESHEET = new UnitSpritesheet(AWORKER_LEFTRIGHT, AWORKER_DOWNUP, false);
+		ATANK_SPRITESHEET = new UnitSpritesheet(ASOLDIER_LEFTRIGHT, ASOLDIER_DOWNUP, false);
+		ASOLDIER_SPRITESHEET = new UnitSpritesheet(ATANK_LEFTRIGHT, ATANK_DOWNUP, false);
+		AFAST_SPRITESHEET = new UnitSpritesheet(AFAST_LEFTRIGHT, AFAST_DOWNUP, false);
+		ARANGED_SPRITESHEET = new UnitSpritesheet(ARANGED_LEFTRIGHT, ARANGED_DOWNUP, false);	
 	}
 }

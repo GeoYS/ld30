@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 public class Soldier extends AnimatedUnit {
 
 	public Soldier(Player player, Vector2 position, Terrain terrain) {
-		super(player, position, terrain, Images.SOLDIER_SPRITESHEET);
+		super(player, position, terrain, Images.SOLDIER_SPRITESHEET, Images.ASOLDIER_SPRITESHEET);
 	}
 
 	@Override

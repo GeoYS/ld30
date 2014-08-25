@@ -41,16 +41,16 @@ public abstract class AnimatedUnit extends Unit{
 		// which direction is the unit going?
 		float dx = deltaPos.x, dy = deltaPos.y;
 		if((dx < 0 && dy < 0)) {
-			current = up;
+			current = this.isAttacking() ? aup : up;
 		}
 		else if((dx > 0 && dy > 0)) {
-			current = down;
+			current = this.isAttacking() ? adown : down;
 		}
 		else if((dx < 0 && dy > 0) || (dx == 0 && dy > 0) || (dx == 0 && dy < 0)) {
-			current = left;
+			current = this.isAttacking() ? aleft : left;
 		}
 		else if((dx > 0 && dy < 0) || (dy == 0 && dx > 0) || (dy == 0 && dx < 0)) {
-			current = right;
+			current = this.isAttacking() ? aright : right;
 		}
 		
 		int keyFrame;
