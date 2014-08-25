@@ -35,6 +35,17 @@ public class HumanPlayer extends Player {
 					Rectangle worldSelection = new Rectangle(currentSelection.getRectangle());
 					selectedUnits = terrain.selectUnits(HumanPlayer.this, worldSelection);
 					currentSelection.setActive(false);
+
+					Vector2 screenPos = new Vector2(screenX - Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 2 - screenY).add(camera.position.x, camera.position.y);
+					for(Unit unit : terrain.getUnits()) {
+						// check if unit belongs to player
+						if(unit.getPlayer() == HumanPlayer.this) {
+							// check if mouse is inside unit's circle
+							if(unit.getCollisionShape().contains(Constants.screenToWorld(screenPos, terrain.getTilesHigh()))) {
+								selectedUnits.add(unit);
+							}
+						}
+					}
 				}
 				// command units
 				if(isDown[Input.Buttons.RIGHT]) {
