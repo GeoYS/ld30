@@ -121,6 +121,21 @@ public class HumanPlayer extends Player {
 				if(keycode == Input.Keys.X) {
 					terrain.addUnit(new Worker(HumanPlayer.this, mouseWorldPos, terrain));
 				}
+				else if(keycode == Input.Keys.C) {
+					terrain.addUnit(new Soldier(HumanPlayer.this, mouseWorldPos, terrain));
+				}
+				else if(keycode == Input.Keys.V) {
+					terrain.addUnit(new Fast(HumanPlayer.this, mouseWorldPos, terrain));
+				}
+				else if(keycode == Input.Keys.B) {
+					terrain.addUnit(new Tank(HumanPlayer.this, mouseWorldPos, terrain));
+				}
+				else if(keycode == Input.Keys.N) {
+					terrain.addUnit(new Spirit(HumanPlayer.this, mouseWorldPos, terrain));
+				}
+				else if(keycode == Input.Keys.M) {
+					terrain.addUnit(new Ranged(HumanPlayer.this, mouseWorldPos, terrain));
+				}
 				return true;
 			}
 			
@@ -180,9 +195,11 @@ public class HumanPlayer extends Player {
 	
 	private void renderUnitHealth(ShapeRenderer renderer, Unit unit) {
 		final float MAX_HEALTH_WIDTH = 40; // pixels
-		Color prev = renderer.getColor();
 		if(unit.getPlayer() == this) {
 			renderer.setColor(Color.GREEN);
+		}
+		else if(unit.getPlayer() instanceof NeutralPlayer) {
+			renderer.setColor(Color.GRAY);
 		}
 		else {
 			renderer.setColor(Color.RED);
@@ -191,7 +208,6 @@ public class HumanPlayer extends Player {
 				unit.getScreenPosition().y - 10,
 				unit.getHP() / unit.getStartHP() * MAX_HEALTH_WIDTH,
 				2);
-		renderer.setColor(prev);
 	}
 	
 	@Override

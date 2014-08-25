@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 public class Tank extends AnimatedUnit {
 
 	public Tank(Player player, Vector2 position, Terrain terrain) {
-		super(player, position, terrain, Images.WORKER_SPRITESHEET);
+		super(player, position, terrain, Images.TANK_SPRITESHEET);
 	}
 
 	@Override

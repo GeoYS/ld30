@@ -1,12 +1,13 @@
 package com.aqua.ludum.ld30.game;
 
+import com.aqua.ludum.ld30.Images;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
-public class Spirit extends Unit {
+public class Spirit extends AnimatedUnit {
 	
 	public Spirit(Player player, Vector2 position, Terrain terrain) {
-		super(player, position, terrain);
+		super(player, position, terrain, Images.SOLDIER_SPRITESHEET);
 	}
 	
 	@Override
