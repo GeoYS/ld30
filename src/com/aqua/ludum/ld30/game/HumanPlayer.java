@@ -136,6 +136,19 @@ public class HumanPlayer extends Player {
 				else if(keycode == Input.Keys.M) {
 					terrain.addUnit(new Ranged(HumanPlayer.this, mouseWorldPos, terrain));
 				}
+				
+				// worker building
+				int workerCount = 0;
+				Worker selectedWorker = null;
+				for(Unit unit : HumanPlayer.this.getSelectedUnits()) {
+					if(unit instanceof Worker) {
+						workerCount ++;
+						selectedWorker = (Worker) unit;
+					}
+				}
+				if(workerCount == 1) {
+					selectedWorker.handleKey(keycode);
+				}
 				return true;
 			}
 			
@@ -207,6 +220,12 @@ public class HumanPlayer extends Player {
 		renderer.rect(unit.getScreenPosition().x - MAX_HEALTH_WIDTH / 2,
 				unit.getScreenPosition().y - 10,
 				unit.getHP() / unit.getStartHP() * MAX_HEALTH_WIDTH,
+				2);
+		// draw shp bar
+		renderer.setColor(Color.BLUE);
+		renderer.rect(unit.getScreenPosition().x - MAX_HEALTH_WIDTH / 2,
+				unit.getScreenPosition().y - 14,
+				unit.getSHP() / unit.getStartSHP() * MAX_HEALTH_WIDTH,
 				2);
 	}
 	

@@ -16,6 +16,7 @@ public abstract class Building extends Unit{
 		isBuilding = true;
 		//buildingAnimation = new Animation(FRAME_DURATION, null);
 		//buildingAnimation.setPlayMode(PlayMode.LOOP_PINGPONG);
+		animationTimer = new Stopwatch();
 		animationTimer.start();
 	}
 	

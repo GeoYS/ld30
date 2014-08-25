@@ -18,6 +18,7 @@ public abstract class Unit {
 		this.position = position;
 		this.currentPath = new Path();
 		this.hp = getStartHP();
+		this.shp = getStartSHP();
 		//this.shoved = false;
 	}
 	
