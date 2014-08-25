@@ -12,46 +12,22 @@ public class NeutralBuilding extends Building {
 	@Override
 	protected void handleKey(int key) {
 	}
-
-	@Override
-	public float getSpeed() {
-		return 0;
-	}
-
-	@Override
-	public float getRadius() {
-		return 0;
-	}
-
+	
 	@Override
 	public float getStartHP() {
-		return 100000;
+		return Float.POSITIVE_INFINITY;
+	}
+	
+	
+	@Override
+	public void spawn() {
+		super.spawn();
 	}
 
 	@Override
-	public float getAttackRadius() {
-		return 0;
+	public float timeUntilSpawn() {
+		return 10.0f;
 	}
 
-	@Override
-	public float getAttackStrength() {
-		return 0;
-	}
-
-	@Override
-	public float getMeleeArmour() {
-		return 1;
-	}
-
-	@Override
-	public float getRangeArmour() {
-		return 1;
-	}
-
-	@Override
-	public float getStartSHP() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 }
