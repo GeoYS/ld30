@@ -1,6 +1,7 @@
 package com.aqua.ludum.ld30.game;
 
 import com.aqua.ludum.ld30.Images;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 
 public class Worker extends AnimatedUnit {
@@ -15,6 +16,21 @@ public class Worker extends AnimatedUnit {
 		batch.draw(Images.WORKER_IMAGE, screenPos.x, screenPos.y);
 	}*/
 
+	public void handleKey(int key) {
+		if(key == Input.Keys.NUM_1) {
+			toBuild = new SoldierSpawn(this.getPlayer(), this.getPosition(), this.getTerrain());
+		}
+		else if(key == Input.Keys.NUM_2) {
+			toBuild = new RangeSpawn(this.getPlayer(), this.getPosition(), this.getTerrain());
+		}
+		else if(key == Input.Keys.NUM_3) {
+			toBuild = new FastSpawn(this.getPlayer(), this.getPosition(), this.getTerrain());
+		}
+		else if(key == Input.Keys.NUM_4) {
+			toBuild = new TankSpawn(this.getPlayer(), this.getPosition(), this.getTerrain());
+		}
+	}
+	
 	@Override
 	public float getSpeed() {
 		return 40.0f;
@@ -54,5 +70,7 @@ public class Worker extends AnimatedUnit {
 	public float getStartSHP() {
 		return 150.0f;
 	}
+	
+	public Building toBuild;
 	
 }

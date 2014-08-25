@@ -91,6 +91,17 @@ public class Terrain {
 				--i;
 			}
 		}
+		// change workers to buildings
+		for (int i = 0; i < units.size(); ++i) {
+			if (units.get(i) instanceof Worker) {
+				Worker worker = (Worker) units.get(i);
+				if(worker.toBuild != null) {
+					units.add(worker.toBuild);
+					units.remove(i);
+					--i;
+				}
+			}
+		}
 	}
 	
 	private void sortUnitsByDepth() {
