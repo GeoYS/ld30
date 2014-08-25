@@ -4,47 +4,29 @@ import com.badlogic.gdx.math.Vector2;
 
 public class ComputerPlayer extends Player {
 	
-	public ComputerPlayer(String name, Terrain terrain) {
-		super(name, terrain);
-		ai = new AI(this, terrain);
+	public ComputerPlayer(String name) {
+		super(name);
 	}
 	
 	@Override
 	public void update(float delta) {
 		super.update(delta);
-		ai.perform();
-	}
-	
-	private AI ai;
-	
-	private class AI {
-		
-		public AI(Player computerPlayer, Terrain terrain) {
-			this.player = computerPlayer;
-			this.terrain = terrain;
-		}
-		
-		public void perform() {
-			player.getSelectedUnits().clear();
-			for(Unit unit : terrain.getUnits()) {
-				if(unit.getPlayer() == this.player) {
-					if(!isUnitMoving(unit)) {
-						player.getSelectedUnits().add(unit);
-					}
+		this.getSelectedUnits().clear();
+		for(Unit unit : getTerrain().getUnits()) {
+			if(unit.getPlayer() == this) {
+				if(!isUnitMoving(unit)) {
+					this.getSelectedUnits().add(unit);
 				}
 			}
-			float x, y;
-			x = (float) (Math.random() * terrain.getWidth());
-			y = (float) (Math.random() * terrain.getHeight());
-			player.moveSelectedUnits(new Vector2(x, y));
 		}
-		
-		private boolean isUnitMoving(Unit unit) {
-			return !unit.getPath().getPoints().isEmpty();
-		}
-		
-		private Terrain terrain;
-		private Player player;
+		float x, y;
+		x = (float) (Math.random() * getTerrain().getWidth());
+		y = (float) (Math.random() * getTerrain().getHeight());
+		this.moveSelectedUnits(new Vector2(x, y));
+	}
+	
+	private boolean isUnitMoving(Unit unit) {
+		return !unit.getPath().getPoints().isEmpty();
 	}
 	
 }

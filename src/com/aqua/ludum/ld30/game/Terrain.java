@@ -22,7 +22,7 @@ public class Terrain {
 	 * Make a new map from the provided file.
 	 * @param pathToTmx
 	 */
-	public Terrain(String pathToTmx, OrthographicCamera camera) {
+	public Terrain(String pathToTmx, OrthographicCamera camera, HumanPlayer human, ComputerPlayer computer) {
 		TmxMapLoader mapLoader = new TmxMapLoader();
 		System.out.println("Loading map.");
 		TiledMap map = mapLoader.load(pathToTmx);
@@ -36,21 +36,41 @@ public class Terrain {
     	this.blocks = new ArrayList<>();
     	this.players = new ArrayList<>();
     	this.neutralPlayer = new NeutralPlayer("Neutral", this);
+    	this.humanPlayer = human;
+    	this.computerPlayer = computer;
     	this.players.add(this.neutralPlayer);
+    	this.players.add(human);
+    	this.players.add(computer);
     	loadBlocks(map);
 	}
 	
 	private void loadBlocks(TiledMap map) {
 		for(int mapLayer = 0; mapLayer < map.getLayers().getCount(); mapLayer ++){
     		MapLayer mLayer = map.getLayers().get(mapLayer);
-    		if(!mLayer.getName().equals("Blocks")) {
-    			continue;
+    		if(mLayer.getName().equals("Blocks")) {
+	    		for(int mapObject = 0; mapObject < mLayer.getObjects().getCount(); mapObject ++){
+	    			RectangleMapObject mObject = (RectangleMapObject) mLayer.getObjects().get(mapObject);
+	    			Rectangle block = mObject.getRectangle();
+	    			block.y = this.getTilesHigh() * 32 - (block.y + block.height);
+	    			blocks.add(new Block(mObject.getRectangle()));
+	    		}
     		}
-    		for(int mapObject = 0; mapObject < mLayer.getObjects().getCount(); mapObject ++){
-    			RectangleMapObject mObject = (RectangleMapObject) mLayer.getObjects().get(mapObject);
-    			Rectangle block = mObject.getRectangle();
-    			block.y = this.getTilesHigh() * 32 - (block.y + block.height);
-    			blocks.add(new Block(mObject.getRectangle()));
+    		else if (mLayer.getName().equals("Temple")) {
+    			for (int mapObject = 0; mapObject < mLayer.getObjects().getCount(); mapObject++) {
+    				RectangleMapObject mObject = (RectangleMapObject) mLayer.getObjects().get(mapObject);
+    				Vector2 position = new Vector2();
+    				position.x = mObject.getRectangle().x;
+    				position.y = getTilesHigh() * 32 - (mObject.getRectangle().y + mObject.getRectangle().height);
+    				if (mObject.getProperties().get("type").equals("human")) {
+    					units.add(new Temple(players.get(1), position, this));
+    				}
+    				else {
+    					units.add(new Temple(players.get(2), position, this));
+    				}
+    			}
+    		}
+    		else if (mLayer.getName().equals("Neutral")) {
+    			
     		}
     	}
 	}
@@ -312,7 +332,9 @@ public class Terrain {
 	private List<Unit> spawnUnits;
 	private List<Block> blocks;
 	private List<Player> players;
-	private Player neutralPlayer;
+	private NeutralPlayer neutralPlayer;
+	private HumanPlayer humanPlayer;
+	private ComputerPlayer computerPlayer;
 	
 	private final int tilesWide, tilesHigh;
 	

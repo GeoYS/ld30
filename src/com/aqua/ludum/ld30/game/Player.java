@@ -9,10 +9,13 @@ import com.badlogic.gdx.math.Vector2;
 
 public abstract class Player {
 	
-	public Player(String name, Terrain terrain) {
+	public Player(String name) {
 		this.name = name;
-		this.terrain = terrain;
 		this.selectedUnits = new ArrayList<>();
+	}
+	
+	public void setTerrain(Terrain terrain) {
+		this.terrain = terrain;
 	}
 	
 	public String getName() {

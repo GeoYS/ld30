@@ -16,11 +16,15 @@ import com.badlogic.gdx.math.Vector2;
 
 public class HumanPlayer extends Player {
 	
-	public HumanPlayer(String name, final Terrain terrain, final OrthographicCamera camera) {
-		super(name, terrain);
+	public HumanPlayer(String name, final OrthographicCamera camera) {
+		super(name);
 		this.currentSelection = new Selection();
 		this.renderer = new ShapeRenderer();
 		this.camera = camera;
+	}
+	
+	public void setInputListener() {
+		final Terrain terrain = getTerrain();
 		inputListener = new InputProcessor() {
 
 			private int lastX, lastY;

@@ -2,6 +2,7 @@ package com.aqua.ludum.ld30.game.screens.test;
 
 import com.aqua.ludum.ld30.Constants;
 import com.aqua.ludum.ld30.Images;
+import com.aqua.ludum.ld30.game.ComputerPlayer;
 import com.aqua.ludum.ld30.game.HumanPlayer;
 import com.aqua.ludum.ld30.game.Player;
 import com.aqua.ludum.ld30.game.Terrain;
@@ -44,7 +45,12 @@ public class TestScreen extends GameScreen{
 	public void init(Game game) {
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
-		terrain = new TestTerrain(camera);
+		HumanPlayer human = new HumanPlayer("George", camera);
+		ComputerPlayer computer = new ComputerPlayer("AI");
+		terrain = new Terrain("../LD30/res/LudumDareMap01.tmx", camera, human, computer);
+		human.setTerrain(terrain);
+		computer.setTerrain(terrain);
+		human.setInputListener();
 		for(Player player : terrain.getPlayers()) {
 			if(player instanceof HumanPlayer) {
 				this.addProcessor(((HumanPlayer) player).getListener());
