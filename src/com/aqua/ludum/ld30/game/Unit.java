@@ -153,9 +153,9 @@ public abstract class Unit {
 		}
 	}
 	
-	protected final void pathingUpdate(float delta) {
+	protected void pathingUpdate(float delta) {
 		if (this.targetUnit != null) {
-			if (this.targetUnit.hp < 0) {
+			if (this.targetUnit.hp < 0 || this.targetUnit.player == player) {
 				this.targetUnit = null;
 			}
 			else if (this.position.dst2(this.targetUnit.position) > getAttackRadius() * getAttackRadius()) {
@@ -193,15 +193,15 @@ public abstract class Unit {
 		return 0;
 	}
 	
-	private void stopMove() {
+	protected void stopMove() {
 		currentPath = new Path();
 	}
 	
-	private boolean move(Vector2 to) {
+	protected boolean move(Vector2 to) {
 		return move(to, new ArrayList<Unit>());
 	}
 	
-	private boolean move(Vector2 to, List<Unit> ignore) {
+	protected boolean move(Vector2 to, List<Unit> ignore) {
 		for (Unit unit : terrain.getUnits()) {
 			if (ignore.contains(unit) || unit == this || unit.getPlayer() != getPlayer()) {
 				continue;
@@ -234,9 +234,15 @@ public abstract class Unit {
 		return move(to, ignore);
 	}
 	
-	public final boolean commandAttack(Unit target) {
+	public boolean commandAttack(Unit target) {
 		this.targetUnit = target;
-		return move(target.position);
+		if (move(target.position)) {
+			return true;
+		}
+		else {
+			this.targetUnit = null;
+			return false;
+		}
 	}
 	
 	public final Stance getStance() {
@@ -275,12 +281,12 @@ public abstract class Unit {
 		return terrain;
 	}
 	
-	private Player player;
-	private Vector2 position;
-	private Unit targetUnit;
-	private Stance stance;
-	private Terrain terrain;
-	private Path currentPath;
+	protected Player player;
+	protected Vector2 position;
+	protected Unit targetUnit;
+	protected Stance stance;
+	protected Terrain terrain;
+	protected Path currentPath;
 	protected float hp;
 	protected float shp;
 	//private boolean shoved;

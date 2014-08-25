@@ -1,12 +1,14 @@
 package com.aqua.ludum.ld30.game;
 
+import com.aqua.ludum.ld30.Constants;
 import com.aqua.ludum.ld30.Images;
 import com.badlogic.gdx.math.Vector2;
 
 public class Spirit extends AnimatedUnit {
 	
 	public Spirit(Player player, Vector2 position, Terrain terrain) {
-		super(player, position, terrain, Images.SOLDIER_SPRITESHEET);
+		super(player, position, terrain, Images.SPIRIT_SPRITESHEET);
+		targetBuilding = null;
 	}
 	
 	@Override
@@ -19,10 +21,47 @@ public class Spirit extends AnimatedUnit {
 		}
 	}
 	
-	/*@Override
+	@Override
 	public void update(float delta) {
-		
-	}*/
+		updateBuildingTarget(delta);
+		super.update(delta);
+	}
+	
+	@Override
+	protected void pathingUpdate(float delta) {
+		if (this.targetBuilding != null) {
+			if (this.targetBuilding.player != player) {
+				this.targetBuilding = null;
+			}
+			else if (this.position.dst2(this.targetBuilding.position) > (targetBuilding.getRadius() + getRadius()) * (targetBuilding.getAttackRadius() + getRadius())) {
+				move(new Vector2(1.0f, 1.0f).nor().scl(targetUnit.getRadius() + Constants.PATHFINDING_CORNER_PADDING).add(targetBuilding.position));
+			}
+			else {
+				stopMove();
+				hp = -10;
+				targetBuilding.spiritCount += 1;
+			}
+		}
+		super.pathingUpdate(delta);
+	}
+	
+	public boolean commandTargetBuilding(Building building) {
+		this.targetBuilding = building;
+		this.targetUnit = null;
+		if (move(building.position)) {
+			return true;
+		}
+		else {
+			this.targetBuilding = null;
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean commandAttack(Unit target) {
+		this.targetBuilding = null;
+		super.commandAttack(target);
+	}
 
 	@Override
 	public float getSpeed() {
@@ -63,5 +102,7 @@ public class Spirit extends AnimatedUnit {
 	public float getStartSHP() {
 		return Float.POSITIVE_INFINITY;
 	}
+	
+	private Building targetBuilding;
 	
 }
