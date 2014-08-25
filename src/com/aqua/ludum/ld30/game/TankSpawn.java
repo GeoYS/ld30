@@ -15,51 +15,14 @@ public class TankSpawn extends Building {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 	@Override
-	public float getSpeed() {
-		// TODO Auto-generated method stub
-		return 0;
+	public void spawn() {
+		super.spawn();
 	}
 
 	@Override
-	public float getRadius() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public float getStartHP() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public float getAttackRadius() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public float getAttackStrength() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public float getMeleeArmour() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public float getRangeArmour() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public float getStartSHP() {
+	public float timeUntilSpawn() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

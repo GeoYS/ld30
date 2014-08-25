@@ -31,11 +31,29 @@ public abstract class Building extends Unit{
 	
 	@Override
 	public void update(float delta) {
-		super.update(delta);
 		if(animationTimer.time() / 1000f >= TIME_TO_COMPLETION) {
 			isBuilding = false;
 		}
+		if (!isBuilding) {
+			if (this.spiritCount > 0 && !spawning) {
+				spawning = true;
+				this.timeToSpawn = this.timeUntilSpawn();
+			}
+			if (spawning) {
+				timeToSpawn -= delta;
+				if (timeToSpawn < 0) {
+					spawning = false;
+					spawn();
+				}
+			}
+		}
 	}
+	
+	public void spawn() {
+		spiritCount -= 1;
+	}
+	
+	public abstract float timeUntilSpawn();
 	
 	public final void renderBuilding(SpriteBatch batch) {
 		Vector2 screenPos = this.getScreenPosition();
@@ -52,6 +70,46 @@ public abstract class Building extends Unit{
 		}
 	}
 	
+	@Override
+	public float getSpeed() {
+		return 0;
+	}
+
+	@Override
+	public float getRadius() {
+		return 0;
+	}
+
+	@Override
+	public float getStartHP() {
+		return 1000.0f;
+	}
+
+	@Override
+	public float getAttackRadius() {
+		return 0;
+	}
+
+	@Override
+	public float getAttackStrength() {
+		return 0;
+	}
+
+	@Override
+	public float getMeleeArmour() {
+		return 0;
+	}
+
+	@Override
+	public float getRangeArmour() {
+		return 0;
+	}
+
+	@Override
+	public float getStartSHP() {
+		return Float.POSITIVE_INFINITY;
+	}
+	
 	protected abstract void handleKey(int key);
 	
 	private Rectangle rectangle;
@@ -59,6 +117,8 @@ public abstract class Building extends Unit{
 	private Animation buildingAnimation;
 	private Stopwatch animationTimer;
 	private Texture buildingImage;
+	private float timeToSpawn = 0.0f;
+	private boolean spawning = false;
 	private final float FRAME_DURATION = 0.3f, TIME_TO_COMPLETION = 3; 
 	public int spiritCount = 0;
 }

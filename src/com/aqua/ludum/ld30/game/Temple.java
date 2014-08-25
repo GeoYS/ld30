@@ -1,12 +1,16 @@
 package com.aqua.ludum.ld30.game;
 
-import com.aqua.ludum.ld30.Images;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public class Temple extends Building {
 
 	public Temple(Player player, Vector2 position, Terrain terrain) {
-		super(player, position, terrain, Images.TEMPLE);
+		super(player, position, terrain);
+	}
+
+	@Override
+	public void renderBuilding(SpriteBatch batch) {
 	}
 
 	@Override

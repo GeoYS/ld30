@@ -16,52 +16,16 @@ public class RangeSpawn extends Building {
 		
 	}
 
+	
 	@Override
-	public float getSpeed() {
-		// TODO Auto-generated method stub
-		return 0;
+	public void spawn() {
+		super.spawn();
 	}
 
 	@Override
-	public float getRadius() {
-		// TODO Auto-generated method stub
-		return 0;
+	public float timeUntilSpawn() {
+		return 10.0f;
 	}
 
-	@Override
-	public float getStartHP() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public float getAttackRadius() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public float getAttackStrength() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public float getMeleeArmour() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public float getRangeArmour() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public float getStartSHP() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 }
