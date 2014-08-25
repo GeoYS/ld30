@@ -276,6 +276,16 @@ public class Terrain {
 		return neutralPlayer;
 	}
 	
+	public int getWidth() {
+		int TILEWIDTH = 32;
+		return this.getTilesWide() * TILEWIDTH;
+	}
+	
+	public int getHeight() {
+		int TILEHEIGHT = 32;
+		return this.getTilesHigh() * TILEHEIGHT;
+	}
+	
 	public int getTilesWide() {
 		return tilesWide;
 	}

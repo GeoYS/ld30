@@ -28,8 +28,8 @@ public class HumanPlayer extends Player {
 			
 			@Override
 			public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-				// select units in selection rectangle
 				if(isDown[Input.Buttons.LEFT]) {
+					// select units in selection rectangle
 					Rectangle worldSelection = new Rectangle(currentSelection.getRectangle());
 					setSelectedUnits(terrain.selectUnits(HumanPlayer.this, worldSelection));
 					currentSelection.setActive(false);
@@ -69,6 +69,7 @@ public class HumanPlayer extends Player {
 			
 			@Override
 			public boolean touchDragged(int screenX, int screenY, int pointer) {
+				System.out.println("dragged");
 				if(isDown[Input.Buttons.LEFT]) {
 					currentSelection.setNewPos(new Vector2(screenX, Constants.SCREEN_HEIGHT - screenY));
 					currentSelection.update();
@@ -145,10 +146,10 @@ public class HumanPlayer extends Player {
 		batch.end();
 		currentSelection.render();
 		batch.begin();
-		renderer.setColor(Color.GREEN);
 		renderer.setProjectionMatrix(camera.combined);
 		renderer.begin(ShapeType.Line);
 		for(Unit unit : getSelectedUnits()) {
+			renderer.setColor(Color.GREEN);
 			// draw selection circle
 			Vector2 screenPos = Constants.worldToScreen(unit.getPosition(), getTerrain().getTilesHigh());
 			renderer.ellipse(screenPos.x - unit.getRadius(), screenPos.y - unit.getRadius() / 2, unit.getRadius() * 2, unit.getRadius());
@@ -160,6 +161,37 @@ public class HumanPlayer extends Player {
 			}
 		}
 		renderer.end();
+		renderer.begin(ShapeType.Filled);
+		for(Unit unit : this.getTerrain().getUnits()) {
+			// draw unit health bars
+			final float HEALTH_DIST_SQUARED = 100 * 100;
+			float dist2 = unit.getPosition().cpy().dst2(this.mouseWorldPos());
+			if(this.getSelectedUnits().contains(unit) || dist2 <= HEALTH_DIST_SQUARED) {
+				renderUnitHealth(renderer, unit);
+			}
+		}
+		renderer.end();
+	}
+	
+	private Vector2 mouseWorldPos() {
+		Vector2 mouseScreen = new Vector2(Gdx.input.getX() - Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 2 - Gdx.input.getY()).add(camera.position.x, camera.position.y);
+		return Constants.screenToWorld(mouseScreen, this.getTerrain().getTilesHigh());
+	}
+	
+	private void renderUnitHealth(ShapeRenderer renderer, Unit unit) {
+		final float MAX_HEALTH_WIDTH = 40; // pixels
+		Color prev = renderer.getColor();
+		if(unit.getPlayer() == this) {
+			renderer.setColor(Color.GREEN);
+		}
+		else {
+			renderer.setColor(Color.RED);
+		}
+		renderer.rect(unit.getScreenPosition().x - MAX_HEALTH_WIDTH / 2,
+				unit.getScreenPosition().y - 10,
+				unit.getHP() / unit.getStartHP() * MAX_HEALTH_WIDTH,
+				2);
+		renderer.setColor(prev);
 	}
 	
 	@Override
