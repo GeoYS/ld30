@@ -57,7 +57,7 @@ public class HumanPlayer extends Player {
 						if (next == null) {
 							break;
 						}
-						if (unit.commandMove(Constants.screenToWorld(screenPos, terrain.getTilesHigh()).add(next))) {
+						if (unit.commandMove(Constants.screenToWorld(screenPos, terrain.getTilesHigh()).add(next), selectedUnits)) {
 							formation.fillPosition();
 						}
 						else {

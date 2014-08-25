@@ -1,5 +1,8 @@
 package com.aqua.ludum.ld30.game;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.aqua.ludum.ld30.Constants;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
@@ -14,7 +17,7 @@ public abstract class Unit {
 		this.terrain = terrain;
 		this.position = position;
 		this.currentPath = new Path();
-		this.shoved = false;
+		//this.shoved = false;
 	}
 	
 	public abstract void render(SpriteBatch batch);
@@ -73,10 +76,10 @@ public abstract class Unit {
 			Intersector.nearestSegmentPoint(lowerLeft, lowerRight, position, point);
 		}
 		if (point.dst2(position) <= getRadius() * getRadius()) {
-			return null;
+			return point;
 		}
 		else {
-			return point;
+			return null;
 		}
 	}
 	
@@ -115,12 +118,10 @@ public abstract class Unit {
 	protected final void pathingUpdate(float delta) {
 		if (this.targetUnit != null) {
 			if (this.position.dst2(this.targetUnit.position) > getAttackRadius() * getAttackRadius()) {
-				currentPath = Path.shortestPath(terrain, this.position, this.targetUnit.position);
-				if (currentPath == null) {
-					currentPath = new Path();
-				}
+				move(targetUnit.position);
 			}
 			else {
+				stopMove();
 				attack(delta);
 			}
 		}
@@ -151,17 +152,35 @@ public abstract class Unit {
 		return 0;
 	}
 	
-	public final boolean commandMove(Vector2 to) {
+	private void stopMove() {
+		currentPath = new Path();
+	}
+	
+	private boolean move(Vector2 to) {
+		return move(to, new ArrayList<Unit>());
+	}
+	
+	private boolean move(Vector2 to, List<Unit> ignore) {
 		for (Unit unit : terrain.getUnits()) {
+			if (ignore.contains(unit)) {
+				continue;
+			}
 			if (!(unit instanceof Building)) {
-				if (unit.getPosition().dst2(to) <= unit.getRadius() * unit.getRadius()) {
+				Vector2 otherTo = null;
+				if (unit.currentPath.getPoints().isEmpty()) {
+					otherTo = unit.getPosition();
+				}
+				else {
+					otherTo = unit.currentPath.getPoints().get(unit.currentPath.getPoints().size() - 1);
+				}
+				if (to.dst2(otherTo) <= (unit.getRadius() + getRadius()) * (unit.getRadius() + getRadius())) {
 					currentPath = new Path();
 					return false;
 				}
 			}
 		}
+		
 		this.currentPath = Path.shortestPath(terrain, this.position, to);
-		this.targetUnit = null;
 		if (currentPath == null) {
 			currentPath = new Path();
 			return false;
@@ -169,14 +188,14 @@ public abstract class Unit {
 		return true;
 	}
 	
+	public final boolean commandMove(Vector2 to, List<Unit> ignore) {
+		this.targetUnit = null;
+		return move(to, ignore);
+	}
+	
 	public final boolean commandAttack(Unit target) {
 		this.targetUnit = target;
-		this.currentPath = Path.shortestPath(terrain, this.position, target.position);
-		if (currentPath == null) {
-			currentPath = new Path();
-			return false;
-		}
-		return true;
+		return move(target.position);
 	}
 	
 	public final Stance getStance() {
@@ -222,6 +241,6 @@ public abstract class Unit {
 	private Terrain terrain;
 	private Path currentPath;
 	private int hp;
-	private boolean shoved;
+	//private boolean shoved;
 	
 }
