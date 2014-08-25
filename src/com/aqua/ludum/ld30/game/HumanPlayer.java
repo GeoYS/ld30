@@ -1,6 +1,5 @@
 package com.aqua.ludum.ld30.game;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.aqua.ludum.ld30.Constants;
@@ -20,7 +19,6 @@ public class HumanPlayer extends Player {
 	public HumanPlayer(String name, final Terrain terrain, final OrthographicCamera camera) {
 		super(name, terrain);
 		this.currentSelection = new Selection();
-		selectedUnits = new ArrayList<>();
 		this.renderer = new ShapeRenderer();
 		this.camera = camera;
 		inputListener = new InputProcessor() {
@@ -33,7 +31,7 @@ public class HumanPlayer extends Player {
 				// select units in selection rectangle
 				if(isDown[Input.Buttons.LEFT]) {
 					Rectangle worldSelection = new Rectangle(currentSelection.getRectangle());
-					selectedUnits = terrain.selectUnits(HumanPlayer.this, worldSelection);
+					setSelectedUnits(terrain.selectUnits(HumanPlayer.this, worldSelection));
 					currentSelection.setActive(false);
 
 					Vector2 screenPos = new Vector2(screenX - Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 2 - screenY).add(camera.position.x, camera.position.y);
@@ -42,7 +40,7 @@ public class HumanPlayer extends Player {
 						if(unit.getPlayer() == HumanPlayer.this) {
 							// check if mouse is inside unit's circle
 							if(unit.getCollisionShape().contains(Constants.screenToWorld(screenPos, terrain.getTilesHigh()))) {
-								selectedUnits.add(unit);
+								getSelectedUnits().add(unit);
 							}
 						}
 					}
@@ -50,20 +48,7 @@ public class HumanPlayer extends Player {
 				// command units
 				if(isDown[Input.Buttons.RIGHT]) {
 					Vector2 screenPos = new Vector2(screenX - Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 2 - screenY).add(camera.position.x, camera.position.y);
-					Formation formation = new Formation(32.0f);
-					for (int i = 0; i < selectedUnits.size(); ++i) {
-						Unit unit = selectedUnits.get(i);
-						Vector2 next = formation.getNextPosition();
-						if (next == null) {
-							break;
-						}
-						if (unit.commandMove(Constants.screenToWorld(screenPos, terrain.getTilesHigh()).add(next), selectedUnits)) {
-							formation.fillPosition();
-						}
-						else {
-							--i;
-						}
-					}
+					moveSelectedUnits(Constants.screenToWorld(screenPos, terrain.getTilesHigh()));
 					/*for(Unit unit : selectedUnits) {
 						unit.commandMove(Constants.screenToWorld(screenPos, terrain.getTilesHigh()));
 					}*/
@@ -153,7 +138,7 @@ public class HumanPlayer extends Player {
 		renderer.setColor(Color.GREEN);
 		renderer.setProjectionMatrix(camera.combined);
 		renderer.begin(ShapeType.Line);
-		for(Unit unit : selectedUnits) {
+		for(Unit unit : getSelectedUnits()) {
 			// draw selection circle
 			Vector2 screenPos = Constants.worldToScreen(unit.getPosition(), getTerrain().getTilesHigh());
 			renderer.ellipse(screenPos.x - unit.getRadius(), screenPos.y - unit.getRadius() / 2, unit.getRadius() * 2, unit.getRadius());
@@ -181,7 +166,6 @@ public class HumanPlayer extends Player {
 		return new Vector2(mousePos.x - Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 2 - mousePos.y);
 	}
 	
-	private List<Unit> selectedUnits;
 	private InputProcessor inputListener;
 	private Selection currentSelection;
 	private ShapeRenderer renderer;
