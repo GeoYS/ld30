@@ -54,7 +54,7 @@ public class HumanPlayer extends Player {
 						Vector2 displacement = new Vector2((float) Math.cos(degrees * ringPos * coprime) * layer * 32, (float) Math.sin(degrees * ringPos * coprime) * layer * 32);
 						unit.commandMove(Constants.screenToWorld(screenPos.cpy().add(displacement), terrain.getTilesHigh()));
 						ringPos++;
-						if (ringPos > 6 * layer) {
+						if (ringPos >= 6 * layer) {
 							layer++;
 							ringPos = 0;
 						}
