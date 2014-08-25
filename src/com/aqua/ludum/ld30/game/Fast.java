@@ -43,5 +43,10 @@ public class Fast extends AnimatedUnit {
 	public float getStartHP() {
 		return 10.0f;
 	}
+
+	@Override
+	public float getStartSHP() {
+		return 90.0f;
+	}
 	
 }

@@ -84,6 +84,9 @@ public class Terrain {
 		}
 		for (int i = 0; i < units.size(); ++i) {
 			if (units.get(i).getHP() < 0) {
+				if (units.get(i).getPlayer() != this.getNeutralPlayer()) {
+					units.add(new Spirit(units.get(i).getPlayer(), units.get(i).getPosition(), this));
+				}
 				units.remove(i);
 				--i;
 			}

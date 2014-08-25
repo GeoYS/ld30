@@ -1,7 +1,6 @@
 package com.aqua.ludum.ld30.game;
 
 import com.aqua.ludum.ld30.Images;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public class Spirit extends AnimatedUnit {
@@ -11,53 +10,58 @@ public class Spirit extends AnimatedUnit {
 	}
 	
 	@Override
-	public void render(SpriteBatch batch) {
-		
+	public void attack(float delta) {
+		getTargetUnit().shp -= delta * 30;
+		if (getTargetUnit().shp < 0) {
+			getTargetUnit().shp = getTargetUnit().getStartSHP();
+			getTargetUnit().setPlayer(getPlayer());
+			hp = -10;
+		}
 	}
 	
-	@Override
+	/*@Override
 	public void update(float delta) {
 		
-	}
+	}*/
 
 	@Override
 	public float getSpeed() {
-		return 0;
+		return 50.0f;
 	}
 
 	@Override
 	public float getRadius() {
-		return 0;
+		return 12.0f;
 	}
 
 	@Override
 	public float getAttackRadius() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 32.0f;
 	}
 
 	@Override
 	public float getAttackStrength() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public float getMeleeArmour() {
-		// TODO Auto-generated method stub
-		return 0;
+		return Float.POSITIVE_INFINITY;
 	}
 
 	@Override
 	public float getRangeArmour() {
-		// TODO Auto-generated method stub
-		return 0;
+		return Float.POSITIVE_INFINITY;
 	}
 
 	@Override
 	public float getStartHP() {
-		// TODO Auto-generated method stub
-		return 0;
+		return Float.POSITIVE_INFINITY;
+	}
+	
+	@Override
+	public float getStartSHP() {
+		return Float.POSITIVE_INFINITY;
 	}
 	
 }

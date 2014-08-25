@@ -43,5 +43,10 @@ public class Ranged extends AnimatedUnit {
 	public float getStartHP() {
 		return 200.0f;
 	}
+
+	@Override
+	public float getStartSHP() {
+		return 110.0f;
+	}
 	
 }

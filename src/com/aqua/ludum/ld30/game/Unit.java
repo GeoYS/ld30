@@ -25,14 +25,24 @@ public abstract class Unit {
 	public abstract float getSpeed();
 	public abstract float getRadius();
 	public abstract float getStartHP();
+	public abstract float getStartSHP();
 	public abstract float getAttackRadius();
 	public abstract float getAttackStrength();
 	public abstract float getMeleeArmour();
 	public abstract float getRangeArmour();
 	
 	public void update(float delta) {
+		stanceUpdate(delta);
 		collisionUpdate(delta);
 		pathingUpdate(delta);
+		hp += delta * 1;
+		shp += delta * 10;
+		if (hp > getStartHP()) {
+			hp = getStartHP();
+		}
+		if (shp > getStartSHP()) {
+			shp = getStartSHP();
+		}
 	}
 	
 	protected final void collisionUpdate(float delta) {
@@ -109,7 +119,7 @@ public abstract class Unit {
 		}
 	}*/
 	
-	protected final void attack(float delta) {
+	protected void attack(float delta) {
 		targetUnit.hp -= getAttackStrength() * delta * (100 / (100 + targetUnit.getMeleeArmour()));
 		if (targetUnit.hp < 0) {
 			targetUnit = null;
@@ -120,9 +130,35 @@ public abstract class Unit {
 		return this.hp;
 	}
 	
+	protected final float getSHP() {
+		return this.shp;
+	}
+	
+	protected final void stanceUpdate(float delta) {
+		if (stance == Stance.StandGround) {
+			for (Unit unit : terrain.getUnits()) {
+				if (unit.targetUnit == this) {
+					commandAttack(unit);
+					break;
+				}
+			}
+		}
+		if (stance == Stance.Aggressive) {
+			for (Unit unit : terrain.getUnits()) {
+				if (unit.player != player && unit.player != terrain.getNeutralPlayer() && unit.position.dst2(position) <= 128 * 128) {
+					commandAttack(unit);
+					break;
+				}
+			}
+		}
+	}
+	
 	protected final void pathingUpdate(float delta) {
 		if (this.targetUnit != null) {
-			if (this.position.dst2(this.targetUnit.position) > getAttackRadius() * getAttackRadius()) {
+			if (this.targetUnit.hp < 0) {
+				this.targetUnit = null;
+			}
+			else if (this.position.dst2(this.targetUnit.position) > getAttackRadius() * getAttackRadius()) {
 				move(targetUnit.position);
 			}
 			else {
@@ -245,7 +281,8 @@ public abstract class Unit {
 	private Stance stance;
 	private Terrain terrain;
 	private Path currentPath;
-	private float hp;
+	protected float hp;
+	protected float shp;
 	//private boolean shoved;
 	
 }

@@ -44,4 +44,9 @@ public class Soldier extends AnimatedUnit {
 		return 400.0f;
 	}
 	
+	@Override
+	public float getStartSHP() {
+		return 100.0f;
+	}
+	
 }

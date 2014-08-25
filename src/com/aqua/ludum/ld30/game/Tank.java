@@ -43,5 +43,10 @@ public class Tank extends AnimatedUnit {
 	public float getStartHP() {
 		return 800.0f;
 	}
+
+	@Override
+	public float getStartSHP() {
+		return 90.0f;
+	}
 	
 }

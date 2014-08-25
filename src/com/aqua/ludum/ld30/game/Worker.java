@@ -49,5 +49,10 @@ public class Worker extends AnimatedUnit {
 	public float getStartHP() {
 		return 120.0f;
 	}
+
+	@Override
+	public float getStartSHP() {
+		return 150.0f;
+	}
 	
 }
