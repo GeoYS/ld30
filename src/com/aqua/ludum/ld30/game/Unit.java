@@ -178,11 +178,15 @@ public abstract class Unit {
 		return this.position;
 	}
 	
+	public final Vector2 getScreenPosition() {
+		return Constants.worldToScreen(this.getPosition(), getTerrain().getTilesHigh());
+	}
+	
 	public final Circle getCollisionShape() {
 		return new Circle(this.position, this.getRadius());
 	}
 	
-	public Path getCurrentPath() {
+	public Path getPath() {
 		return currentPath;
 	}
 	

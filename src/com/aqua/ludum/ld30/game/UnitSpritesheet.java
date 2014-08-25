@@ -6,27 +6,28 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class UnitSpritesheet {
 	
 	public UnitSpritesheet(Texture leftUp, Texture downRight) {
-		int regionWidth = leftUp.getWidth() / 3, regionHeight = leftUp.getHeight() / 2;
-		left = new TextureRegion[3];
-		for(int i = 0; i < 3; i ++) {
+		final int FRAMES_WIDE = 3, FRAMES_HIGH = 2;
+		int regionWidth = leftUp.getWidth() / FRAMES_WIDE, regionHeight = leftUp.getHeight() / FRAMES_HIGH;
+		left = new TextureRegion[FRAMES_WIDE];
+		for(int i = 0; i < FRAMES_WIDE; i ++) {
 			left[i] = new TextureRegion();
 			left[i].setTexture(leftUp);
 			left[i].setRegion(i * regionWidth, 0, regionWidth, regionHeight);
 		}
-		up = new TextureRegion[3];
-		for(int i = 0; i < 3; i ++) {
+		up = new TextureRegion[FRAMES_WIDE];
+		for(int i = 0; i < FRAMES_WIDE; i ++) {
 			up[i] = new TextureRegion();
 			up[i].setTexture(leftUp);
 			up[i].setRegion(i * regionWidth, regionHeight, regionWidth, regionHeight);
 		}
-		down = new TextureRegion[3];
-		for(int i = 0; i < 3; i ++) {
+		down = new TextureRegion[FRAMES_WIDE];
+		for(int i = 0; i < FRAMES_WIDE; i ++) {
 			down[i] = new TextureRegion();
 			down[i].setTexture(downRight);
 			down[i].setRegion(i * regionWidth, 0, regionWidth, regionHeight);
 		}
-		right = new TextureRegion[3];
-		for(int i = 0; i < 3; i ++) {
+		right = new TextureRegion[FRAMES_WIDE];
+		for(int i = 0; i < FRAMES_WIDE; i ++) {
 			right[i] = new TextureRegion();
 			right[i].setTexture(downRight);
 			right[i].setRegion(i * regionWidth, regionHeight, regionWidth, regionHeight);
@@ -37,7 +38,7 @@ public class UnitSpritesheet {
 		return up;
 	}
 	
-	public TextureRegion[] geDownFrames() {
+	public TextureRegion[] getDownFrames() {
 		return down;
 	}
 	

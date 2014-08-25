@@ -1,6 +1,7 @@
 package com.aqua.ludum.ld30.game.screens.test;
 
 import com.aqua.ludum.ld30.Constants;
+import com.aqua.ludum.ld30.Images;
 import com.aqua.ludum.ld30.game.HumanPlayer;
 import com.aqua.ludum.ld30.game.Player;
 import com.aqua.ludum.ld30.game.Terrain;
@@ -28,6 +29,8 @@ public class TestScreen extends GameScreen{
 		Gdx.gl20.glClearColor(0,0,0,0);
 		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		terrain.render(batch);
+		batch.draw(Images.WORKER_LEFTUP, 100, 100);
+		batch.draw(Images.WORKER_DOWNRIGHT, 400, 400);
 		
 		batch.end();
 	}

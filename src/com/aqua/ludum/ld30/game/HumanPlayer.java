@@ -158,7 +158,7 @@ public class HumanPlayer extends Player {
 			Vector2 screenPos = Constants.worldToScreen(unit.getPosition(), getTerrain().getTilesHigh());
 			renderer.ellipse(screenPos.x - unit.getRadius(), screenPos.y - unit.getRadius() / 2, unit.getRadius() * 2, unit.getRadius());
 			// draw target points
-			List<Vector2> pathPoints = unit.getCurrentPath().getPoints();
+			List<Vector2> pathPoints = unit.getPath().getPoints();
 			if(!pathPoints.isEmpty()) {
 				Vector2 targetPos = Constants.worldToScreen(pathPoints.get(pathPoints.size() - 1), getTerrain().getTilesHigh());
 				renderer.circle(targetPos.x, targetPos.y, 2);

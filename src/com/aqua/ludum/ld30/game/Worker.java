@@ -5,18 +5,18 @@ import com.aqua.ludum.ld30.Images;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
-public class Worker extends Unit {
+public class Worker extends AnimatedUnit {
 
 	public Worker(Player player, Vector2 position, Terrain terrain) {
-		super(player, position, terrain);
+		super(player, position, terrain, Images.WORKER_SPRITESHEET);
 		System.out.println("x: " + this.getPosition().x + " y: " + this.getPosition().y);
 	}
 
-	@Override
+	/*@Override
 	public void render(SpriteBatch batch) {
 		Vector2 screenPos = Constants.worldToScreen(this.getPosition(), getTerrain().getTilesHigh());
 		batch.draw(Images.WORKER_IMAGE, screenPos.x, screenPos.y);
-	}
+	}*/
 
 	@Override
 	public float getSpeed() {
