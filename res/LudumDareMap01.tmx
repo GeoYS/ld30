@@ -30,12 +30,12 @@
  </layer>
  <layer name="Snow Obstruction" width="32" height="32">
   <data encoding="base64" compression="zlib">
-   eJztV0kOwyAMROrTopx4AH+o4NJrl7c3SLHkjsxicJpDOxIKJLYnBmODc3/MIBjbys3vz2Xv+72/CDr0LbC+Z2MNtPKjOiVI/h2hU8LL0NYILH1BUGxRfEjA97eGTZSf3Quz8TrLr51/Lp8G9Gf5yf8IY+q31luyF9xnHqrp8pzTk28eW7tDK2FlHL1o7d/8/QoN+RCamOzlz0gN2QBPS36Kl4sgg/OgickZ/3Ge18J7C/7YkOM4wn8p/ogLa3ht/aW6X8PT1fefNn8iHx/z3NNrdzT/ZSQFT4+9HtD/Rhhb8bfqL/r77fqnAcVDrU6cff46+/w7sn6W9w9+18DaXsoveN/gdxbLfyvBcv5/EW9MNDi5
+   eJztV0sOAyEINenRJrPyAN6hy277OXs7yZjQF0ARnFm0LzE6KjAoPjSlPzwowbq2kvd62dt5by+MTB0rpJ3JtwXW+aMyEjj/ZshIeAXqGkGkL4gaWzU+OGD/raET53vPgjdevfat64/zvftnlUf/M7Rb+83pK+mbhzRZyjk9fPP4lDsUCSux0YvW+d3Gr1DQHsISk732e1CgnmH/wszBdbDEpMd/XOdV6J9lX8IM/7n4q7Ywh2v7z+V9Dc+knz8rf2r8Q7mnV6+X/47OP9H8b82/6O/R+c+CGg9anjj7/nX2/Xdk/yLfH/Stgbld4hd8b9A3S+S/SYhc/1/EG/vfNVU=
   </data>
  </layer>
  <layer name="Snow Obstruction Top" width="32" height="32">
   <data encoding="base64" compression="zlib">
-   eJxjYBgF2IAlGtuSSHVDFYDc7kWGHmqDEBqYSQxA9kscHewgBDJo5IbBCkhNS8jqk8nQT6n9MJBEAzNJAUOpzElAwwNhPwgkD4DdMPvxpRd0QO24TYDSI9n/yBibXcTaSYt6n9T6Fx8gtzwlp/6ldnoipv6FuTcJjU8tQO/6l9bl+FCqJ0YywFauENP3wKduFIwCXAAAKyERfQ==
+   eJxjYBgF2IAlGtuSSHVDFYDc7kWGHmqDEBqYSQxA9kscHewgBDJo5IbBCkhNS+jqKU2LtEjL9CgPhlKZk4CGB8L+gQSk2k/tuCXVfmoDUu2nhf+RMTa7iLWTFvU+qfUvPkBueTpQ9S8yIKb+pXb5jw7oXf/SuhwfSvXESAbYyhVi+h741I2CUYALAACxKw5p
   </data>
  </layer>
  <objectgroup name="Blocks" width="32" height="32">
@@ -62,5 +62,16 @@
   <object x="704" y="352" width="128" height="32"/>
   <object x="224" y="736" width="32" height="32"/>
   <object x="224" y="256" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="Temple" width="32" height="32">
+  <object x="192" y="832" width="32" height="32"/>
+  <object x="192" y="192" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="Neutral" width="32" height="32">
+  <object x="576" y="320" width="32" height="32"/>
+  <object x="588" y="689"/>
+  <object x="576" y="704" width="32" height="32"/>
+  <object x="960" y="544" width="32" height="32"/>
+  <object x="960" y="480" width="32" height="32"/>
  </objectgroup>
 </map>
