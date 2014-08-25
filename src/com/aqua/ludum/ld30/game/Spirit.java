@@ -39,7 +39,7 @@ public class Spirit extends AnimatedUnit {
 		super.pathingUpdate(delta);
 	}
 	
-	public boolean commandTargetBuilding(Building building) {
+	public boolean commandTargetBuilding(SpawnBuilding building) {
 		this.targetBuilding = building;
 		this.targetUnit = null;
 		if (move(building.position)) {
@@ -97,6 +97,6 @@ public class Spirit extends AnimatedUnit {
 		return Float.POSITIVE_INFINITY;
 	}
 	
-	private Building targetBuilding;
+	private SpawnBuilding targetBuilding;
 	
 }

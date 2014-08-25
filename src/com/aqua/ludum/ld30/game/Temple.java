@@ -10,10 +10,6 @@ public class Temple extends Building {
 	}
 
 	@Override
-	public void renderBuilding(SpriteBatch batch) {
-	}
-
-	@Override
 	protected void handleKey(int key) {
 	}
 
@@ -56,6 +52,12 @@ public class Temple extends Building {
 	public float getStartSHP() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public void render(SpriteBatch batch) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

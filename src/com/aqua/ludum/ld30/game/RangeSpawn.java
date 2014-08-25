@@ -3,7 +3,7 @@ package com.aqua.ludum.ld30.game;
 import com.aqua.ludum.ld30.Images;
 import com.badlogic.gdx.math.Vector2;
 
-public class RangeSpawn extends Building {
+public class RangeSpawn extends SpawnBuilding {
 
 	public RangeSpawn(Player player, Vector2 position, Terrain terrain) {
 		super(player, position, terrain, Images.RANGED_TENT);

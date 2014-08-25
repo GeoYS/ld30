@@ -3,7 +3,7 @@ package com.aqua.ludum.ld30.game;
 import com.aqua.ludum.ld30.Images;
 import com.badlogic.gdx.math.Vector2;
 
-public class FastSpawn extends Building{
+public class FastSpawn extends SpawnBuilding{
 
 	public FastSpawn(Player player, Vector2 position, Terrain terrain) {
 		super(player, position, terrain, Images.FAST_TENT);
