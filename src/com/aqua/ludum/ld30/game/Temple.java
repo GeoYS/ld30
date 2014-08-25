@@ -21,7 +21,7 @@ public class Temple extends Building {
 
 	@Override
 	public float getRadius() {
-		return 0;
+		return 48.0f;
 	}
 
 	@Override

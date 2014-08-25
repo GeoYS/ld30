@@ -18,6 +18,10 @@ public class Spirit extends AnimatedUnit {
 		getTargetUnit().shp -= delta * 30;
 		if (getTargetUnit().shp < 0) {
 			getTargetUnit().shp = getTargetUnit().getStartSHP();
+			if (getTargetUnit().getPlayer() != terrain.getNeutralPlayer() &&
+					getTargetUnit().getPlayer() != player) {
+				terrain.spawnUnit(new Spirit(getTargetUnit().player, getTargetUnit().position, terrain));
+			}
 			getTargetUnit().setPlayer(getPlayer());
 			hp = -10;
 		}
