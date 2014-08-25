@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 public class Spirit extends AnimatedUnit {
 	
 	public Spirit(Player player, Vector2 position, Terrain terrain) {
-		super(player, position, terrain, Images.SPIRIT_SPRITESHEET);
+		super(player, position, terrain, Images.SPIRIT_SPRITESHEET, Images.SPIRIT_SPRITESHEET);
 		targetBuilding = null;
 	}
 	

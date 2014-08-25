@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 public class Fast extends AnimatedUnit {
 
 	public Fast(Player player, Vector2 position, Terrain terrain) {
-		super(player, position, terrain, Images.FAST_SPRITESHEET);
+		super(player, position, terrain, Images.FAST_SPRITESHEET, Images.ARANGED_SPRITESHEET);
 	}
 
 	@Override

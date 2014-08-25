@@ -23,9 +23,9 @@ public class TestTerrain extends Terrain {
 		this.getPlayers().add(human);
 		this.getPlayers().add(computer);
 		
-		/*addUnit(new Worker(computer, new Vector2(0, 0), this));
+		addUnit(new Worker(computer, new Vector2(0, 0), this));
 		addUnit(new Worker(computer, new Vector2(32, 0), this));
-		addUnit(new Worker(computer, new Vector2(0, 32), this));*/
+		addUnit(new Worker(computer, new Vector2(0, 32), this));
 		/*this.addUnit(new Worker(this.getNeutralPlayer(), new Vector2(0, 0), this));
 		this.addUnit(new Worker(this.getNeutralPlayer(), new Vector2(64, 0), this));
 		this.addUnit(new Worker(this.getNeutralPlayer(), new Vector2(128, 0), this));

@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 public class Ranged extends AnimatedUnit {
 
 	public Ranged(Player player, Vector2 position, Terrain terrain) {
-		super(player, position, terrain, Images.RANGED_SPRITESHEET);
+		super(player, position, terrain, Images.RANGED_SPRITESHEET, Images.ARANGED_SPRITESHEET);
 	}
 
 	@Override
