@@ -17,12 +17,14 @@ public abstract class Unit {
 		this.terrain = terrain;
 		this.position = position;
 		this.currentPath = new Path();
+		this.hp = getStartHP();
 		//this.shoved = false;
 	}
 	
 	public abstract void render(SpriteBatch batch);
 	public abstract float getSpeed();
 	public abstract float getRadius();
+	public abstract float getStartHP();
 	public abstract float getAttackRadius();
 	public abstract float getAttackStrength();
 	public abstract float getMeleeArmour();
@@ -108,10 +110,13 @@ public abstract class Unit {
 	}*/
 	
 	protected final void attack(float delta) {
-		
+		targetUnit.hp -= getAttackStrength() * delta * (100 / (100 + targetUnit.getMeleeArmour()));
+		if (targetUnit.hp < 0) {
+			targetUnit = null;
+		}
 	}
 	
-	protected final int getHP() {
+	protected final float getHP() {
 		return this.hp;
 	}
 	
@@ -162,7 +167,7 @@ public abstract class Unit {
 	
 	private boolean move(Vector2 to, List<Unit> ignore) {
 		for (Unit unit : terrain.getUnits()) {
-			if (ignore.contains(unit)) {
+			if (ignore.contains(unit) || unit == this || unit.getPlayer() != getPlayer()) {
 				continue;
 			}
 			if (!(unit instanceof Building)) {
@@ -240,7 +245,7 @@ public abstract class Unit {
 	private Stance stance;
 	private Terrain terrain;
 	private Path currentPath;
-	private int hp;
+	private float hp;
 	//private boolean shoved;
 	
 }

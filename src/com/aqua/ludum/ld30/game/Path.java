@@ -36,7 +36,9 @@ public final class Path {
 				}
 			}
 			if (current.equals(goal)) {
-				return reconstructPath(cameFrom, goal);
+				Path result = reconstructPath(cameFrom, goal);
+				result.points.remove(0);
+				return result;
 			}
 			openSet.remove(current);
 			closedSet.add(current);

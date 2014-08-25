@@ -30,26 +30,27 @@ public class Worker extends AnimatedUnit {
 
 	@Override
 	public float getAttackRadius() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 32.0f;
 	}
 
 	@Override
 	public float getAttackStrength() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 60.0f;
 	}
 
 	@Override
 	public float getMeleeArmour() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 1.0f;
 	}
 
 	@Override
 	public float getRangeArmour() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 1.0f;
+	}
+
+	@Override
+	public float getStartHP() {
+		return 120.0f;
 	}
 	
 }

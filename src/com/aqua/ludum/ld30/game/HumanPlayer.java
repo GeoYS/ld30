@@ -52,6 +52,16 @@ public class HumanPlayer extends Player {
 					/*for(Unit unit : selectedUnits) {
 						unit.commandMove(Constants.screenToWorld(screenPos, terrain.getTilesHigh()));
 					}*/
+					// command attack
+					Vector2 mouseWorld = Constants.screenToWorld(screenPos, terrain.getTilesHigh());
+					for(Unit unit : terrain.getUnits()) {
+						if(unit.getPlayer() != HumanPlayer.this){
+							if(unit.getCollisionShape().contains(mouseWorld)){
+								HumanPlayer.this.attackWithSelectedUnits(unit);
+								break;
+							}
+						}
+					}
 				}
 				isDown[button] = false;
 				return true; // touchUp used up

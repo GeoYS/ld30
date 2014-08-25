@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="isometric" width="32" height="32" tilewidth="64" tileheight="32">
+ <tileset firstgid="1" name="ice tiles part 1" tilewidth="64" tileheight="32">
+  <image source="ice tiles part 1.png" width="192" height="64"/>
+ </tileset>
+ <tileset firstgid="7" name="ice tiles part 2" tilewidth="64" tileheight="32">
+  <image source="ice tiles part 2.png" width="128" height="64"/>
+ </tileset>
+ <tileset firstgid="11" name="snow tiles part 1 - edit" tilewidth="64" tileheight="32">
+  <image source="snow tiles part 1 - edit.png" width="192" height="64"/>
+ </tileset>
+ <tileset firstgid="17" name="snow tiles part 2 - edit" tilewidth="64" tileheight="32">
+  <image source="snow tiles part 2 - edit.png" width="192" height="64"/>
+ </tileset>
+ <tileset firstgid="23" name="Obstecles" tilewidth="64" tileheight="32">
+  <image source="Obstecles.png" width="640" height="320"/>
+ </tileset>
+ <tileset firstgid="123" name="ice tiles - river 2" tilewidth="64" tileheight="32">
+  <image source="ice tiles - river 2.png" width="192" height="64"/>
+ </tileset>
+ <layer name="under" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJztwwEJAAAMBKGL8P3TrsdQcNVUVVXV1w+uAEAB
+  </data>
+ </layer>
+ <layer name="Visual" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJztV9sKwjAMreJ9c+zi/3+rHbRQQpKTdJ36oHDwYSc9pLl2CCG8voQ+YokYN2DaYDsT/UmBZL/+P512nP4MuNw9IRvJTtMfhFhp/ks2kp2m78mHGpuW+qPBRym3LPoof+h3LU/pbwH66D68fC4vkP/a3Xr1W8cf6Vv7B7Xneommn/ldoS/1BXpux+hz8PSezKXxRnzOpgcx8XCz/jnikXAA8fbkhLVe7hGXhOtf/6f0ufrQzvRws/4p4pZwDPvVH/UF8bVZrvmT+WX9cVoLc27P6Lfqv1Yfaufv3vOn9fyt2T+suw3iS/nQYv+y7v81+4c3B72wzn9pF/jk+6OMmxZXja/pczFC74mW749aeGuE6qN474l1Zr0BP9ZCDQ==
+  </data>
+ </layer>
+ <layer name="Snow Obstruction" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJztV0kOwyAMROrTopx4AH+o4NJrl7c3SLHkjsxicJpDOxIKJLYnBmODc3/MIBjbys3vz2Xv+72/CDr0LbC+Z2MNtPKjOiVI/h2hU8LL0NYILH1BUGxRfEjA97eGTZSf3Quz8TrLr51/Lp8G9Gf5yf8IY+q31luyF9xnHqrp8pzTk28eW7tDK2FlHL1o7d/8/QoN+RCamOzlz0gN2QBPS36Kl4sgg/OgickZ/3Ge18J7C/7YkOM4wn8p/ogLa3ht/aW6X8PT1fefNn8iHx/z3NNrdzT/ZSQFT4+9HtD/Rhhb8bfqL/r77fqnAcVDrU6cff46+/w7sn6W9w9+18DaXsoveN/gdxbLfyvBcv5/EW9MNDi5
+  </data>
+ </layer>
+ <layer name="Snow Obstruction Top" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgF2IAlGtuSSHVDFYDc7kWGHmqDEBqYSQxA9kscHewgBDJo5IbBCkhNS8jqk8nQT6n9MJBEAzNJAUOpzElAwwNhPwgkD4DdMPvxpRd0QO24TYDSI9n/yBibXcTaSYt6n9T6Fx8gtzwlp/6ldnoipv6FuTcJjU8tQO/6l9bl+FCqJ0YywFauENP3wKduFIwCXAAAKyERfQ==
+  </data>
+ </layer>
+ <objectgroup name="Blocks" width="32" height="32">
+  <object x="96" y="96" width="288" height="32"/>
+  <object x="96" y="128" width="32" height="256"/>
+  <object x="96" y="384" width="192" height="32"/>
+  <object x="256" y="416" width="32" height="192"/>
+  <object x="96" y="608" width="192" height="32"/>
+  <object x="96" y="640" width="32" height="256"/>
+  <object x="96" y="896" width="288" height="32"/>
+  <object x="512" y="832" width="32" height="128"/>
+  <object x="544" y="896" width="224" height="32"/>
+  <object x="832" y="768" width="128" height="32"/>
+  <object x="704" y="640" width="128" height="32"/>
+  <object x="480" y="608" width="128" height="32"/>
+  <object x="480" y="640" width="32" height="128"/>
+  <object x="480" y="256" width="32" height="128"/>
+  <object x="480" y="384" width="128" height="32"/>
+  <object x="608" y="256" width="32" height="160"/>
+  <object x="608" y="608" width="32" height="160"/>
+  <object x="512" y="64" width="32" height="128"/>
+  <object x="544" y="96" width="224" height="32"/>
+  <object x="832" y="224" width="128" height="32"/>
+  <object x="704" y="352" width="128" height="32"/>
+  <object x="224" y="736" width="32" height="32"/>
+  <object x="224" y="256" width="32" height="32"/>
+ </objectgroup>
+</map>

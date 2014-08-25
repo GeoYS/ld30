@@ -43,7 +43,9 @@ public abstract class Player {
 	}
 	
 	protected void attackWithSelectedUnits(Unit target) {
-		
+		for (Unit unit : this.selectedUnits) {
+			unit.commandAttack(target);
+		}
 	}
 	
 	public InputProcessor getListener() {

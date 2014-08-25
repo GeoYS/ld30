@@ -82,6 +82,12 @@ public class Terrain {
 		for(Player player : players) {
 			player.update(delta);
 		}
+		for (int i = 0; i < units.size(); ++i) {
+			if (units.get(i).getHP() < 0) {
+				units.remove(i);
+				--i;
+			}
+		}
 	}
 	
 	private void sortUnitsByDepth() {

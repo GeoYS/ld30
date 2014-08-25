@@ -52,5 +52,11 @@ public class Spirit extends Unit {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public float getStartHP() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 }
