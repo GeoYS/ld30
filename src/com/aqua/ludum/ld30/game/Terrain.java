@@ -36,6 +36,7 @@ public class Terrain {
     	this.blocks = new ArrayList<>();
     	this.players = new ArrayList<>();
     	this.neutralPlayer = new NeutralPlayer("Neutral");
+    	neutralPlayer.setTerrain(this);
     	this.humanPlayer = human;
     	this.computerPlayer = computer;
     	this.players.add(this.neutralPlayer);
