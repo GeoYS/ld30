@@ -1,8 +1,5 @@
 package com.aqua.ludum.ld30.game;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 

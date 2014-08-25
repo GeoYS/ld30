@@ -37,29 +37,50 @@ public abstract class Unit {
 	private void handleWallCollision() {
 		for (Block block : terrain.getBlocks()) {
 			Rectangle rect = block.getRectangle();
-			Vector2 upperLeft = new Vector2(rect.x, rect.y);
-			Vector2 upperRight = new Vector2(rect.x + rect.width, rect.y);
-			Vector2 lowerLeft = new Vector2(rect.x, rect.y + rect.height);
-			Vector2 lowerRight = new Vector2(rect.x + rect.width, rect.y + rect.height);
-			Vector2 point = new Vector2();
-			Intersector.nearestSegmentPoint(upperLeft, upperRight, position, point);
-			if (point.dst2(position) > getRadius() * getRadius()) {
-				Intersector.nearestSegmentPoint(upperLeft, lowerLeft, position, point);
+			Vector2 collisionPoint = getCollisionPoint(rect);
+			if (collisionPoint != null) {
+				Vector2 r = position.cpy().sub(collisionPoint);
+				position.add(r.cpy().nor().scl(getRadius() - r.len() + Constants.COLLISION_PADDING));
 			}
-			if (point.dst2(position) > getRadius() * getRadius()) {
-				Intersector.nearestSegmentPoint(upperRight, lowerRight, position, point);
+		}
+		for (Unit unit : terrain.getUnits()) {
+			if (!(unit instanceof Building)) {
+				continue;
 			}
-			if (point.dst2(position) > getRadius() * getRadius()) {
-				Intersector.nearestSegmentPoint(lowerLeft, lowerRight, position, point);
-			}
-			if (point.dst2(position) <= getRadius() * getRadius()) {
-				Vector2 r = position.cpy().sub(point);
+			Rectangle rect = ((Building) unit).getRectangle();
+			Vector2 collisionPoint = getCollisionPoint(rect);
+			if (collisionPoint != null) {
+				Vector2 r = position.cpy().sub(collisionPoint);
 				position.add(r.cpy().nor().scl(getRadius() - r.len() + Constants.COLLISION_PADDING));
 			}
 		}
 	}
 	
-	private void handleUnitCollision() {
+	private Vector2 getCollisionPoint(Rectangle rect) {
+		Vector2 upperLeft = new Vector2(rect.x, rect.y);
+		Vector2 upperRight = new Vector2(rect.x + rect.width, rect.y);
+		Vector2 lowerLeft = new Vector2(rect.x, rect.y + rect.height);
+		Vector2 lowerRight = new Vector2(rect.x + rect.width, rect.y + rect.height);
+		Vector2 point = new Vector2();
+		Intersector.nearestSegmentPoint(upperLeft, upperRight, position, point);
+		if (point.dst2(position) > getRadius() * getRadius()) {
+			Intersector.nearestSegmentPoint(upperLeft, lowerLeft, position, point);
+		}
+		if (point.dst2(position) > getRadius() * getRadius()) {
+			Intersector.nearestSegmentPoint(upperRight, lowerRight, position, point);
+		}
+		if (point.dst2(position) > getRadius() * getRadius()) {
+			Intersector.nearestSegmentPoint(lowerLeft, lowerRight, position, point);
+		}
+		if (point.dst2(position) <= getRadius() * getRadius()) {
+			return null;
+		}
+		else {
+			return point;
+		}
+	}
+	
+	/*private void handleUnitCollision() {
 		if (!currentPath.getPoints().isEmpty() || shoved) {
 			shoved = false;
 			for (Unit unit : terrain.getUnits()) {
@@ -81,7 +102,7 @@ public abstract class Unit {
 				}
 			}
 		}
-	}
+	}*/
 	
 	protected final void attack(float delta) {
 		
