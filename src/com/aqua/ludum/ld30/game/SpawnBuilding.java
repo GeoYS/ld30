@@ -63,11 +63,12 @@ public abstract class SpawnBuilding extends Building {
 		}
 		spiritCount -= 1;
 		Unit unit = getSpawnUnit();
-		Formation formation = new Formation(16.0f);
-		formation.getNextPosition();
-		for (int i = 0; i < 6 + 12 + 18 + 24; ++i) {
-			Vector2 pos = formation.getNextPosition().add(position);
-			unit.position = pos;
+		int MAX_I = 20;
+		for (int i = 0; i < MAX_I; ++i) {
+			float angle = (float) (Math.PI * 2.0 / MAX_I);
+			float distance = getRadius() + unit.getRadius() + 4.0f;
+			Vector2 pos = new Vector2(distance * (float) Math.cos(i * angle), distance * (float) Math.sin(i * angle));
+			unit.position = pos.add(position);
 			if (unit.validPosition()) {
 				terrain.spawnUnit(unit);
 				return;
