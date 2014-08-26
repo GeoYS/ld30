@@ -148,6 +148,23 @@ public class HumanPlayer extends Player {
 				else if(keycode == Input.Keys.M) {
 					terrain.addUnit(new Ranged(HumanPlayer.this, mouseWorldPos, terrain));
 				}
+				else if (keycode == Input.Keys.Q) {
+					for (Unit unit : HumanPlayer.this.getSelectedUnits()) {
+						if (!(unit instanceof Spirit) && !(unit instanceof Temple)) {
+							if (unit instanceof SpawnBuilding) {
+								int n = ((SpawnBuilding) unit).spiritCount;
+								unit.hp = -10;
+								for (int i = 0; i < n; ++i) {
+									terrain.spawnUnit(new Spirit(HumanPlayer.this, unit.position, terrain));
+								}
+							}
+							else {
+								unit.hp = -10;
+								terrain.spawnUnit(new Spirit(HumanPlayer.this, unit.position, terrain));
+							}
+						}
+					}
+				}
 				
 				// worker building
 				int workerCount = 0;

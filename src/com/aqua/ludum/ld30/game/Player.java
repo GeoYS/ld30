@@ -33,6 +33,12 @@ public abstract class Player {
 				--i;
 			}
 		}
+		for (int i = 0; i < units.size(); ++i) {
+			if (units.get(i).getPlayer() != this) {
+				units.remove(i);
+				--i;
+			}
+		}
 	}
 	
 	protected void moveSelectedUnits(Vector2 position) {
