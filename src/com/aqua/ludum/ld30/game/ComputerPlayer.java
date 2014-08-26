@@ -17,7 +17,7 @@ public class ComputerPlayer extends Player {
 		super.update(delta);
 		if (Math.random() < delta / 20) {
 			for (Unit unit : this.getTerrain().getUnits()) {
-				if (!(unit instanceof Spirit) && !(unit instanceof Building) && unit.player != this) {
+				if (!(unit instanceof Spirit) && !(unit instanceof Building) && unit.player == this) {
 					getSelectedUnits().add(unit);
 				}
 			}
