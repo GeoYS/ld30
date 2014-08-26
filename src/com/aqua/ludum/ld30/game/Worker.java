@@ -19,25 +19,23 @@ public class Worker extends AnimatedUnit {
 
 	public void handleKey(int key) {
 		if(key == Input.Keys.NUM_1) {
-			terrain.spawnUnit(new SoldierSpawn(this.getPlayer(), this.getPosition(), this.getTerrain()));
-			this.hp = -1;
-			isSpawning = true;
+			becomeBuilding(new SoldierSpawn(this.getPlayer(), this.getPosition(), this.getTerrain()));
 		}
 		else if(key == Input.Keys.NUM_2) {
-			terrain.spawnUnit(new RangeSpawn(this.getPlayer(), this.getPosition(), this.getTerrain()));
-			this.hp = -1;
-			isSpawning = true;
+			becomeBuilding(new RangeSpawn(this.getPlayer(), this.getPosition(), this.getTerrain()));
 		}
 		else if(key == Input.Keys.NUM_3) {
-			terrain.spawnUnit(new FastSpawn(this.getPlayer(), this.getPosition(), this.getTerrain()));
-			this.hp = -1;
-			isSpawning = true;
+			becomeBuilding(new FastSpawn(this.getPlayer(), this.getPosition(), this.getTerrain()));
 		}
 		else if(key == Input.Keys.NUM_4) {
-			terrain.spawnUnit(new TankSpawn(this.getPlayer(), this.getPosition(), this.getTerrain()));
-			this.hp = -1;
-			isSpawning = true;
+			becomeBuilding(new TankSpawn(this.getPlayer(), this.getPosition(), this.getTerrain()));
 		}
+	}
+	
+	public void becomeBuilding(SpawnBuilding building) {
+		terrain.spawnUnit(building);
+		this.hp = -1;
+		isSpawning = true;
 	}
 	
 	@Override

@@ -74,8 +74,8 @@ public class Images {
 		ARANGED_RIGHTLEFT = new Texture(new Pixmap(Gdx.files.internal("../LD30/res/units/ranged_attack_sprite_1.png")));
 		ARANGED_DOWNUP = new Texture(new Pixmap(Gdx.files.internal("../LD30/res/units/ranged_attack_sprite_2.png")));
 		AWORKER_SPRITESHEET = new UnitSpritesheet(AWORKER_RIGHTLEFT, AWORKER_DOWNUP, true);
-		ATANK_SPRITESHEET = new UnitSpritesheet(ASOLDIER_RIGHTLEFT, ASOLDIER_DOWNUP, true);
-		ASOLDIER_SPRITESHEET = new UnitSpritesheet(ATANK_RIGHTLEFT, ATANK_DOWNUP, true);
+		ATANK_SPRITESHEET = new UnitSpritesheet(ATANK_RIGHTLEFT, ATANK_DOWNUP, true);
+		ASOLDIER_SPRITESHEET = new UnitSpritesheet(ASOLDIER_RIGHTLEFT, ASOLDIER_DOWNUP, true);
 		AFAST_SPRITESHEET = new UnitSpritesheet(AFAST_RIGHTLEFT, AFAST_DOWNUP, true);
 		ARANGED_SPRITESHEET = new UnitSpritesheet(ARANGED_RIGHTLEFT, ARANGED_DOWNUP, true);	
 	}

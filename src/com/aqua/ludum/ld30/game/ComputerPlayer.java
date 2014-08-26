@@ -1,6 +1,10 @@
 package com.aqua.ludum.ld30.game;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.math.Vector2;
+
 
 public class ComputerPlayer extends Player {
 	
@@ -11,18 +15,98 @@ public class ComputerPlayer extends Player {
 	@Override
 	public void update(float delta) {
 		super.update(delta);
-		/*this.getSelectedUnits().clear();
-		for(Unit unit : getTerrain().getUnits()) {
+		for(Unit unit : this.getTerrain().getUnits()) {
 			if(unit.getPlayer() == this) {
-				if(!isUnitMoving(unit)) {
+				if (unit.targetUnit != null) {
+					continue;
+				}
+				if(unit instanceof Spirit) {
+					List<Unit> workers = new ArrayList<>();
+					for(Unit u : this.getTerrain().getUnits()) {
+						if(u instanceof Worker && u.getPlayer() == getTerrain().getNeutralPlayer()) {
+							workers.add(u);
+						}
+					}
+					if(workers.isEmpty()) {
+						for(Unit u : this.getTerrain().getUnits()) {
+							if(u instanceof Worker && u.getPlayer() != this) {
+								workers.add(u);
+							}
+						}
+					}
+					if(workers.isEmpty()) {
+						for(Unit u : this.getTerrain().getUnits()) {
+							if(!(u instanceof Building) && u.getPlayer() != this) {
+								workers.add(u);
+							}
+						}
+					}
+					if(!workers.isEmpty()) {
+						this.getSelectedUnits().add(unit);
+						this.attackWithSelectedUnits(workers.get((int) (Math.random() * workers.size())));
+						this.getSelectedUnits().remove(unit);
+					}
+				}
+				else if (unit instanceof Worker) {
+					if(Math.random() < delta / 10) {
+						Worker worker = (Worker) unit;
+						if(Math.random() < 0.25) {
+							worker.becomeBuilding(new SoldierSpawn(this, worker.position, getTerrain()));
+						}
+						else if(Math.random() < 0.33) {
+							worker.becomeBuilding(new RangeSpawn(this, worker.position, getTerrain()));
+						}
+						else if(Math.random() < 0.5) {
+							worker.becomeBuilding(new FastSpawn(this, worker.position, getTerrain()));
+						}
+						else {
+							worker.becomeBuilding(new TankSpawn(this, worker.position, getTerrain()));
+						}
+					}
+					else if (!isUnitMoving(unit) || Math.random() < delta) {
+						Temple temple = null;
+						for(Unit u : this.getTerrain().getUnits()) {
+							if(u instanceof Temple && u.getPlayer() == this) {
+								temple = (Temple) u;
+							}
+						}
+						float x, y;
+						x = (float) (Math.random() * 256) - 128;
+						y = (float) (Math.random() * 256) - 128;
+						Vector2 newPos = new Vector2(x, y).add(temple.position);
+
+						this.getSelectedUnits().add(unit);
+						this.moveSelectedUnits(newPos);
+						this.getSelectedUnits().remove(unit);
+					}
+				}
+				else if (unit instanceof Tank) {
+					List<Unit> buildings = new ArrayList<>();
+					for(Unit u : this.getTerrain().getUnits()) {
+						if(u instanceof Building 
+								&& u.getPlayer() != getTerrain().getNeutralPlayer()
+								&& u.getPlayer() != this) {
+							buildings.add(u);
+						}
+					}
 					this.getSelectedUnits().add(unit);
+					this.attackWithSelectedUnits(buildings.get((int) (Math.random() * buildings.size())));
+					this.getSelectedUnits().remove(unit);
+				}
+				else {
+					List<Unit> enemies = new ArrayList<>();
+					for(Unit u : this.getTerrain().getUnits()) {
+						if(u.getPlayer() != getTerrain().getNeutralPlayer()
+								&& u.getPlayer() != this) {
+							enemies.add(u);
+						}
+					}
+					this.getSelectedUnits().add(unit);
+					this.attackWithSelectedUnits(enemies.get((int) (Math.random() * enemies.size())));
+					this.getSelectedUnits().remove(unit);
 				}
 			}
 		}
-		float x, y;
-		x = (float) (Math.random() * getTerrain().getWidth());
-		y = (float) (Math.random() * getTerrain().getHeight());
-		this.moveSelectedUnits(new Vector2(x, y));*/
 	}
 	
 	private boolean isUnitMoving(Unit unit) {

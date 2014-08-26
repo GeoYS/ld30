@@ -2,10 +2,14 @@ package com.aqua.ludum.ld30.game.screens.test;
 
 import com.aqua.ludum.ld30.Constants;
 import com.aqua.ludum.ld30.Images;
+import com.aqua.ludum.ld30.game.Building;
 import com.aqua.ludum.ld30.game.ComputerPlayer;
 import com.aqua.ludum.ld30.game.HumanPlayer;
 import com.aqua.ludum.ld30.game.Player;
+import com.aqua.ludum.ld30.game.Spirit;
+import com.aqua.ludum.ld30.game.Temple;
 import com.aqua.ludum.ld30.game.Terrain;
+import com.aqua.ludum.ld30.game.Unit;
 import com.aqua.ludum.ld30.game.Worker;
 import com.aqua.ludum.ld30.screen.Game;
 import com.aqua.ludum.ld30.screen.GameScreen;
@@ -56,10 +60,25 @@ public class TestScreen extends GameScreen{
 				this.addProcessor(((HumanPlayer) player).getListener());
 			}
 		}
-		terrain.addUnit(new Worker(computer, new Vector2(0, 0), terrain));
-		terrain.addUnit(new Worker(computer, new Vector2(20, 0), terrain));
-		terrain.addUnit(new Worker(computer, new Vector2(40, 0), terrain));
-		terrain.addUnit(new Worker(computer, new Vector2(60, 0), terrain));
+		
+		Temple humanT = null, computerT = null;
+		
+		for(Unit u : terrain.getUnits()) {
+			if(u instanceof Temple && u.getPlayer() == human) {
+				humanT = (Temple) u;
+			}
+			if(u instanceof Temple && u.getPlayer() == computer) {
+				computerT = (Temple) u;
+			}
+		}
+		
+		camera.translate(Constants.worldToScreen(humanT.getPosition(), terrain.getTilesHigh()));
+		
+		int SPIRITS = 15;
+		for(int i = 0; i < SPIRITS; i ++) {
+			terrain.addUnit(new Spirit(human, humanT.getPosition().cpy(), terrain));
+			terrain.addUnit(new Spirit(computer, computerT.getPosition().cpy(), terrain));
+		}
 	}
 
 	@Override
