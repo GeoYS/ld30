@@ -14,6 +14,7 @@ import com.aqua.ludum.ld30.game.Worker;
 import com.aqua.ludum.ld30.screen.Game;
 import com.aqua.ludum.ld30.screen.GameScreen;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -26,6 +27,11 @@ public class TestScreen extends GameScreen{
 	private Terrain terrain;
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
+	private Game game;
+	private Temple humanT = null, computerT = null;
+	
+	private boolean title = true;
+	private Music music;
 	
 	@Override
 	public void render() {
@@ -36,17 +42,34 @@ public class TestScreen extends GameScreen{
 		Gdx.gl20.glClearColor(0,0,0,0);
 		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		terrain.render(batch);
-		
+
+		if(title) {
+			batch.draw(Images.TITLE,
+					Gdx.graphics.getWidth() / 2 - Images.TITLE.getWidth() / 2,
+					Gdx.graphics.getHeight() / 2 - Images.TITLE.getHeight() / 2);
+		}
 		batch.end();
 	}
 
 	@Override
 	public void update(float delta) {
+		if(title) {
+			return;
+		}
+		if(humanT != null && humanT.hp < -1) {
+			game.enterScreen(LoseScreen.ID);
+		}
+		if(computerT != null && computerT.hp < -1) {
+			game.enterScreen(WinScreen.ID);
+		}
 		terrain.update(delta);
 	}
 
 	@Override
 	public void init(Game game) {
+		this.game = game;
+		music = Gdx.audio.newMusic(Gdx.files.internal("../LD30/res/ld30music1.ogg"));
+		music.play();
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
 		HumanPlayer human = new HumanPlayer("George", camera);
@@ -84,6 +107,15 @@ public class TestScreen extends GameScreen{
 	@Override
 	public int getID() {
 		return ID;
+	}
+	
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		if(title) {
+			title = false;
+			return false;
+		}
+		return super.touchUp(screenX, screenY, pointer, button);
 	}
 
 }

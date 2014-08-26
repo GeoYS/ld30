@@ -313,7 +313,7 @@ public abstract class Unit {
 	protected Stance stance;
 	protected Terrain terrain;
 	protected Path currentPath;
-	protected float hp;
+	public float hp;
 	protected float shp;
 	private boolean isAttacking = false;
 	//private boolean shoved;

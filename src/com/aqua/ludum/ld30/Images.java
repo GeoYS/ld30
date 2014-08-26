@@ -32,6 +32,10 @@ public class Images {
 	
 	public static SpriteSheet BUILDING = new SpriteSheet(new Texture(new Pixmap(Gdx.files.internal("../LD30/res/units/tent_building_sprite.png"))), 136, 96);
 	
+	public static Texture WIN_IMAGE = new Texture(new Pixmap(Gdx.files.internal("../LD30/res/Win.png"))),
+			LOST_IMAGE = new Texture(new Pixmap(Gdx.files.internal("../LD30/res/Lose.png"))),
+			TITLE = new Texture(new Pixmap(Gdx.files.internal("../LD30/res/aColdNight.png")));
+	
 	static {
 		// buildings
 		RANGED_TENT = new Texture(new Pixmap(Gdx.files.internal("../LD30/res/units/ranged_tent_sprite.png")));

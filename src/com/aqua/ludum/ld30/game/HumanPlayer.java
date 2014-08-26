@@ -206,6 +206,21 @@ public class HumanPlayer extends Player {
 				renderUnitHealth(renderer, unit);
 			}
 		}
+		for(Unit unit : getTerrain().getUnits()) {
+			if(unit.getPlayer() == getTerrain().getNeutralPlayer()) {
+				renderer.setColor(Color.GRAY);
+			}
+			else if(unit.getPlayer() == this) {
+				renderer.setColor(Color.GREEN);
+			}
+			else {
+				renderer.setColor(Color.RED);
+			}
+			renderer.rect(unit.getScreenPosition().x - 5,
+					unit.getScreenPosition().y + 32,
+					10,
+					2);
+		}
 		renderer.end();
 	}
 	
