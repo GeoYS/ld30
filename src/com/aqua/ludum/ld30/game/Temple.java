@@ -16,39 +16,8 @@ public class Temple extends Building {
 	}
 
 	@Override
-	public float getSpeed() {
-		return 0;
-	}
-
-	@Override
 	public float getStartHP() {
 		return 1000;
-	}
-
-	@Override
-	public float getAttackRadius() {
-		return 0;
-	}
-
-	@Override
-	public float getAttackStrength() {
-		return 0;
-	}
-
-	@Override
-	public float getMeleeArmour() {
-		return 0;
-	}
-
-	@Override
-	public float getRangeArmour() {
-		return 0;
-	}
-
-	@Override
-	public float getStartSHP() {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	public com.badlogic.gdx.math.Rectangle getScreenRectangle() {
