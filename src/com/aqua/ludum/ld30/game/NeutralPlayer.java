@@ -14,9 +14,9 @@ public class NeutralPlayer extends Player {
 			if(unit.getPlayer() == this) {
 				if(Math.random() < delta / 2 ) {
 					this.getSelectedUnits().add(unit);
-					float x, y, xdir = Math.random() < 0.5 ? -1 : 1, ydir = Math.random() < 0.5 ? -1 : 1;
-					x = xdir * (float) (Math.random() * 32);
-					y = xdir * (float) (Math.random() * 32);
+					float x, y;
+					x = (float) (Math.random() * 64) - 32;
+					y = (float) (Math.random() * 64) - 32;
 					this.moveSelectedUnits(getSelectedUnits().get(0).getPosition().cpy().add(x, y));
 					this.getSelectedUnits().remove(unit);
 				}
