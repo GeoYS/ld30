@@ -94,8 +94,9 @@ public class Terrain {
 		camera.update();
 		batch.begin();
 		// render units
-		for(Unit unit : units) {
-			unit.render(batch);
+		sortUnitsByDepth();
+		for(int i = units.size() - 1; i <= 0; i --) {
+			units.get(i).render(batch);
 		}
 		// render selection box
 		for(Player player : players) {

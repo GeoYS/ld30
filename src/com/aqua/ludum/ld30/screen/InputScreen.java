@@ -27,6 +27,10 @@ public abstract class InputScreen extends UpdateableScreen{
 		return processors.removeAll(inputProcessors);
 	}
 	
+	public void clearProcessors() {
+		processors.clear();
+	}
+	
 	public boolean addAll(ArrayList<InputProcessor> inputProcessors){
 		return processors.addAll(inputProcessors);
 	}
