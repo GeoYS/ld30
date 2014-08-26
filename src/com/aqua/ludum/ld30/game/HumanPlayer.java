@@ -233,10 +233,10 @@ public class HumanPlayer extends Player {
 			else {
 				renderer.setColor(Color.RED);
 			}
-			renderer.rect(unit.getScreenPosition().x - 5,
+			renderer.rect(unit.getScreenPosition().x - 1.5f,
 					unit.getScreenPosition().y + 32,
-					10,
-					2);
+					3,
+					3);
 		}
 		renderer.end();
 	}
@@ -276,6 +276,13 @@ public class HumanPlayer extends Player {
 						unit.getScreenPosition().y - 18,
 						percentage * MAX_HEALTH_WIDTH,
 						2);
+				for(int i = 0; i < spawnBuilding.spiritCount; i ++) {
+					renderer.setColor(Color.BLUE);
+					renderer.rect(unit.getScreenPosition().x - MAX_HEALTH_WIDTH / 2 + i * 3,
+							unit.getScreenPosition().y - 22,
+							2,
+							2);
+				}
 			}
 		}
 	}

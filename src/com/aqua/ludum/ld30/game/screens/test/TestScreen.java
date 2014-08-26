@@ -61,9 +61,11 @@ public class TestScreen extends GameScreen{
 			return;
 		}
 		if(humanT != null && humanT.hp < 0) {
+			music.stop();
 			game.enterScreen(LoseScreen.ID);
 		}
 		if(computerT != null && computerT.hp < 0) {
+			music.stop();
 			game.enterScreen(WinScreen.ID);
 		}
 		terrain.update(delta);

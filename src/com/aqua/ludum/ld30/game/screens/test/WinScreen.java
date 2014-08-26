@@ -11,6 +11,7 @@ public class WinScreen extends GameScreen {
 	public static int ID = 2;
 	
 	private SpriteBatch batch;
+	private Game game;
 	
 	@Override
 	public void render() {
@@ -30,11 +31,19 @@ public class WinScreen extends GameScreen {
 	@Override
 	public void init(Game game) {
 		batch = new SpriteBatch();
+		this.game = game;
 	}
 
 	@Override
 	public int getID() {
 		return ID;
+	}
+	
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		game.initScreens();
+		game.enterScreen(TestScreen.ID);
+		return super.touchUp(screenX, screenY, pointer, button);
 	}
 
 }

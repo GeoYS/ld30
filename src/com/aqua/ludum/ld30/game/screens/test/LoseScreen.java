@@ -11,6 +11,7 @@ public class LoseScreen extends GameScreen{
 	public static int ID = 1;
 
 	private SpriteBatch batch;
+	private Game game;
 	
 	@Override
 	public void render() {
@@ -29,6 +30,7 @@ public class LoseScreen extends GameScreen{
 
 	@Override
 	public void init(Game game) {
+		this.game = game;
 		batch = new SpriteBatch();
 	}
 
@@ -36,6 +38,13 @@ public class LoseScreen extends GameScreen{
 	public int getID() {
 		// TODO Auto-generated method stub
 		return ID;
+	}
+	
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		game.initScreens();
+		game.enterScreen(TestScreen.ID);
+		return super.touchUp(screenX, screenY, pointer, button);
 	}
 
 }

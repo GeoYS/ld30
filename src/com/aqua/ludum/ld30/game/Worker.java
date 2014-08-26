@@ -33,6 +33,22 @@ public class Worker extends AnimatedUnit {
 	}
 	
 	public void becomeBuilding(SpawnBuilding building) {
+		for(Unit unit : getTerrain().getUnits()) {
+			if(unit == this) {
+				continue;
+			}
+			float dst2 = unit.getPosition().dst2(building.getPosition()), mindst2;
+			float buffer = 0;
+			mindst2 = (building.getRadius() + buffer) * (unit.getRadius() + building.getRadius() + buffer);
+			if(dst2 <  mindst2) {
+				return;
+			}
+		}
+		for(Block block : getTerrain().getBlocks()) {
+			if(block.getRectangle().overlaps(building.getRectangle())) {
+				return;
+			}
+		}
 		terrain.spawnUnit(building);
 		this.hp = -1;
 		isSpawning = true;
