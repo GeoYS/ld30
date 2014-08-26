@@ -57,9 +57,6 @@ public abstract class AnimatedUnit extends Unit{
 		}
 		
 		// which direction is the unit going?
-		if(isAttacking()) {
-			System.out.println("is attacking " + this.isAttacking());
-		}
 		float dx = deltaPos.x, dy = deltaPos.y;
 		if((dx < 0 && dy < 0)) {
 			current = this.isAttacking() ? aup : up;

@@ -24,10 +24,8 @@ public class Terrain {
 	 */
 	public Terrain(String pathToTmx, OrthographicCamera camera, HumanPlayer human, ComputerPlayer computer) {
 		TmxMapLoader mapLoader = new TmxMapLoader();
-		System.out.println("Loading map.");
 		TiledMap map = mapLoader.load(pathToTmx);
 		spawnUnits = new ArrayList<>();
-		System.out.println("Finished loading map.");
 		this.tilesWide = (Integer) map.getProperties().get("width");
 		this.tilesHigh = (Integer) map.getProperties().get("height");
 		this.mapRenderer = new IsometricTiledMapRenderer((TiledMap) map, 1);
