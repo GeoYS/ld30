@@ -20,7 +20,7 @@ public class Spirit extends AnimatedUnit {
 			getTargetUnit().shp = getTargetUnit().getStartSHP();
 			if (getTargetUnit().getPlayer() != terrain.getNeutralPlayer() &&
 					getTargetUnit().getPlayer() != player) {
-				terrain.spawnUnit(new Spirit(getTargetUnit().player, getTargetUnit().position, terrain));
+				terrain.spawnUnit(new Spirit(getTargetUnit().player, getTargetUnit().position.cpy(), terrain));
 			}
 			getTargetUnit().setPlayer(getPlayer());
 			hp = -10;
@@ -115,6 +115,6 @@ public class Spirit extends AnimatedUnit {
 		return Float.POSITIVE_INFINITY;
 	}
 	
-	private SpawnBuilding targetBuilding;
+	public SpawnBuilding targetBuilding;
 	
 }

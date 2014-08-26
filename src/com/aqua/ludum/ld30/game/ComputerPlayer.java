@@ -15,9 +15,25 @@ public class ComputerPlayer extends Player {
 	@Override
 	public void update(float delta) {
 		super.update(delta);
+		if (Math.random() < delta / 20) {
+			for (Unit unit : this.getTerrain().getUnits()) {
+				if (!(unit instanceof Spirit) && !(unit instanceof Building) && unit.player != this) {
+					getSelectedUnits().add(unit);
+				}
+			}
+			Temple temple = null;
+			for(Unit u : this.getTerrain().getUnits()) {
+				if(u instanceof Temple && u.getPlayer() != this) {
+					temple = (Temple) u;
+				}
+			}
+			attackWithSelectedUnits(temple);
+			getSelectedUnits().clear();
+			return;
+		}
 		for(Unit unit : this.getTerrain().getUnits()) {
 			if(unit.getPlayer() == this) {
-				if (unit.targetUnit != null) {
+				if (unit.targetUnit != null || (unit instanceof Spirit && (((Spirit) unit).targetBuilding != null)) && Math.random() > delta / 10) {
 					continue;
 				}
 				if(unit instanceof Spirit) {
@@ -34,9 +50,17 @@ public class ComputerPlayer extends Player {
 							}
 						}
 					}
+					if (workers.isEmpty()) {
+						for (Unit u : this.getTerrain().getUnits()) {
+							if (u instanceof SpawnBuilding && u.player == this) {
+								Spirit spirit = (Spirit) unit;
+								spirit.commandTargetBuilding((SpawnBuilding) u);
+							}
+						}
+					}
 					if(workers.isEmpty()) {
 						for(Unit u : this.getTerrain().getUnits()) {
-							if(!(u instanceof Building) && u.getPlayer() != this) {
+							if(!(u instanceof Building) && !(u instanceof Spirit) && u.getPlayer() != this) {
 								workers.add(u);
 							}
 						}
@@ -96,8 +120,8 @@ public class ComputerPlayer extends Player {
 				else {
 					List<Unit> enemies = new ArrayList<>();
 					for(Unit u : this.getTerrain().getUnits()) {
-						if(u.getPlayer() != getTerrain().getNeutralPlayer()
-								&& u.getPlayer() != this) {
+						if(/*u.getPlayer() != getTerrain().getNeutralPlayer()
+								&&*/ u.getPlayer() != this) {
 							enemies.add(u);
 						}
 					}
