@@ -28,7 +28,7 @@ public abstract class SpawnBuilding extends Building {
 		if(isBuilding) {
 			Vector2 screenPos = this.getScreenPosition();
 			TextureRegion frame = buildingAnimation.getKeyFrame(animationTimer.time() / 1000f);
-			batch.draw(buildingAnimation.getKeyFrame(animationTimer.time() / 1000f), screenPos.x - frame.getRegionWidth() / 2, screenPos.y);
+			batch.draw(buildingAnimation.getKeyFrame(animationTimer.time() / 1000f), screenPos.x - frame.getRegionWidth() / 2, screenPos.y - 25);
 		}
 		else {
 			renderBuilding(batch);
@@ -63,7 +63,7 @@ public abstract class SpawnBuilding extends Building {
 	
 	public final void renderBuilding(SpriteBatch batch) {
 		Vector2 screenPos = this.getScreenPosition();
-		batch.draw(buildingImage, screenPos.x - buildingImage.getWidth() / 2, screenPos.y - buildingImage.getHeight() / 2 + 16);
+		batch.draw(buildingImage, screenPos.x - buildingImage.getWidth() / 2, screenPos.y - buildingImage.getHeight() / 2 + 25);
 	}
 	
 	public void handleKeyDown(int key) {
@@ -80,6 +80,13 @@ public abstract class SpawnBuilding extends Building {
 	public abstract float timeToCompletion();
 	
 	protected abstract void handleKey(int key);
+	
+	@Override
+	public Rectangle getScreenRectangle() {
+		Vector2 screenPos = this.getScreenPosition();
+		return new Rectangle(screenPos.x - buildingImage.getWidth() / 2, screenPos.y - buildingImage.getHeight() / 2 + 25,
+				buildingImage.getWidth(), buildingImage.getHeight());
+	}
 	
 	private boolean isBuilding;
 	private Animation buildingAnimation;

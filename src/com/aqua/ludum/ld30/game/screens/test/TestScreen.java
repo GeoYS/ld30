@@ -79,7 +79,7 @@ public class TestScreen extends GameScreen{
 		camera = new OrthographicCamera(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
 		HumanPlayer human = new HumanPlayer("George", camera);
 		ComputerPlayer computer = new ComputerPlayer("AI");
-		terrain = new Terrain("../LD30/res/test.tmx", camera, human, computer);
+		terrain = new Terrain("../LD30/res/LudumDareMap01(BAD).tmx", camera, human, computer);
 		human.setTerrain(terrain);
 		computer.setTerrain(terrain);
 		human.setInputListener();

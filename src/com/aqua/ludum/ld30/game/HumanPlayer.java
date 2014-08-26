@@ -38,7 +38,7 @@ public class HumanPlayer extends Player {
 					setSelectedUnits(terrain.selectUnits(HumanPlayer.this, worldSelection));
 					currentSelection.setActive(false);
 
-					Vector2 screenPos = new Vector2(screenX - Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 2 - screenY).add(camera.position.x, camera.position.y);
+					/*Vector2 screenPos = new Vector2(screenX - Constants.SCREEN_WIDTH / 2, Constants.SCREEN_HEIGHT / 2 - screenY).add(camera.position.x, camera.position.y);
 					for(Unit unit : terrain.getUnits()) {
 						// check if unit belongs to player
 						if(unit.getPlayer() == HumanPlayer.this) {
@@ -47,7 +47,7 @@ public class HumanPlayer extends Player {
 								getSelectedUnits().add(unit);
 							}
 						}
-					}
+					}*/
 				}
 				// command units
 				if(isDown[Input.Buttons.RIGHT]) {
@@ -60,7 +60,7 @@ public class HumanPlayer extends Player {
 					Vector2 mouseWorld = Constants.screenToWorld(screenPos, terrain.getTilesHigh());
 					for(Unit unit : terrain.getUnits()) {
 						if(unit.getPlayer() != HumanPlayer.this){
-							if(unit.getCollisionShape().contains(mouseWorld)){
+							if(unit.getCollisionShape().contains(mouseWorld) || unit.getScreenRectangle().contains(screenPos)){
 								HumanPlayer.this.attackWithSelectedUnits(unit);
 								break;
 							}

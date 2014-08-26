@@ -155,9 +155,12 @@ public class Terrain {
 			// check if unit belongs to player
 			if(unit.getPlayer() == player) {
 				// check if unit is in selection
-				if(selection.contains(Constants.worldToScreen(unit.getPosition(), tilesHigh))) {
-					System.out.println("Unit selected");
+				if(selection.contains(Constants.worldToScreen(unit.getPosition(), tilesHigh)) ||
+						selection.overlaps(unit.getScreenRectangle())) {
 					selectedUnits.add(unit);
+					if(selection.width < 1 && selection.height < 1) {
+						return selectedUnits;
+					}
 				}
 			}
 		}
