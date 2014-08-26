@@ -73,6 +73,8 @@ public class TestScreen extends GameScreen{
 
 	@Override
 	public void init(Game game) {
+		this.clearProcessors();
+		title = true;
 		this.game = game;
 		music = Gdx.audio.newMusic(Gdx.files.internal("../LD30/res/ld30music1.ogg"));
 		music.play();
@@ -104,6 +106,8 @@ public class TestScreen extends GameScreen{
 			terrain.addUnit(new Spirit(human, humanT.getPosition().cpy(), terrain));
 			terrain.addUnit(new Spirit(computer, computerT.getPosition().cpy(), terrain));
 		}
+		
+		terrain.update(0.01f);
 	}
 
 	@Override
@@ -113,8 +117,10 @@ public class TestScreen extends GameScreen{
 	
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		System.out.println(title);
 		if(title) {
 			title = false;
+			System.out.println(terrain.getPlayers().size());
 			for(Player player : terrain.getPlayers()) {
 				if(player instanceof HumanPlayer) {
 					this.addProcessor(((HumanPlayer) player).getListener());
