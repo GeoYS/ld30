@@ -17,7 +17,7 @@ public class ComputerPlayer extends Player {
 		super.update(delta);
 		if (Math.random() < delta / 20) {
 			for (Unit unit : this.getTerrain().getUnits()) {
-				if (!(unit instanceof Spirit) && !(unit instanceof Building) && unit.player != this) {
+				if (!(unit instanceof Spirit) && !(unit instanceof Building) && unit.player == this) {
 					getSelectedUnits().add(unit);
 				}
 			}
@@ -94,6 +94,9 @@ public class ComputerPlayer extends Player {
 								temple = (Temple) u;
 							}
 						}
+						if(temple == null) {
+							return;
+						}
 						float x, y;
 						x = (float) (Math.random() * 256) - 128;
 						y = (float) (Math.random() * 256) - 128;
@@ -112,6 +115,9 @@ public class ComputerPlayer extends Player {
 								&& u.getPlayer() != this) {
 							buildings.add(u);
 						}
+					}
+					if(buildings.isEmpty()) {
+						continue;
 					}
 					this.getSelectedUnits().add(unit);
 					this.attackWithSelectedUnits(buildings.get((int) (Math.random() * buildings.size())));

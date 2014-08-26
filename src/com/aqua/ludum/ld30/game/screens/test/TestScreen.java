@@ -18,6 +18,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 
 public class TestScreen extends GameScreen{
@@ -25,7 +26,7 @@ public class TestScreen extends GameScreen{
 	public static int ID = 0;
 	
 	private Terrain terrain;
-	private SpriteBatch batch;
+	private SpriteBatch batch, titleBatch;
 	private OrthographicCamera camera;
 	private Game game;
 	private Temple humanT = null, computerT = null;
@@ -42,14 +43,16 @@ public class TestScreen extends GameScreen{
 		Gdx.gl20.glClearColor(0,0,0,0);
 		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		terrain.render(batch);
-
-		if(title) {
-			batch.draw(Images.TITLE,
-					Gdx.graphics.getWidth() / 2 - Images.TITLE.getWidth() / 2,
-					Gdx.graphics.getHeight() / 2 - Images.TITLE.getHeight() / 2);
-		}
 		
 		batch.end();
+		
+		if(title) {
+			titleBatch.begin();
+			titleBatch.draw(Images.TITLE,
+					Gdx.graphics.getWidth() / 2 - Images.TITLE.getWidth() / 2,
+					Gdx.graphics.getHeight() / 2 - Images.TITLE.getHeight() / 2);
+			titleBatch.end();
+		}
 	}
 
 	@Override
@@ -72,27 +75,23 @@ public class TestScreen extends GameScreen{
 		music = Gdx.audio.newMusic(Gdx.files.internal("../LD30/res/ld30music1.ogg"));
 		music.play();
 		batch = new SpriteBatch();
+		titleBatch = new SpriteBatch();
 		camera = new OrthographicCamera(Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
 		HumanPlayer human = new HumanPlayer("George", camera);
 		ComputerPlayer computer = new ComputerPlayer("AI");
-		terrain = new Terrain("../LD30/res/LudumDareMap01.tmx", camera, human, computer);
+		terrain = new Terrain("../LD30/res/test.tmx", camera, human, computer);
 		human.setTerrain(terrain);
 		computer.setTerrain(terrain);
 		human.setInputListener();
-		for(Player player : terrain.getPlayers()) {
-			if(player instanceof HumanPlayer) {
-				this.addProcessor(((HumanPlayer) player).getListener());
-			}
-		}
 		
 		Temple humanT = null, computerT = null;
 		
 		for(Unit u : terrain.getUnits()) {
 			if(u instanceof Temple && u.getPlayer() == human) {
-				humanT = (Temple) u;
+				humanT = this.humanT = (Temple) u;
 			}
 			if(u instanceof Temple && u.getPlayer() == computer) {
-				computerT = (Temple) u;
+				computerT = this.computerT = (Temple) u;
 			}
 		}
 		
@@ -114,6 +113,11 @@ public class TestScreen extends GameScreen{
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		if(title) {
 			title = false;
+			for(Player player : terrain.getPlayers()) {
+				if(player instanceof HumanPlayer) {
+					this.addProcessor(((HumanPlayer) player).getListener());
+				}
+			}
 			return false;
 		}
 		return super.touchUp(screenX, screenY, pointer, button);

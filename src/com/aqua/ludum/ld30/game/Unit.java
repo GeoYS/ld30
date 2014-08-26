@@ -288,7 +288,7 @@ public abstract class Unit {
 	}
 	
 	public final Vector2 getPosition() {
-		return this.position;
+		return this.position.cpy();
 	}
 	
 	public final Vector2 getScreenPosition() {

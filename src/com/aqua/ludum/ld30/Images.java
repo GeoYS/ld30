@@ -34,7 +34,7 @@ public class Images {
 	
 	public static Texture WIN_IMAGE = new Texture(new Pixmap(Gdx.files.internal("../LD30/res/Win.png"))),
 			LOST_IMAGE = new Texture(new Pixmap(Gdx.files.internal("../LD30/res/Lose.png"))),
-			TITLE = new Texture(new Pixmap(Gdx.files.internal("../LD30/res/aColdNight.png")));
+			TITLE = new Texture(new Pixmap(Gdx.files.internal("../LD30/res/aColdNight2.png")));
 	
 	static {
 		// buildings
