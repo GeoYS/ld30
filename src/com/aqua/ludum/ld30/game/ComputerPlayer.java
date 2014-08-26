@@ -127,7 +127,7 @@ public class ComputerPlayer extends Player {
 					List<Unit> enemies = new ArrayList<>();
 					for(Unit u : this.getTerrain().getUnits()) {
 						if(/*u.getPlayer() != getTerrain().getNeutralPlayer()
-								&&*/ u.getPlayer() != this) {
+								&&*/ u.getPlayer() != this && !(u instanceof Spirit)) {
 							enemies.add(u);
 						}
 					}
