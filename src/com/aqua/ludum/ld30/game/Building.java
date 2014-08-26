@@ -7,10 +7,10 @@ public abstract class Building extends Unit{
 
 	public Building(Player player, Vector2 position, Terrain terrain) {
 		super(player, position, terrain);
-		this.rectangle = new Rectangle(position.x - 32,
-				position.y - 32,
-				64,
-				64);
+		this.rectangle = new Rectangle(position.x - 48,
+				position.y - 48,
+				96,
+				96);
 	}
 	
 	@Override

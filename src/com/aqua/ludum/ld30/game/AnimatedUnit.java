@@ -4,6 +4,8 @@ import com.aqua.ludum.ld30.util.Stopwatch;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public abstract class AnimatedUnit extends Unit{
@@ -135,6 +137,17 @@ public abstract class AnimatedUnit extends Unit{
 		aleft.setPlayMode(PlayMode.LOOP_PINGPONG);
 		aright = new Animation(FRAME_DURATION, spritesheet.getRightFrames());
 		aright.setPlayMode(PlayMode.LOOP_PINGPONG);
+	}
+	
+	@Override
+	public Rectangle getScreenRectangle() {
+		boolean halfImageHeight = current == up || current == down || current == left || current == right;
+		float heightscale = halfImageHeight ? 0.5f : 1;
+		
+		Vector2 screenPos = this.getScreenPosition();
+		TextureRegion region = current.getKeyFrame(animationTimer.time());
+		return new Rectangle(screenPos.x - current.getKeyFrames()[0].getRegionWidth() / 2, screenPos.y,
+				region.getRegionWidth(), region.getRegionHeight() * heightscale);
 	}
 	
 	private Animation up, down, left, right, aup, adown, aleft, aright, current;

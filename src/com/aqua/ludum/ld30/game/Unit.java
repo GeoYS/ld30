@@ -126,6 +126,8 @@ public abstract class Unit {
 		}
 	}*/
 	
+	public abstract Rectangle getScreenRectangle();
+	
 	protected void attack(float delta) {
 		targetUnit.hp -= getAttackStrength() * delta * (100 / (100 + targetUnit.getMeleeArmour()));
 		if (targetUnit.hp < 0) {
