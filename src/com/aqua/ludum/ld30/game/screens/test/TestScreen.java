@@ -48,6 +48,7 @@ public class TestScreen extends GameScreen{
 					Gdx.graphics.getWidth() / 2 - Images.TITLE.getWidth() / 2,
 					Gdx.graphics.getHeight() / 2 - Images.TITLE.getHeight() / 2);
 		}
+		
 		batch.end();
 	}
 
