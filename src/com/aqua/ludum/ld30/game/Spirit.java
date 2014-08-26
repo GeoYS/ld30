@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.aqua.ludum.ld30.Constants;
 import com.aqua.ludum.ld30.Images;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class Spirit extends AnimatedUnit {
@@ -35,6 +36,9 @@ public class Spirit extends AnimatedUnit {
 	@Override
 	protected boolean move(Vector2 to, List<Unit> ignore) {
 		this.currentPath = new Path();
+		if (to.x < 0 || to.y < 0 || to.x > terrain.getTilesWide() * 32.0f || to.y > terrain.getTilesHigh() * 32.0f) {
+			return false;
+		}
 		currentPath.getPoints().add(to);
 		return true;
 	}
