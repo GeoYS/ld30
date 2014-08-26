@@ -213,8 +213,8 @@ public abstract class Unit {
 		return this.targetUnit;
 	}
 	
-	public final int getDepth() {
-		return 0;
+	public final float getDepth() {
+		return this.position.x + this.position.y;
 	}
 	
 	protected void stopMove() {

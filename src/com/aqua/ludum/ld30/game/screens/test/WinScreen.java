@@ -29,6 +29,7 @@ public class WinScreen extends GameScreen {
 
 	@Override
 	public void init(Game game) {
+		batch = new SpriteBatch();
 	}
 
 	@Override
