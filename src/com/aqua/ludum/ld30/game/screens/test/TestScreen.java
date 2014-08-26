@@ -60,10 +60,10 @@ public class TestScreen extends GameScreen{
 		if(title) {
 			return;
 		}
-		if(humanT != null && humanT.hp < -1) {
+		if(humanT != null && humanT.hp < 0) {
 			game.enterScreen(LoseScreen.ID);
 		}
-		if(computerT != null && computerT.hp < -1) {
+		if(computerT != null && computerT.hp < 0) {
 			game.enterScreen(WinScreen.ID);
 		}
 		terrain.update(delta);
