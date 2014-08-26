@@ -93,7 +93,7 @@ public class Terrain {
 		batch.begin();
 		// render units
 		sortUnitsByDepth();
-		for(int i = units.size() - 1; i <= 0; i --) {
+		for(int i = units.size() - 1; i >= 0; i --) {
 			units.get(i).render(batch);
 		}
 		// render selection box
@@ -134,7 +134,7 @@ public class Terrain {
 		for (int i = 1; i < units.size(); ++i) {
 			Unit x = units.get(i);
 			int j = i;
-			while (j > 0 && units.get(j - 1).getDepth() > x.getDepth()) {
+			while (j > 0 && units.get(j - 1).getDepth() < x.getDepth()) {
 				units.set(j, units.get(j - 1));
 				j -= 1;
 			}
