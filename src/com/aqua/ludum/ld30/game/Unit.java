@@ -233,7 +233,7 @@ public abstract class Unit {
 		return this.targetUnit;
 	}
 	
-	public final float getDepth() {
+	public float getDepth() {
 		return this.position.x + this.position.y;
 	}
 	

@@ -80,6 +80,11 @@ public class Spirit extends AnimatedUnit {
 	}
 
 	@Override
+	public float getDepth() {
+		return Float.POSITIVE_INFINITY;
+	}
+	
+	@Override
 	public float getSpeed() {
 		return 50.0f;
 	}
