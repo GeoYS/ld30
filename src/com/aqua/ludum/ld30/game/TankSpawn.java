@@ -1,7 +1,6 @@
 package com.aqua.ludum.ld30.game;
 
 import com.aqua.ludum.ld30.Images;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public class TankSpawn extends SpawnBuilding {
@@ -17,9 +16,8 @@ public class TankSpawn extends SpawnBuilding {
 	}
 	
 	@Override
-	public void spawn() {
-		super.spawn();
-		terrain.spawnUnit(new Tank(player, new Vector2(0.0f, this.getRadius() + 32.0f).add(position), terrain));
+	protected Unit getSpawnUnit() {
+		return new Tank(player, new Vector2(), terrain);
 	}
 
 	@Override

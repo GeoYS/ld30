@@ -1,7 +1,6 @@
 package com.aqua.ludum.ld30.game;
 
 import com.aqua.ludum.ld30.Images;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
 public class SoldierSpawn extends SpawnBuilding{
@@ -14,11 +13,9 @@ public class SoldierSpawn extends SpawnBuilding{
 	protected void handleKey(int key) {
 	}
 
-	
 	@Override
-	public void spawn() {
-		super.spawn();
-		terrain.spawnUnit(new Soldier(player, new Vector2(0.0f, this.getRadius() + 32.0f).add(position), terrain));
+	protected Unit getSpawnUnit() {
+		return new Soldier(player, new Vector2(), terrain);
 	}
 
 	@Override

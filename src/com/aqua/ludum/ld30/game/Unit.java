@@ -78,7 +78,7 @@ public abstract class Unit {
 		}
 	}
 	
-	private Vector2 getCollisionPoint(Rectangle rect) {
+	protected Vector2 getCollisionPoint(Rectangle rect) {
 		Vector2 upperLeft = new Vector2(rect.x, rect.y);
 		Vector2 upperRight = new Vector2(rect.x + rect.width, rect.y);
 		Vector2 lowerLeft = new Vector2(rect.x, rect.y + rect.height);
@@ -100,6 +100,26 @@ public abstract class Unit {
 		else {
 			return null;
 		}
+	}
+	
+	public boolean validPosition() {
+		Rectangle rect2 = new Rectangle(position.x - getRadius(), position.y - getRadius(), 2 * getRadius(), 2 * getRadius());
+		for (Block block : terrain.getBlocks()) {
+			Rectangle rect = block.getRectangle();
+			if (rect2.overlaps(rect)) {
+				return false;
+			}
+		}
+		for (Unit unit : terrain.getUnits()) {
+			if (!(unit instanceof Building)) {
+				continue;
+			}
+			Rectangle rect = ((Building) unit).getRectangle();
+			if (rect2.overlaps(rect)) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	/*private void handleUnitCollision() {

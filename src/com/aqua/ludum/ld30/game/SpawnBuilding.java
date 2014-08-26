@@ -55,8 +55,25 @@ public abstract class SpawnBuilding extends Building {
 		}
 	}
 	
+	protected abstract Unit getSpawnUnit();
+	
 	public void spawn() {
+		if (player instanceof HumanPlayer) {
+			System.out.println("Hey!");
+		}
 		spiritCount -= 1;
+		Unit unit = getSpawnUnit();
+		Formation formation = new Formation(16.0f);
+		formation.getNextPosition();
+		for (int i = 0; i < 6 + 12 + 18 + 24; ++i) {
+			Vector2 pos = formation.getNextPosition().add(position);
+			unit.position = pos;
+			if (unit.validPosition()) {
+				terrain.spawnUnit(unit);
+				return;
+			}
+		}
+		terrain.spawnUnit(new Spirit(player, this.position.cpy(), terrain));
 	}
 	
 	public abstract float timeUntilSpawn();
