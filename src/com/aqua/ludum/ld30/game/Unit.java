@@ -163,13 +163,20 @@ public abstract class Unit {
 	protected void pathingUpdate(float delta) {
 		isAttacking = false;
 		if (this.targetUnit != null) {
+			float r;
+			if (targetUnit instanceof Building) {
+				r = getAttackRadius() + this.targetUnit.getRadius();
+			}
+			else {
+				r = getAttackRadius() + this.targetUnit.getRadius();
+			}
 			if (this.targetUnit.hp < 0 || this.targetUnit.player == player) {
 				this.targetUnit = null;
 			}
-			else if (this.position.dst2(this.targetUnit.position) > getAttackRadius() * getAttackRadius() ||
-					(!isAttacking && this.position.dst2(this.targetUnit.position) > (getAttackRadius() + 8) * (getAttackRadius() + 8))) {
+			else if (this.position.dst2(this.targetUnit.position) > r * r ||
+					(!isAttacking && this.position.dst2(this.targetUnit.position) > (r + 8) * (r + 8))) {
 				if (targetUnit instanceof Building) {
-					move(targetUnit.position.cpy().add(new Vector2(0.0f, targetUnit.getRadius() + getRadius() + 4.0f)));
+					move(targetUnit.position.cpy().sub(targetUnit.position.cpy().sub(position).nor().scl(targetUnit.getRadius() + getRadius() + 4.0f)));
 				}
 				else {
 					move(targetUnit.position);
@@ -257,7 +264,7 @@ public abstract class Unit {
 		this.targetUnit = target;
 		boolean result = false;
 		if (target instanceof Building) {
-			result = move(targetUnit.position.cpy().add(new Vector2(0.0f, targetUnit.getRadius() + getRadius() + 4.0f)));
+			result = move(targetUnit.position.cpy().sub(targetUnit.position.cpy().sub(position).nor().scl(targetUnit.getRadius() + getRadius() + 4.0f)));
 		}
 		else {
 			result = move(target.position);
