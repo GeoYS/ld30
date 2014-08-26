@@ -132,7 +132,17 @@ public class Terrain {
 	}
 	
 	private void sortUnitsByDepth() {
-		
+		for (int i = 1; i < units.size(); ++i) {
+			Unit x = units.get(i);
+			int j = i;
+			while (j > 0 && units.get(j - 1).getDepth() < x.getDepth()) {
+				units.set(j, units.get(j - 1));
+				j -= 1;
+			}
+			if (i != j) {
+				units.set(j, x);
+			}
+		}
 	}
 	
 	public void addUnit(Unit unit) {
