@@ -23,18 +23,12 @@ public abstract class Game implements ApplicationListener, InputProcessor{
 	 * @param title
 	 */
 	public Game(String title){
-		while(Gdx.input == null){
-			System.out.println("Waiting for input...");
-		}
 		Gdx.input.setInputProcessor(this);
 		Gdx.graphics.setTitle(title);
 		screens = new HashMap<Integer, UpdateableScreen>();
 	}
 	
 	public Game(){
-		while(Gdx.input == null){
-			System.out.println("Waiting for input...");
-		}
 		Gdx.input.setInputProcessor(this);
 		screens = new HashMap<Integer, UpdateableScreen>();
 	}
@@ -106,18 +100,15 @@ public abstract class Game implements ApplicationListener, InputProcessor{
 		if(previousScreen != null && previousScreen instanceof GameScreen){
 			GameScreen prevGameScreen = (GameScreen) previousScreen;
 			if(!prevGameScreen.outTransitionFinished()){
-				//System.out.println("transitioning");
 				return true;
 			}
 		}
 		if(currentScreen instanceof GameScreen){
 			GameScreen currGameScreen = (GameScreen) currentScreen;
 			if(!currGameScreen.inTransitionFinished()){
-				//System.out.println("transitioning");
 				return true;
 			}
 		}
-		//System.out.println("Not transitioning");
 		return false;
 	}	
 

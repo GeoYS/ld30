@@ -58,9 +58,6 @@ public abstract class SpawnBuilding extends Building {
 	protected abstract Unit getSpawnUnit();
 	
 	public void spawn() {
-		if (player instanceof HumanPlayer) {
-			System.out.println("Hey!");
-		}
 		spiritCount -= 1;
 		Unit unit = getSpawnUnit();
 		int MAX_I = 20;
