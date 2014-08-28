@@ -168,7 +168,7 @@ public class HumanPlayer extends Player {
 					}
 				}
 				
-				// worker building
+				/*// worker building
 				int workerCount = 0;
 				Worker selectedWorker = null;
 				for(Unit unit : HumanPlayer.this.getSelectedUnits()) {
@@ -179,6 +179,11 @@ public class HumanPlayer extends Player {
 				}
 				if(workerCount == 1) {
 					selectedWorker.handleKey(keycode);
+				}*/
+				for (Unit unit : HumanPlayer.this.getSelectedUnits()) {
+					if (unit instanceof Worker) {
+						((Worker) unit).handleKey(keycode);
+					}
 				}
 				return true;
 			}

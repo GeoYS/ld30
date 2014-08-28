@@ -34,7 +34,7 @@ public class Worker extends AnimatedUnit {
 	
 	public void becomeBuilding(SpawnBuilding building) {
 		for(Unit unit : getTerrain().getUnits()) {
-			if(unit == this) {
+			if(unit == this || unit instanceof Spirit) {
 				continue;
 			}
 			float dst2 = unit.getPosition().dst2(building.getPosition()), mindst2;
