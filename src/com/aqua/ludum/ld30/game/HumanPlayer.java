@@ -28,16 +28,16 @@ public class HumanPlayer extends Player {
 	public void update(float delta) {
 		super.update(delta);
 		if (isKeyDown[0]) {
-			camera.translate(-256.0f * delta, 0.0f);
+			camera.translate(-512.0f * delta, 0.0f);
 		}
 		if (isKeyDown[1]) {
-			camera.translate(256.0f * delta, 0.0f);
+			camera.translate(512.0f * delta, 0.0f);
 		}
 		if (isKeyDown[2]) {
-			camera.translate(0.0f, 256.0f * delta);
+			camera.translate(0.0f, 512.0f * delta);
 		}
 		if (isKeyDown[3]) {
-			camera.translate(0.0f, -256.0f * delta);
+			camera.translate(0.0f, -512.0f * delta);
 		}
 	}
 	
