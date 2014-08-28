@@ -1,7 +1,9 @@
 package com.aqua.ludum.ld30.game;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.aqua.ludum.ld30.Constants;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -41,6 +43,47 @@ public class Terrain {
     	this.players.add(human);
     	this.players.add(computer);
     	loadBlocks(map);
+    	initializeNeighbours();
+	}
+	
+	private void initializeNeighbours() {
+		neighbours = new HashMap<>();
+		List<Vector2> points = new ArrayList<>();
+		for (Block block : this.blocks) {
+			Rectangle rect = block.getRectangle();
+			float padding = Constants.PATHFINDING_CORNER_PADDING;
+			points.add(new Vector2(rect.x - padding, rect.y - padding));
+			points.add(new Vector2(rect.x + rect.width + padding, rect.y - padding));
+			points.add(new Vector2(rect.x - padding, rect.y + rect.height + padding));
+			points.add(new Vector2(rect.x + rect.width + padding, rect.y + rect.height + padding));
+		}
+		for (Unit unit : this.units) {
+			if (!(unit instanceof Building)) {
+				continue;
+			}
+			Rectangle rect = ((Building) unit).getRectangle();
+			float padding = Constants.PATHFINDING_CORNER_PADDING;
+			points.add(new Vector2(rect.x - padding, rect.y - padding));
+			points.add(new Vector2(rect.x + rect.width + padding, rect.y - padding));
+			points.add(new Vector2(rect.x - padding, rect.y + rect.height + padding));
+			points.add(new Vector2(rect.x + rect.width + padding, rect.y + rect.height + padding));
+		}
+		for (int i = 0; i < points.size(); ++i) {
+			for (int j = i + 1; j < points.size(); ++j) {
+				Vector2 pointA = points.get(i);
+				Vector2 pointB = points.get(j);
+				if (reachable(pointA, pointB)) {
+					if (!neighbours.containsKey(pointA)) {
+						neighbours.put(pointA, new ArrayList<Vector2>());
+					}
+					if (!neighbours.containsKey(pointB)) {
+						neighbours.put(pointB, new ArrayList<Vector2>());
+					}
+					neighbours.get(pointA).add(pointB);
+					neighbours.get(pointB).add(pointA);
+				}
+			}
+		}
 	}
 	
 	private void loadBlocks(TiledMap map) {
@@ -103,8 +146,18 @@ public class Terrain {
 	}
 	
 	public void update(float delta) {
+		boolean willInitializeNeighbours = false;
+		for (Unit unit : spawnUnits) {
+			if (unit instanceof Building) {
+				willInitializeNeighbours = true;
+				break;
+			}
+		}
 		units.addAll(spawnUnits);
 		spawnUnits.clear();
+		if (willInitializeNeighbours) {
+			initializeNeighbours();
+		}
 		for(Unit unit : units) {
 			unit.update(delta);
 		}
@@ -203,11 +256,16 @@ public class Terrain {
 	}
 	
 	public List<Vector2> getNeighbours(Vector2 point, Vector2 target) {			
-		ArrayList<Vector2> neighbours = new ArrayList<>();	
+		ArrayList<Vector2> neighbours = new ArrayList<>();
 		
 		// check if target reachable
 		if(reachable(point, target)) {
 			neighbours.add(target);
+			return neighbours;
+		}
+		
+		if (this.neighbours.containsKey(point)) {
+			return this.neighbours.get(point);
 		}
 		
 		// go through each block
@@ -263,6 +321,9 @@ public class Terrain {
 	}
 	
 	private boolean reachable(Vector2 point, Vector2 target) {
+		if (target.x < 0 || target.y < 0 || target.x > getTilesWide() * 32.0f || target.y > getTilesHigh() * 32.0f) {
+			return false;
+		}
 		for (Block block : this.blocks) {
 			Rectangle rect = block.getRectangle();
 			Vector2 topLeft = new Vector2(rect.x, rect.y);
@@ -354,6 +415,8 @@ public class Terrain {
 	private NeutralPlayer neutralPlayer;
 	private HumanPlayer humanPlayer;
 	private ComputerPlayer computerPlayer;
+	
+	private Map<Vector2, List<Vector2>> neighbours;
 	
 	private final int tilesWide, tilesHigh;
 	
