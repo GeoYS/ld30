@@ -17,7 +17,7 @@ public class Temple extends Building {
 
 	@Override
 	public float getStartHP() {
-		return 1000;
+		return 10000;
 	}
 
 	public com.badlogic.gdx.math.Rectangle getScreenRectangle() {
