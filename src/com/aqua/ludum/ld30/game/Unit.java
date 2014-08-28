@@ -19,6 +19,7 @@ public abstract class Unit {
 		this.currentPath = new Path();
 		this.hp = getStartHP();
 		this.shp = getStartSHP();
+		this.stance = Stance.Passive;
 		//this.shoved = false;
 	}
 	
@@ -193,6 +194,7 @@ public abstract class Unit {
 				r = getAttackRadius() + this.targetUnit.getRadius();
 			}
 			if (this.targetUnit.hp < 0 || this.targetUnit.player == player) {
+				stopMove();
 				this.targetUnit = null;
 			}
 			else if (this.position.dst2(this.targetUnit.position) > r * r ||

@@ -2,9 +2,7 @@ package com.aqua.ludum.ld30.game;
 
 import java.util.List;
 
-import com.aqua.ludum.ld30.Constants;
 import com.aqua.ludum.ld30.Images;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class Spirit extends AnimatedUnit {
@@ -18,6 +16,9 @@ public class Spirit extends AnimatedUnit {
 	public void attack(float delta) {
 		getTargetUnit().shp -= delta * 30;
 		if (getTargetUnit().shp < 0) {
+			getTargetUnit().currentPath = new Path();
+			getTargetUnit().targetUnit = null;
+			getTargetUnit().stance = Stance.Passive;
 			getTargetUnit().shp = getTargetUnit().getStartSHP();
 			if (getTargetUnit().getPlayer() != terrain.getNeutralPlayer() &&
 					getTargetUnit().getPlayer() != player) {
