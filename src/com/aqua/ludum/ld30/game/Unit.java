@@ -216,6 +216,20 @@ public abstract class Unit {
 		if(currentPath.getPoints().isEmpty()) {
 			return;
 		}
+		Vector2 finalPoint = currentPath.getPoints().get(currentPath.getPoints().size() - 1);
+		if (finalPoint.dst2(position) < getRadius() * getRadius()) {
+			Vector2 oldPosition = position;
+			position = finalPoint;
+			if (validPosition()) {
+				position = oldPosition;
+			}
+			else {
+				position = oldPosition;
+				stopMove();
+				return;
+			}
+		}
+		
 		// update position
 		Vector2 target = currentPath.getPoints().get(0),
 				deltaPos;
