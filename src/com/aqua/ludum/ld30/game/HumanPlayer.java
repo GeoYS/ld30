@@ -6,6 +6,7 @@ import com.aqua.ludum.ld30.Constants;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -21,6 +22,23 @@ public class HumanPlayer extends Player {
 		this.currentSelection = new Selection();
 		this.renderer = new ShapeRenderer();
 		this.camera = camera;
+	}
+	
+	@Override
+	public void update(float delta) {
+		super.update(delta);
+		if (isKeyDown[0]) {
+			camera.translate(-256.0f * delta, 0.0f);
+		}
+		if (isKeyDown[1]) {
+			camera.translate(256.0f * delta, 0.0f);
+		}
+		if (isKeyDown[2]) {
+			camera.translate(0.0f, 256.0f * delta);
+		}
+		if (isKeyDown[3]) {
+			camera.translate(0.0f, -256.0f * delta);
+		}
 	}
 	
 	public void setInputListener() {
@@ -124,6 +142,21 @@ public class HumanPlayer extends Player {
 			
 			@Override
 			public boolean keyUp(int keycode) {
+				switch (keycode) {
+				case Keys.LEFT:
+					isKeyDown[0] = false;
+					break;
+				case Keys.RIGHT:
+					isKeyDown[1] = false;
+					break;
+				case Keys.UP:
+					isKeyDown[2] = false;
+					break;
+				case Keys.DOWN:
+					isKeyDown[3] = false;
+					break;
+				}
+				
 				Vector2 mouseWorldPos = Constants
 						.screenToWorld(
 								mouseToScreen(
@@ -210,7 +243,21 @@ public class HumanPlayer extends Player {
 			
 			@Override
 			public boolean keyDown(int keycode) {
-				return false;
+				switch (keycode) {
+				case Keys.LEFT:
+					isKeyDown[0] = true;
+					break;
+				case Keys.RIGHT:
+					isKeyDown[1] = true;
+					break;
+				case Keys.UP:
+					isKeyDown[2] = true;
+					break;
+				case Keys.DOWN:
+					isKeyDown[3] = true;
+					break;
+				}
+				return true;
 			}
 		};
 	}
@@ -327,6 +374,7 @@ public class HumanPlayer extends Player {
 	private Selection currentSelection;
 	private ShapeRenderer renderer;
 	private OrthographicCamera camera;
+	private boolean[] isKeyDown = new boolean[] { false, false, false, false };
 	
 	private class Selection {
 		
