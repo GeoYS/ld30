@@ -19,7 +19,7 @@ public abstract class Unit {
 		this.currentPath = new Path();
 		this.hp = getStartHP();
 		this.shp = getStartSHP();
-		this.stance = Stance.Passive;
+		this.stance = Stance.StandGround;
 		//this.shoved = false;
 	}
 	
@@ -167,7 +167,7 @@ public abstract class Unit {
 	protected final void stanceUpdate(float delta) {
 		if (stance == Stance.StandGround) {
 			for (Unit unit : terrain.getUnits()) {
-				if (unit.targetUnit == this) {
+				if (!(unit instanceof Spirit) && unit.targetUnit == this) {
 					commandAttack(unit);
 					break;
 				}
@@ -175,7 +175,7 @@ public abstract class Unit {
 		}
 		if (stance == Stance.Aggressive) {
 			for (Unit unit : terrain.getUnits()) {
-				if (unit.player != player && unit.player != terrain.getNeutralPlayer() && unit.position.dst2(position) <= 128 * 128) {
+				if (!(unit instanceof Spirit) && !(unit instanceof Building) && unit.player != player && unit.player != terrain.getNeutralPlayer() && unit.position.dst2(position) <= 128 * 128) {
 					commandAttack(unit);
 					break;
 				}

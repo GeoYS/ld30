@@ -18,7 +18,7 @@ public class Spirit extends AnimatedUnit {
 		if (getTargetUnit().shp < 0) {
 			getTargetUnit().currentPath = new Path();
 			getTargetUnit().targetUnit = null;
-			getTargetUnit().stance = Stance.Passive;
+			getTargetUnit().stance = Stance.StandGround;
 			getTargetUnit().shp = getTargetUnit().getStartSHP();
 			if (getTargetUnit().getPlayer() != terrain.getNeutralPlayer() &&
 					getTargetUnit().getPlayer() != player) {

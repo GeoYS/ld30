@@ -167,6 +167,21 @@ public class HumanPlayer extends Player {
 						}
 					}
 				}
+				else if (keycode == Input.Keys.A) {
+					for (Unit unit : HumanPlayer.this.getSelectedUnits()) {
+						unit.stance = Stance.Aggressive;
+					}
+				}
+				else if (keycode == Input.Keys.S) {
+					for (Unit unit : HumanPlayer.this.getSelectedUnits()) {
+						unit.stance = Stance.StandGround;
+					}
+				}
+				else if (keycode == Input.Keys.D) {
+					for (Unit unit : HumanPlayer.this.getSelectedUnits()) {
+						unit.stance = Stance.Passive;
+					}
+				}
 				
 				/*// worker building
 				int workerCount = 0;
