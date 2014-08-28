@@ -114,7 +114,7 @@ public class Terrain {
 		for (int i = 0; i < units.size(); ++i) {
 			if (units.get(i).getHP() < 0) {
 				if (units.get(i).getPlayer() != this.getNeutralPlayer()) {
-					if (!(units.get(i) instanceof Spirit)) {
+					if (!(units.get(i) instanceof Spirit) && !(units.get(i) instanceof Building)) {
 						if(!(units.get(i) instanceof Worker) || !((Worker) units.get(i)).isSpawning) {
 							units.add(new Spirit(units.get(i).getPlayer(), units.get(i).getPosition(), this));
 						}

@@ -154,8 +154,10 @@ public class HumanPlayer extends Player {
 							if (unit instanceof SpawnBuilding) {
 								int n = ((SpawnBuilding) unit).spiritCount;
 								unit.hp = -10;
+								Formation formation = new Formation(32.0f);
 								for (int i = 0; i < n; ++i) {
-									terrain.spawnUnit(new Spirit(HumanPlayer.this, unit.position.cpy(), terrain));
+									Vector2 pos = formation.getNextPosition();
+									terrain.spawnUnit(new Spirit(HumanPlayer.this, pos.add(unit.position), terrain));
 								}
 							}
 							else {
