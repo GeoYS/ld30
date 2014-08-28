@@ -167,7 +167,7 @@ public abstract class Unit {
 	protected final void stanceUpdate(float delta) {
 		if (stance == Stance.StandGround) {
 			for (Unit unit : terrain.getUnits()) {
-				if (!(unit instanceof Spirit) && unit.targetUnit == this) {
+				if (!(unit instanceof Spirit) && unit.targetUnit == this && unit.position.dst2(position) <= (unit.getAttackRadius() + 32.0f) * (unit.getAttackRadius() + 32.0f)) {
 					commandAttack(unit);
 					break;
 				}
