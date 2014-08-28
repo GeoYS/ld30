@@ -165,6 +165,9 @@ public abstract class Unit {
 	}
 	
 	protected final void stanceUpdate(float delta) {
+		if (!this.currentPath.getPoints().isEmpty() || this.targetUnit != null || (this instanceof Building) || (this instanceof Spirit && ((Spirit) this).targetBuilding != null)) {
+			return;
+		}
 		if (stance == Stance.StandGround) {
 			for (Unit unit : terrain.getUnits()) {
 				if (!(unit instanceof Spirit) && unit.targetUnit == this && unit.position.dst2(position) <= (unit.getAttackRadius() + 32.0f) * (unit.getAttackRadius() + 32.0f)) {
