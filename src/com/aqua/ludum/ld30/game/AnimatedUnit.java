@@ -22,11 +22,119 @@ public abstract class AnimatedUnit extends Unit{
 	public void update(float delta) {
 		oldPos.set(this.getPosition());
 		super.update(delta);
+		updateAnimation();
+	}
+	
+	private void updateAnimation() {
+		Vector2 deltaPos = this.getPosition().cpy().sub(oldPos);
+		float bufferAngle = 10; // degrees
+		float angle = deltaPos.angle();
+		if(isAttackAnimation(current) && !isAttacking() ) { // switch from attacking to not attacking
+			updateAnimationDirection(deltaPos);
+		}
+		else if (!isAttackAnimation(current) && isAttacking() && targetUnit != null) { // switch from not attacking to attacking
+			deltaPos = targetUnit.getPosition().cpy().sub(this.getPosition());
+			updateAnimationDirection(deltaPos);
+		}
+		else if (isAttacking() && targetUnit != null) {
+			deltaPos = targetUnit.getPosition().cpy().sub(this.getPosition());
+			updateAnimationDirection(deltaPos);
+		}
+		else if(current == up || current == aup) {
+			if(angle < 180 - bufferAngle || angle > 270 + bufferAngle) {
+				updateAnimationDirection(deltaPos);
+			}
+		}
+		else if(current == down || current == adown) {
+			if(angle < 360 - bufferAngle && angle > 90 + bufferAngle) {
+				updateAnimationDirection(deltaPos);
+			}
+		}
+		else if(current == left || current == aleft) {
+			if(angle < 90 - bufferAngle || angle > 180 + bufferAngle) {
+				updateAnimationDirection(deltaPos);
+			}
+		}
+		else if(current == right || current == aright) {
+			if(angle < 270 - bufferAngle && angle > 0 + bufferAngle) {
+				updateAnimationDirection(deltaPos);
+			}
+		}
+	}
+	
+	private void updateAnimationDirection(Vector2 deltaPos) {
+		float dx = deltaPos.x, dy = deltaPos.y;
+		if((dx < 0 && dy < 0)) {
+			if(isAttacking()) {
+				setAnimation(aup);
+			}
+			else {
+				setAnimation(up);
+			}
+		}
+		else if((dx > 0 && dy > 0)) {
+			if(isAttacking()) {
+				setAnimation(adown);
+			}
+			else {
+				setAnimation(down);
+			}
+		}
+		else if((dx < 0 && dy > 0) || (dx == 0 && dy > 0) || (dx == 0 && dy < 0)) {
+			if(isAttacking()) {
+				setAnimation(aleft);
+			}
+			else {
+				setAnimation(left);
+			}
+		}
+		else if((dx > 0 && dy < 0) || (dy == 0 && dx > 0) || (dy == 0 && dx < 0)){
+			if(isAttacking()) {
+				setAnimation(aright);
+			}
+			else {
+				setAnimation(right);
+			}
+		}
+		else {
+			if(isAttackAnimation(current) && !isAttacking() ) { // switch from attacking to not attacking
+				if(current == aleft) {
+					setAnimation(left);
+				}
+				else if(current == aright) {
+					setAnimation(right);
+				}
+				else if(current == aup) {
+					setAnimation(up);
+				}
+				else if(current == adown) {
+					setAnimation(down);
+				}
+			}
+		}
+	}
+	
+	private void setAnimation(Animation animation) {
+		if(isAttackAnimation(current)) {
+			if(isAttackAnimation(animation)) {
+				current = animation;
+				return;
+			}
+			if(animationTimer.time() < 1000f) { // minimum time for attack animation (MILLISECONDS!!!)
+				return;
+			}
+		}
+		animationTimer.restart();
+		current = animation;
+	}
+	
+	private boolean isAttackAnimation(Animation animation) {
+		return animation == aup || animation == adown || animation == aleft || animation == aright;
 	}
 	
 	@Override
 	public void render(SpriteBatch batch) {
-		if(current == aup || current == adown || current == aleft || current == aright) {
+		/*if(current == aup || current == adown || current == aleft || current == aright) {
 			if(animationTimer.time() / 1000f < FRAME_DURATION * 6) {
 				int keyFrame;
 				if(animationTimer.isRunning()) {
@@ -99,10 +207,11 @@ public abstract class AnimatedUnit extends Unit{
 					current = right;
 				}
 			}
-		}
-		
+		}*/
+
+		Vector2 deltaPos = this.getPosition().cpy().sub(oldPos);
 		int keyFrame;
-		if(animationTimer.isRunning()) {
+		if(deltaPos.len2() != 0 || isAttacking() || isAttackAnimation(current)) {
 			keyFrame = current.getKeyFrameIndex(animationTimer.time() / 1000f); // StopWatch is in milliseconds!
 		}
 		else {
@@ -150,5 +259,5 @@ public abstract class AnimatedUnit extends Unit{
 	private Animation up, down, left, right, aup, adown, aleft, aright, current;
 	private Vector2 oldPos;
 	private Stopwatch animationTimer;
-	private final float FRAME_DURATION = 0.2f; // in seconds
+	public float FRAME_DURATION = 0.2f; // in seconds
 }

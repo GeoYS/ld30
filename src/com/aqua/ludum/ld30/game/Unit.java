@@ -19,6 +19,7 @@ public abstract class Unit {
 		this.currentPath = new Path();
 		this.hp = getStartHP();
 		this.shp = getStartSHP();
+		this.stance = Stance.StandGround;
 		//this.shoved = false;
 	}
 	
@@ -164,9 +165,12 @@ public abstract class Unit {
 	}
 	
 	protected final void stanceUpdate(float delta) {
+		if (!this.currentPath.getPoints().isEmpty() || this.targetUnit != null || (this instanceof Building) || (this instanceof Spirit && ((Spirit) this).targetBuilding != null)) {
+			return;
+		}
 		if (stance == Stance.StandGround) {
 			for (Unit unit : terrain.getUnits()) {
-				if (unit.targetUnit == this) {
+				if (!(unit instanceof Spirit) && unit.targetUnit == this && unit.position.dst2(position) <= (unit.getAttackRadius() + 32.0f) * (unit.getAttackRadius() + 32.0f)) {
 					commandAttack(unit);
 					break;
 				}
@@ -174,7 +178,7 @@ public abstract class Unit {
 		}
 		if (stance == Stance.Aggressive) {
 			for (Unit unit : terrain.getUnits()) {
-				if (unit.player != player && unit.player != terrain.getNeutralPlayer() && unit.position.dst2(position) <= 128 * 128) {
+				if (!(unit instanceof Spirit) && !(unit instanceof Building) && unit.player != player && unit.player != terrain.getNeutralPlayer() && unit.position.dst2(position) <= 128 * 128) {
 					commandAttack(unit);
 					break;
 				}
@@ -193,6 +197,7 @@ public abstract class Unit {
 				r = getAttackRadius() + this.targetUnit.getRadius();
 			}
 			if (this.targetUnit.hp < 0 || this.targetUnit.player == player) {
+				stopMove();
 				this.targetUnit = null;
 			}
 			else if (this.position.dst2(this.targetUnit.position) > r * r ||
@@ -214,6 +219,20 @@ public abstract class Unit {
 		if(currentPath.getPoints().isEmpty()) {
 			return;
 		}
+		Vector2 finalPoint = currentPath.getPoints().get(currentPath.getPoints().size() - 1);
+		if (finalPoint.dst2(position) < getRadius() * getRadius()) {
+			Vector2 oldPosition = position;
+			position = finalPoint;
+			if (validPosition()) {
+				position = oldPosition;
+			}
+			else {
+				position = oldPosition;
+				stopMove();
+				return;
+			}
+		}
+		
 		// update position
 		Vector2 target = currentPath.getPoints().get(0),
 				deltaPos;

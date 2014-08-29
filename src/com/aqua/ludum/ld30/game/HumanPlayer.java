@@ -6,6 +6,7 @@ import com.aqua.ludum.ld30.Constants;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -21,6 +22,23 @@ public class HumanPlayer extends Player {
 		this.currentSelection = new Selection();
 		this.renderer = new ShapeRenderer();
 		this.camera = camera;
+	}
+	
+	@Override
+	public void update(float delta) {
+		super.update(delta);
+		if (isKeyDown[0]) {
+			camera.translate(-512.0f * delta, 0.0f);
+		}
+		if (isKeyDown[1]) {
+			camera.translate(512.0f * delta, 0.0f);
+		}
+		if (isKeyDown[2]) {
+			camera.translate(0.0f, 512.0f * delta);
+		}
+		if (isKeyDown[3]) {
+			camera.translate(0.0f, -512.0f * delta);
+		}
 	}
 	
 	public void setInputListener() {
@@ -124,6 +142,21 @@ public class HumanPlayer extends Player {
 			
 			@Override
 			public boolean keyUp(int keycode) {
+				switch (keycode) {
+				case Keys.LEFT:
+					isKeyDown[0] = false;
+					break;
+				case Keys.RIGHT:
+					isKeyDown[1] = false;
+					break;
+				case Keys.UP:
+					isKeyDown[2] = false;
+					break;
+				case Keys.DOWN:
+					isKeyDown[3] = false;
+					break;
+				}
+				
 				Vector2 mouseWorldPos = Constants
 						.screenToWorld(
 								mouseToScreen(
@@ -154,19 +187,36 @@ public class HumanPlayer extends Player {
 							if (unit instanceof SpawnBuilding) {
 								int n = ((SpawnBuilding) unit).spiritCount;
 								unit.hp = -10;
+								Formation formation = new Formation(32.0f);
 								for (int i = 0; i < n; ++i) {
-									terrain.spawnUnit(new Spirit(HumanPlayer.this, unit.position, terrain));
+									Vector2 pos = formation.getNextPosition();
+									terrain.spawnUnit(new Spirit(HumanPlayer.this, pos.add(unit.position), terrain));
 								}
 							}
 							else {
-								unit.hp = -10;
-								terrain.spawnUnit(new Spirit(HumanPlayer.this, unit.position, terrain));
+								unit.player = terrain.getNeutralPlayer();
+								terrain.spawnUnit(new Spirit(HumanPlayer.this, unit.position.cpy(), terrain));
 							}
 						}
 					}
 				}
+				else if (keycode == Input.Keys.A) {
+					for (Unit unit : HumanPlayer.this.getSelectedUnits()) {
+						unit.stance = Stance.Aggressive;
+					}
+				}
+				else if (keycode == Input.Keys.S) {
+					for (Unit unit : HumanPlayer.this.getSelectedUnits()) {
+						unit.stance = Stance.StandGround;
+					}
+				}
+				else if (keycode == Input.Keys.D) {
+					for (Unit unit : HumanPlayer.this.getSelectedUnits()) {
+						unit.stance = Stance.Passive;
+					}
+				}
 				
-				// worker building
+				/*// worker building
 				int workerCount = 0;
 				Worker selectedWorker = null;
 				for(Unit unit : HumanPlayer.this.getSelectedUnits()) {
@@ -177,6 +227,11 @@ public class HumanPlayer extends Player {
 				}
 				if(workerCount == 1) {
 					selectedWorker.handleKey(keycode);
+				}*/
+				for (Unit unit : HumanPlayer.this.getSelectedUnits()) {
+					if (unit instanceof Worker) {
+						((Worker) unit).handleKey(keycode);
+					}
 				}
 				return true;
 			}
@@ -188,7 +243,21 @@ public class HumanPlayer extends Player {
 			
 			@Override
 			public boolean keyDown(int keycode) {
-				return false;
+				switch (keycode) {
+				case Keys.LEFT:
+					isKeyDown[0] = true;
+					break;
+				case Keys.RIGHT:
+					isKeyDown[1] = true;
+					break;
+				case Keys.UP:
+					isKeyDown[2] = true;
+					break;
+				case Keys.DOWN:
+					isKeyDown[3] = true;
+					break;
+				}
+				return true;
 			}
 		};
 	}
@@ -305,6 +374,7 @@ public class HumanPlayer extends Player {
 	private Selection currentSelection;
 	private ShapeRenderer renderer;
 	private OrthographicCamera camera;
+	private boolean[] isKeyDown = new boolean[] { false, false, false, false };
 	
 	private class Selection {
 		

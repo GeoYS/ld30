@@ -34,13 +34,16 @@ public class Worker extends AnimatedUnit {
 	
 	public void becomeBuilding(SpawnBuilding building) {
 		for(Unit unit : getTerrain().getUnits()) {
-			if(unit == this) {
+			if(unit == this || unit instanceof Spirit) {
 				continue;
 			}
 			float dst2 = unit.getPosition().dst2(building.getPosition()), mindst2;
 			float buffer = 0;
 			mindst2 = (building.getRadius() + buffer) * (unit.getRadius() + building.getRadius() + buffer);
 			if(dst2 <  mindst2) {
+				return;
+			}
+			if(unit instanceof Building && ((Building) unit).getRectangle().overlaps(building.getRectangle())) {
 				return;
 			}
 		}

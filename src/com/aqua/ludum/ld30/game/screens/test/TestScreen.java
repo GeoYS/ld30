@@ -2,15 +2,14 @@ package com.aqua.ludum.ld30.game.screens.test;
 
 import com.aqua.ludum.ld30.Constants;
 import com.aqua.ludum.ld30.Images;
-import com.aqua.ludum.ld30.game.Building;
 import com.aqua.ludum.ld30.game.ComputerPlayer;
+import com.aqua.ludum.ld30.game.Formation;
 import com.aqua.ludum.ld30.game.HumanPlayer;
 import com.aqua.ludum.ld30.game.Player;
 import com.aqua.ludum.ld30.game.Spirit;
 import com.aqua.ludum.ld30.game.Temple;
 import com.aqua.ludum.ld30.game.Terrain;
 import com.aqua.ludum.ld30.game.Unit;
-import com.aqua.ludum.ld30.game.Worker;
 import com.aqua.ludum.ld30.screen.Game;
 import com.aqua.ludum.ld30.screen.GameScreen;
 import com.badlogic.gdx.Gdx;
@@ -18,7 +17,6 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 
 public class TestScreen extends GameScreen{
@@ -107,9 +105,13 @@ public class TestScreen extends GameScreen{
 		camera.translate(Constants.worldToScreen(humanT.getPosition(), terrain.getTilesHigh()));
 		
 		int SPIRITS = 15;
+		Formation formation = new Formation(32.0f);
 		for(int i = 0; i < SPIRITS; i ++) {
-			terrain.addUnit(new Spirit(human, humanT.getPosition().cpy(), terrain));
-			terrain.addUnit(new Spirit(computer, computerT.getPosition().cpy(), terrain));
+			Vector2 pos = formation.getNextPosition();
+			Vector2 hPos = pos.cpy().add(humanT.getPosition());
+			Vector2 cPos = pos.cpy().add(computerT.getPosition());
+			terrain.addUnit(new Spirit(human, hPos, terrain));
+			terrain.addUnit(new Spirit(computer, cPos, terrain));
 		}
 		
 		terrain.update(0.01f);
