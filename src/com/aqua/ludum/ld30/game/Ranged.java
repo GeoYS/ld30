@@ -16,7 +16,7 @@ public class Ranged extends AnimatedUnit {
 
 	@Override
 	public float getRadius() {
-		return 16.0f;
+		return 12.0f;
 	}
 
 	@Override
